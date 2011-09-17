@@ -9,4 +9,6 @@
    - multilang uses json messages over stdin/stdout to communicate with the subprocess
    - storm comes with ruby, python, and fancy adapters that implement the protocol. show an example of python
       - python supports emitting, anchoring, acking, and logging
-
+- "storm shell" command makes constructing jar and uploading to nimbus easy
+  - makes jar and uploads it
+  - calls your program with host/port of nimbus and the jarfile id
