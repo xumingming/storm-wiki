@@ -21,7 +21,7 @@ Installing ZeroMQ and JZMQ is usually straightforward. Sometimes, however, peopl
 Storm has been tested with ZeroMQ 2.1.7, and this is the recommended ZeroMQ release that you install. You can download a ZeroMQ release [here](http://download.zeromq.org/). Installing ZeroMQ should look something like this:
 
 ```
-wget http://download.zeromq.org/zeromq-2.1.7.tar.gz
+wget http://download.zeromq.org/historic/zeromq-2.1.7.tar.gz
 tar -xzf zeromq-2.1.7.tar.gz
 cd zeromq-2.1.7
 ./configure
