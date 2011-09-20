@@ -47,7 +47,7 @@ The other main methods on spouts are `ack` and `fail`. These are called when Sto
 **Resources:**
 
 * [IRichSpout](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichSpout.html): this is the interface that spouts must implement. 
-* [[https://github.com/nathanmarz/storm/wiki/Guaranteeing-message-processing]]
+* [[Guaranteeing message processing]]
 
 ### Bolts
 
@@ -68,7 +68,7 @@ Its perfectly fine to launch new threads in bolts that do processing asynchronou
 * [IRichBolt](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichBolt.html): this is general interface for bolts.
 * [IBasicBolt](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IBasicBolt.html): this is a convenience interface for defining bolts that do filtering or simple functions.
 * [OutputCollector](http://nathanmarz.github.com/storm/doc/backtype/storm/task/OutputCollector.html): bolts emit tuples to their output streams using an instance of this class
-* [[https://github.com/nathanmarz/storm/wiki/Guaranteeing-message-processing]]
+* [[Guaranteeing message processing]]
 
 ### Stream groupings
 
