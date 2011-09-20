@@ -47,6 +47,8 @@ To get the JZMQ build to work, you may need to do one or all of the following:
 2. Install Java dev package (more info [here](http://goo.gl/D8lI) for Mac OSX users)
 3. Upgrade autoconf on your machine
 
+If you run into any errors when running `./configure`, [this thread](http://stackoverflow.com/questions/3522248/how-do-i-compile-jzmq-for-zeromq-on-osx) may provide a solution.
+
 ### Installing a Storm release locally
 
 If you want to be able to submit topologies to a remote cluster from your machine, you should install a Storm release locally. Installing a Storm release will give you the `storm` client that you can use to interact with remote clusters. To install Storm locally, download a release [from here](https://github.com/nathanmarz/storm/downloads) and unzip it somewhere on your computer. Then add the unpacked `bin/` directory onto your `PATH` and make sure the `bin/storm` script is executable.
