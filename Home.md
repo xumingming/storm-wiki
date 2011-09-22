@@ -35,6 +35,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 #### Intermediate
 
+* [[Serialization]]
 * [[Common patterns]]
 * [[Using non-JVM languages with Storm]]
 * [[Distributed RPC]]
