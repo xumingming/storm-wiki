@@ -177,9 +177,9 @@ In distributed mode, Storm operates as a cluster of machines. When you submit a 
 Here's the code that runs `ExclamationTopology` in local mode:
 
 ```java
-Map conf = new HashMap();
-conf.put(Config.TOPOLOGY_DEBUG, true);
-conf.put(Config.TOPOLOGY_WORKERS, 2);
+Config conf = new Config();
+conf.setDebug(true);
+conf.setNumWorkers(2);
 
 LocalCluster cluster = new LocalCluster();
 cluster.submitTopology("test", conf, builder.createTopology());

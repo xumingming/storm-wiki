@@ -5,9 +5,9 @@ Running topologies on a production cluster is similar to running in [[Local mode
 2) Use [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html) to submit the topology to the cluster. `StormSubmitter` takes as input the name of the topology, a configuration for the topology, and the topology itself. For example:
 
 ```java
-Map conf = new HashMap();
-conf.put(Config.TOPOLOGY_WORKERS, 20);
-conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 5000);
+Config conf = new Config();
+conf.setNumWorkers(20);
+conf.setMaxSpoutPending(5000);
 StormSubmitter.submitTopology("mytopology", conf, topology);
 ```
 
