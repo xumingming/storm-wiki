@@ -22,6 +22,10 @@ Storm uses a few native libraries which you installed in [[Setting up a developm
 
 On Macs, the native libraries are located at `/usr/local/lib`. 
 
+On Linux, you'll also need to set the LD_LIBRARY_PATH variable in your environment. You can do this in Eclipse as shown in this picture:
+
+![Native environment in Eclipse on Linux](images/ld-library-path-eclipse-linux.png)
+
 ### If using multilang, add multilang dir to classpath
 
 If you implement spouts or bolts in languages other than Java, then those implementations should be under the `multilang/resources/` directory of the project. For Storm to find these files in local mode, the `multilang/` dir needs to be on the classpath. You can do this in Eclipse by adding `multilang/` as a source folder.
