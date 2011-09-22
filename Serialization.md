@@ -2,11 +2,11 @@ Tuples can be comprised of objects of any types. Since Storm is a distributed sy
 
 ### Dynamic typing
 
-There are no type declarations for fields in a Tuple. You put objects in and Storm figures out the serialization dynamically. Before we get to the interface for serialization, let's spend a moment understanding why Storm's tuples are dynamically typed.
+There are no type declarations for fields in a Tuple. You put objects in fields and Storm figures out the serialization dynamically. Before we get to the interface for serialization, let's spend a moment understanding why Storm's tuples are dynamically typed.
 
 Adding static typing to tuple fields would add large amount of complexity to Storm's API. Hadoop, for example, statically types its keys and values but requires a huge amount of annotations on the part of the user. Hadoop's API is a burden to use and the "type safety" isn't worth it. Dynamic typing is simply easier to use.
 
-Further than that, it's not possible to statically type Storm's tuples in any reasonable way. Suppose a Bolt subscribes to multiple streams. The tuples from all those streams may have different types across the fields. When a Bolt receives a `Tuple` in `execute`, that tuple could have come from any stream and so could have any types. There might be some reflection magic you can do to declare a different method for every tuple stream a bolt subscribes to, but Storm opts for the simpler, straightforward approach of dynamic typing.
+Further than that, it's not possible to statically type Storm's tuples in any reasonable way. Suppose a Bolt subscribes to multiple streams. The tuples from all those streams may have different types across the fields. When a Bolt receives a `Tuple` in `execute`, that tuple could have come from any stream and so could have any combination of types. There might be some reflection magic you can do to declare a different method for every tuple stream a bolt subscribes to, but Storm opts for the simpler, straightforward approach of dynamic typing.
 
 Finally, another reason for using dynamic typing is so Storm can be used in a straightforward manner from dynamically typed languages like Clojure and JRuby.
 
@@ -28,13 +28,13 @@ public interface ISerialization<T> {
 }
 ```
 
-Storm uses the `accept` method to determine if a type can be serialized by this serializer. Remember, Storm's tuples are dynamically typed so Storm determines what serializer to use dynamically.
+Storm uses the `accept` method to determine if a type can be serialized by this serializer. Remember, Storm's tuples are dynamically typed so Storm determines what serializer to use at runtime.
 
 `serialize` writes the object out to the output stream in binary format. The field must be written in a way such that it can be deserialized later. For example, if you're writing out a list of objects, you'll need to write out the size of the list first so that you know how many elements to deserialize.
 
 `deserialize` reads the serialized object off of the stream and returns it.
 
-You can see the serialization implementations for the primitive types, strings, and byte arrays in the source for [SerializationFactory](https://github.com/nathanmarz/storm/blob/master/src/jvm/backtype/storm/serialization/SerializationFactory.java)
+You can see example serialization implementations in the source for [SerializationFactory](https://github.com/nathanmarz/storm/blob/master/src/jvm/backtype/storm/serialization/SerializationFactory.java)
 
 ### Registering a serializer
 
@@ -48,4 +48,4 @@ Instead, Storm requires you as a user to provide an identifier (the "token") tha
 
 Storm provides helpers for registering serializers in a topology config. The [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html) class has a method called `addSerialization` that takes in a token and a serializer class.
 
-There's an advanced config called Config.TOPOLOGY_SKIP_MISSING_SERIALIZATIONS. If you set this to true, Storm will ignore any serializations that are registered but do not have their code available on the classpath. Otherwise, Storm will throw errors when it can't find a serialization. This is useful if you run many topologies on a cluster that each have different serializations, but you want to declare all the serializations in the `storm.yaml` files.
+There's an advanced config called Config.TOPOLOGY_SKIP_MISSING_SERIALIZATIONS. If you set this to true, Storm will ignore any serializations that are registered but do not have their code available on the classpath. Otherwise, Storm will throw errors when it can't find a serialization. This is useful if you run many topologies on a cluster that each have different serializations, but you want to declare all the serializations across all topologies in the `storm.yaml` files.
