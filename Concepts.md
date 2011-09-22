@@ -120,7 +120,7 @@ The preference order for configuration values is defaults.yaml < storm.yaml < to
 
 **Resources:**
 
-* [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html): a listing of all configurations
+* [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html): a listing of all configurations as well as a helper class for creating topology specific configurations
 * [defaults.yaml](https://github.com/nathanmarz/storm/blob/master/conf/defaults.yaml): the default values for all configurations
 * [[Setting up a Storm cluster]]: explains how to create and configure a Storm cluster
 * [[Running topologies on a production cluster]]: lists useful configurations when running topologies on a cluster
