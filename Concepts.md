@@ -31,6 +31,7 @@ Every stream is given an id when declared. Since single-stream spouts and bolts 
 
 * [Tuple](http://nathanmarz.github.com/storm/doc/backtype/storm/tuple/Tuple.html): streams are composed of tuples
 * [OutputFieldsDeclarer](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/OutputFieldsDeclarer.html): used to declare streams and their schemas
+* [[Serialization]]: Information about Storm's dynamic typing of tuples and declaring custom serializations
 * [ISerialization](http://nathanmarz.github.com/storm/doc/backtype/storm/serialization/ISerialization.html): custom serializers must implement this interface
 * [CONFIG.TOPOLOGY_SERIALIZATIONS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_SERIALIZATIONS): custom serializers can be registered using this configuration
 
