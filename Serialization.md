@@ -36,7 +36,7 @@ Storm uses the `accept` method to determine if a type can be serialized by this 
 
 You can see example serialization implementations in the source for [SerializationFactory](https://github.com/nathanmarz/storm/blob/master/src/jvm/backtype/storm/serialization/SerializationFactory.java)
 
-### Registering a serializer
+#### Registering a serializer
 
 Once you create a serializer, you need to tell Storm it exists. This is done through the Storm configuration (See [[Concepts]] for information about how configuration works in Storm). You can register serializations either through the config given when submitting a topology or in the storm.yaml files across your cluster.
 
