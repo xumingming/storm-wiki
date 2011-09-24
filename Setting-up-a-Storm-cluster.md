@@ -29,6 +29,8 @@ Next you need to install Storm's dependencies on Nimbus and the worker machines.
 
 These are the versions of the dependencies that have been tested with Storm. Storm may or may not work with different versions of Java and/or Python.
 
+If you have trouble installing ZeroMQ or JZMQ, see [[Installing native dependencies]]. 
+
 ### Download and extract a Storm release to Nimbus and worker machines
 
 Next, download a Storm release and extract the zip file somewhere on Nimbus and each of the worker machines. The Storm releases can be downloaded [from here](http://github.com/nathanmarz/storm/downloads).
