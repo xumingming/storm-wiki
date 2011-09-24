@@ -46,6 +46,7 @@ To get the JZMQ build to work, you may need to do one or all of the following:
 1. Set JAVA_HOME environment variable appropriately
 2. Install Java dev package (more info [here](http://goo.gl/D8lI) for Mac OSX users)
 3. Upgrade autoconf on your machine
+4. Follow the instructions in [this blog post](http://blog.pmorelli.com/getting-zeromq-and-jzmq-running-on-mac-os-x)
 
 If you run into any errors when running `./configure`, [this thread](http://stackoverflow.com/questions/3522248/how-do-i-compile-jzmq-for-zeromq-on-osx) may provide a solution.
 
