@@ -37,6 +37,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 * [[Serialization]]
 * [[Common patterns]]
+* [[Clojure DSL]]
 * [[Using non-JVM languages with Storm]]
 * [[Distributed RPC]]
 * [[Direct groupings]]
