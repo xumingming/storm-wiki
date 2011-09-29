@@ -31,7 +31,7 @@ The maps of spout and bolt specs are maps from the component id to the correspon
 
 #### spout-spec
 
-`spout-spec` takes as arguments the spout implementation (an object that implements [IRichSpout](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichSpout.html)) and optional keyword arguments. The only existing option currently is the `:p` option, which specifies the parallelism for the spout. If you omit `:p`, the spout will execute as a single task.
+`spout-spec` takes as arguments the spout implementation (an object that implements [IRichSpout](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichSpout.html)) and optional keyword arguments. The only option that exists currently is the `:p` option, which specifies the parallelism for the spout. If you omit `:p`, the spout will execute as a single task.
 
 #### bolt-spec
 
