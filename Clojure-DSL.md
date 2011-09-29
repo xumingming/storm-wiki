@@ -3,8 +3,9 @@ Storm comes with a Clojure DSL for defining spouts, bolts, and topologies. The C
 This page outlines all the pieces of the Clojure DSL, including:
 
 1. Defining topologies
-2. defbolt
-3. defspout
+2. `defbolt`
+3. `defspout`
+4. Running topologies in local mode or on a cluster
 
 ### Defining topologies
 
@@ -247,7 +248,7 @@ The following example illustrates how to use this spout in a `spout-spec`:
             :p 2)
 ```
 
-### Submitting topologies
+### Running topologies in local mode or on a cluster
 
 That's all there is to the Clojure DSL. To submit topologies in remote mode or local mode, just use the `StormSubmitter` or `LocalCluster` classes just like you would from Java.
 
