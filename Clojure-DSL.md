@@ -1,4 +1,4 @@
-Storm comes with a Clojure DSL for defining spouts, bolts, and topologies. The Clojure DSL has access to everything the Java API exposes, so if you're a Clojure user you can code Storm topologies without touching Java at all. The Clojure DSL is defined in the source in the [backtype.storm.clojure](https://github.com/nathanmarz/storm/blob/master/src/clj/backtype/storm/clojure.clj) namespace.
+Storm comes with a Clojure DSL for defining spouts, bolts, and topologies. The Clojure DSL has access to everything the Java API exposes, so if you're a Clojure user you can code Storm topologies without touching Java at all. The Clojure DSL is defined in the source in the [backtype.storm.clojure](https://github.com/nathanmarz/storm/blob/0.5.3/src/clj/backtype/storm/clojure.clj) namespace.
 
 This page outlines all the pieces of the Clojure DSL, including:
 
@@ -182,6 +182,7 @@ This declares the output of the bolt as the fields ["word" "count"] on the defau
 Rather than use the Java methods on `OutputCollector` directly, the DSL provides a nicer set of functions for using `OutputCollector`: `emit-bolt!`, `ack!`, and `fail!`.
 
 1. `emit-bolt!`: takes as parameters the `OutputCollector`, the values to emit (a Clojure sequence), and keyword arguments for `:anchor` and `:stream`. `:anchor` can be a single tuple or a list of tuples, and `:stream` is the id of the stream to emit to. Omitting the keyword arguments emits an unanchored tuple to the default stream.
+2. `emit-direct-bolt!`: takes as parameters the `OutputCollector`, the task id to send the tuple to, the values to emit, and keyword arguments for `:anchor` and `:stream`. This function can only emit to streams declared as direct streams.
 2. `ack!`: takes as parameters the `OutputCollector` and the tuple to ack.
 3. `fail!`: takes as parameters the `OutputCollector` and the tuple to fail.
 
@@ -191,8 +192,68 @@ See [[Guaranteeing message processing]] for more info on acking and anchoring.
 
 ### defspout
 
-- can create storm topologies completely from clojure (has the full power of the java API)
-- defbolt and defspout for creating components
-- how to declare outputs, map or vector, direct-stream for declaring direct streams
-- parameterized components
-- prepared components
+`defspout` is used for defining spouts in Clojure. Like bolts, spouts must be serializable so you can't just reify `IRichSpout` to do spout implementations in Clojure. `defspout` works around this restriction and provides a nicer syntax for defining spouts than just implementing a Java interface.
+
+The signature for `defspout` looks like the following:
+
+(defspout _name_ _output-declaration_ *_option-map_ & _impl_)
+
+If you leave out the option map, it defaults to {:prepare true}. The output declaration for `defspout` has the same syntax as `defbolt`.
+
+Here's an example `defspout` implementation from [storm-starter](https://github.com/nathanmarz/storm-starter/blob/master/src/clj/storm/starter/clj/word_count.clj):
+
+```clojure
+(defspout sentence-spout ["sentence"]
+  [conf context collector]
+  (let [sentences ["a little brown dog"
+                   "the man petted the dog"
+                   "four score and seven years ago"
+                   "an apple a day keeps the doctor away"]]
+    (spout
+     (nextTuple []
+       (Thread/sleep 100)
+       (emit-spout! collector [(rand-nth sentences)])         
+       )
+     (ack [id]
+        ;; You only need to define this method for reliable spouts
+        ;; (such as one that reads off of a queue like Kestrel)
+        ;; This is an unreliable spout, so it does nothing here
+        ))))
+```
+
+The implementation takes in as input the topology config, `TopologyContext`, and `SpoutOutputCollector`. The implementation returns an `ISpout` object. Here, the `nextTuple` function emits a random sentence from `sentences`. 
+
+This spout isn't reliable, so the `ack` and `fail` methods will never be called. A reliable spout will add a message id when emitting tuples, and then `ack` or `fail` will be called when the tuple is completed or failed respectively.
+
+`emit-spout!` takes in as parameters the `SpoutOutputCollector` and the new tuple to be emitted, and accepts as keyword arguments `:stream` and `:id`. `:stream` specifies the stream to emit to, and `:id` specifies a message id for the tuple (used in the `ack` and `fail` callbacks). Omitting these arguments emits an unanchored tuple to the default output stream.
+
+There is also a `emit-direct-spout!` that emits a tuple to a direct stream and takes an additional argument of the task id to send the tuple to as the second parameter. 
+
+Spouts can be parameterized just like bolts, in which case the symbol is bound to a function returning `IRichSpout` instead of the `IRichSpout` itself. You can also declare an unprepared spout which only defines the `nextTuple` method. Here is an example of an unprepared spout that emits random sentences parameterized at runtime:
+
+```clojure
+(defspout sentence-spout-parameterized ["word"] {:params [sentences] :prepare false}
+  [collector]
+  (Thread/sleep 500)
+  (emit-spout! collector [(rand-nth sentences)]))
+```
+
+The following example illustrates how to use this spout in a `spout-spec`:
+
+```clojure
+(spout-spec (sentence-spout-parameterized
+                   ["the cat jumped over the door"
+                    "greetings from a faraway land"])
+            :p 2)
+```
+
+### Submitting topologies
+
+That's all there is to the Clojure DSL. To submit topologies in remote mode or local mode, just use the `StormSubmitter` or `LocalCluster` classes just like you would from Java.
+
+To create topology configs, it's easiest to use the `backtype.storm.config` namespace which defines constants for all of the possible configs. The constants are the same as the static constants in the `Config` class, except with dashes instead of underscores. For example, here's a topology config that sets the number of workers to 15 and configures the topology in debug mode:
+
+```clojure
+{TOPOLOGY-DEBUG true
+ TOPOLOGY-WORKERS 15}
+```
