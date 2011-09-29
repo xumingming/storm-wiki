@@ -64,9 +64,39 @@ Like `spout-spec`, the only current supported keyword argument for `bolt-spec` i
 
 #### shell-bolt-spec
 
+`shell-bolt-spec` is used for defining bolts that are implemented in a non-JVM language. It takes as arguments the input declaration, the command line program to run, the name of the file implementing the bolt, an output specification, and then the same keyword arguments that `bolt-spec` accepts.
+
+Here's an example `shell-bolt-spec`:
+
+```clojure
+(shell-bolt-spec {1 :shuffle 2 ["id"]}
+                 "python"
+                 "mybolt.py"
+                 ["outfield1" "outfield2"]
+                 :p 25)
+```
+
+The syntax of output declarations is described in more detail in the `defbolt` section below. See [[Using non JVM languages with Storm]] for more details on how multilang works within Storm.
 
 ### defbolt
 
+`defbolt` is used for defining bolts in Clojure. Bolts have the constraint that they must be serializable, and this is why you can't just reify `IRichBolt` to do bolt implementations in Clojure (closures aren't serializable). `defbolt` works around this restriction and provides a nicer syntax for defining bolts than just implementing a Java interface.
+
+At its fullest expressiveness, `defbolt` supports parameterized bolts and maintaining state in a closure around the bolt implementation. It also provides shortcuts for defining bolts that don't need this extra functionality. The signature for `defbolt` looks like the following:
+
+(defbolt _name_ _output declaration_ *_option map_ & _impl_)
+
+
+Let's start with the simplest form of bolt:
+
+```clojure
+(defbolt split-sentence ["word"] [tuple collector]
+  (let [words (.split (.getString tuple 0) " ")]
+    (doseq [w words]
+      (emit-bolt! collector [w] :anchor tuple))
+    (ack! collector tuple)
+    ))
+```
 
 ### defspout
 
@@ -75,4 +105,3 @@ Like `spout-spec`, the only current supported keyword argument for `bolt-spec` i
 - how to declare outputs, map or vector, direct-stream for declaring direct streams
 - parameterized components
 - prepared components
-
