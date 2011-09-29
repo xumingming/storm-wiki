@@ -28,7 +28,7 @@ Let's take a look at an example topology definition [from the storm-starter proj
                :p 6)})
 ```
 
-The maps of spout and bolt specs are maps from the component id to the corresponding spec. The component ids must be unique across the maps. Just like defining topologies in Java, component ids are used to declare inputs for bolts in the topology.
+The maps of spout and bolt specs are maps from the component id to the corresponding spec. The component ids must be unique across the maps. Just like defining topologies in Java, component ids are used when declaring inputs for bolts in the topology.
 
 #### spout-spec
 
@@ -43,10 +43,10 @@ The input declaration is a map from stream ids to stream groupings. A stream id 
 1. `[==component id== ==stream id==]`: Subscribes to a specific stream on a component
 2. `==component id==`: Subscribes to the default stream on a component
 
-The value indicates a stream grouping, and can be one of the following:
+A stream grouping can be one of the following:
 
 1. `:shuffle`: subscribes with a shuffle grouping
-2. Vector of field names, like `["id" "name"]`: subscribes with a fields grouping with the specified fields
+2. Vector of field names, like `["id" "name"]`: subscribes with a fields grouping on the specified fields
 3. `:global`: subscribes with a global grouping
 4. `:all`: subscribes with an all grouping
 5. `:direct`: subscribes with a direct grouping
@@ -81,18 +81,17 @@ The syntax of output declarations is described in more detail in the `defbolt` s
 
 ### defbolt
 
-`defbolt` is used for defining bolts in Clojure. Bolts have the constraint that they must be serializable, and this is why you can't just reify `IRichBolt` to do bolt implementations in Clojure (closures aren't serializable). `defbolt` works around this restriction and provides a nicer syntax for defining bolts than just implementing a Java interface.
+`defbolt` is used for defining bolts in Clojure. Bolts have the constraint that they must be serializable, and this is why you can't just reify `IRichBolt` to implement a bolt (closures aren't serializable). `defbolt` works around this restriction and provides a nicer syntax for defining bolts than just implementing a Java interface.
 
 At its fullest expressiveness, `defbolt` supports parameterized bolts and maintaining state in a closure around the bolt implementation. It also provides shortcuts for defining bolts that don't need this extra functionality. The signature for `defbolt` looks like the following:
 
 (defbolt _name_ _output-declaration_ *_option-map_ & _impl_)
 
-
 Omitting the option map is equivalent to having an option map of `{:prepare false}`.
 
 #### Simple bolts
 
-Let's start with the simplest form of `defbolt`, a bolt that splits a tuple containing a sentence into a tuple for each word:
+Let's start with the simplest form of `defbolt`. Here's an example bolt that splits a tuple containing a sentence into a tuple for each word:
 
 ```clojure
 (defbolt split-sentence ["word"] [tuple collector]
@@ -103,9 +102,9 @@ Let's start with the simplest form of `defbolt`, a bolt that splits a tuple cont
     ))
 ```
 
-Since the option map is omitted, this is a non-prepared bolt. The DSL simply expects an implementation for the `execute` method of `IRichBolt`. The implementation takes two parameters, the tuple and the `OutputCollector`, and this is followed by the implementation. The DSL automatically type-hints the parameters, so you don't need to worry about reflection.
+Since the option map is omitted, this is a non-prepared bolt. The DSL simply expects an implementation for the `execute` method of `IRichBolt`. The implementation takes two parameters, the tuple and the `OutputCollector`, and is followed by the body of the `execute` function. The DSL automatically type-hints the parameters for you so you don't need to worry about reflection if you use Java interop.
 
-This implementation will bind `split-sentence` to an actual `IRichBolt` that you can use in topologies, like so:
+This implementation binds `split-sentence` to an actual `IRichBolt` object that you can use in topologies, like so:
 
 ```clojure
 (bolt-spec {1 :shuffle}
@@ -116,7 +115,7 @@ This implementation will bind `split-sentence` to an actual `IRichBolt` that you
 
 #### Parameterized bolts
 
-Many times, however, you want to parameterize your bolts with other arguments. For example, let's say you wanted to have a bolt that appends a suffix to every input string it receives, and you want that suffix to be set at runtime. You do this with `defbolt` by including a `:params` option in the option map, like so:
+Many times you want to parameterize your bolts with other arguments. For example, let's say you wanted to have a bolt that appends a suffix to every input string it receives, and you want that suffix to be set at runtime. You do this with `defbolt` by including a `:params` option in the option map, like so:
 
 ```clojure
 (defbolt suffix-appender ["word"] {:params [suffix]}
@@ -125,7 +124,7 @@ Many times, however, you want to parameterize your bolts with other arguments. F
   )
 ```
 
-Unlike the previous example, `suffix-appender` will be bound to a function that returns an `IRichBolt`. This is due to it using `:params` in its option map. So to use `suffix-appender` in a topology, you would do something like:
+Unlike the previous example, `suffix-appender` will be bound to a function that returns an `IRichBolt` rather than be an `IRichBolt` object directly. This is caused by specifying `:params` in its option map. So to use `suffix-appender` in a topology, you would do something like:
 
 ```clojure
 (bolt-spec {1 :shuffle}
@@ -135,7 +134,7 @@ Unlike the previous example, `suffix-appender` will be bound to a function that 
 
 #### Prepared bolts
 
-To do more complex bolts, such as ones that do joins and streaming aggregations, the bolt will need to store state. You can do this by creating a prepared bolt which is specified by including `{:prepare true}` in the option map. Consider, for example, this bolt that implements word counting:
+To do more complex bolts, such as ones that do joins and streaming aggregations, the bolt needs to store state. You can do this by creating a prepared bolt which is specified by including `{:prepare true}` in the option map. Consider, for example, this bolt that implements word counting:
 
 ```clojure
 (defbolt word-count ["word" "count"] {:prepare true}
@@ -150,9 +149,9 @@ To do more complex bolts, such as ones that do joins and streaming aggregations,
          )))))
 ```
 
-The implementation for a prepared bolt is a function that takes as input the topology config, `TopologyContext`, and `OutputCollector`, and returns an implementation of the `IBolt` interface. This design allows you to have a closure around the implementation of `execute` and `cleanup` which is exactly what you want. 
+The implementation for a prepared bolt is a function that takes as input the topology config, `TopologyContext`, and `OutputCollector`, and returns an implementation of the `IBolt` interface. This design allows you to have a closure around the implementation of `execute` and `cleanup`. 
 
-In this example, the word counts are stored in the closure in a map called `counts`. The `bolt` macro is used to create the `IBolt` implementation. The `bolt` macro is a more concise way to implement the interface, and it automatically type-hints all of the method parameters. This bolt implements the execute method which updates the count in the map and emits the new word count.
+In this example, the word counts are stored in the closure in a map called `counts`. The `bolt` macro is used to create the `IBolt` implementation. The `bolt` macro is a more concise way to implement the interface than reifying, and it automatically type-hints all of the method parameters. This bolt implements the execute method which updates the count in the map and emits the new word count.
 
 Note that the `execute` method in prepared bolts only takes as input the tuple since the `OutputCollector` is already in the closure of the function (for simple bolts the collector is a second parameter to the `execute` function).
 
@@ -175,21 +174,18 @@ If the bolt only has one output stream, you can define the default stream of the
 ```clojure
 ["word" "count"]
 ```
-
 This declares the output of the bolt as the fields ["word" "count"] on the default stream id.
 
 #### Emitting, acking, and failing
 
-Rather than use the Java methods on `OutputCollector` directly, the DSL provides a nicer set of functions for using `OutputCollector`: `emit-bolt!`, `ack!`, and `fail!`.
+Rather than use the Java methods on `OutputCollector` directly, the DSL provides a nicer set of functions for using `OutputCollector`: `emit-bolt!`, `emit-direct-bolt!`, `ack!`, and `fail!`.
 
 1. `emit-bolt!`: takes as parameters the `OutputCollector`, the values to emit (a Clojure sequence), and keyword arguments for `:anchor` and `:stream`. `:anchor` can be a single tuple or a list of tuples, and `:stream` is the id of the stream to emit to. Omitting the keyword arguments emits an unanchored tuple to the default stream.
 2. `emit-direct-bolt!`: takes as parameters the `OutputCollector`, the task id to send the tuple to, the values to emit, and keyword arguments for `:anchor` and `:stream`. This function can only emit to streams declared as direct streams.
 2. `ack!`: takes as parameters the `OutputCollector` and the tuple to ack.
 3. `fail!`: takes as parameters the `OutputCollector` and the tuple to fail.
 
-
 See [[Guaranteeing message processing]] for more info on acking and anchoring.
-
 
 ### defspout
 
@@ -224,11 +220,11 @@ Here's an example `defspout` implementation from [storm-starter](https://github.
 
 The implementation takes in as input the topology config, `TopologyContext`, and `SpoutOutputCollector`. The implementation returns an `ISpout` object. Here, the `nextTuple` function emits a random sentence from `sentences`. 
 
-This spout isn't reliable, so the `ack` and `fail` methods will never be called. A reliable spout will add a message id when emitting tuples, and then `ack` or `fail` will be called when the tuple is completed or failed respectively.
+This spout isn't reliable, so the `ack` and `fail` methods will never be called. A reliable spout will add a message id when emitting tuples, and then `ack` or `fail` will be called when the tuple is completed or failed respectively. See [[Guaranteeing message processing]] for more info on how reliability works within Storm.
 
 `emit-spout!` takes in as parameters the `SpoutOutputCollector` and the new tuple to be emitted, and accepts as keyword arguments `:stream` and `:id`. `:stream` specifies the stream to emit to, and `:id` specifies a message id for the tuple (used in the `ack` and `fail` callbacks). Omitting these arguments emits an unanchored tuple to the default output stream.
 
-There is also a `emit-direct-spout!` that emits a tuple to a direct stream and takes an additional argument of the task id to send the tuple to as the second parameter. 
+There is also a `emit-direct-spout!` function that emits a tuple to a direct stream and takes an additional argument as the second parameter of the task id to send the tuple to.
 
 Spouts can be parameterized just like bolts, in which case the symbol is bound to a function returning `IRichSpout` instead of the `IRichSpout` itself. You can also declare an unprepared spout which only defines the `nextTuple` method. Here is an example of an unprepared spout that emits random sentences parameterized at runtime:
 
