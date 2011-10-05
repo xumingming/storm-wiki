@@ -11,7 +11,28 @@ conf.setMaxSpoutPending(5000);
 StormSubmitter.submitTopology("mytopology", conf, topology);
 ```
 
-3) Create a jar containing your code and all the dependencies of your code (except for Storm -- the Storm jars will be added to the classpath on the worker nodes). Submit the topology to the cluster using the `storm` client like so:
+3) Create a jar containing your code and all the dependencies of your code (except for Storm -- the Storm jars will be added to the classpath on the worker nodes).
+
+If you're using Maven, the [Maven Assembly Plugin](http://maven.apache.org/plugins/maven-assembly-plugin/) can do the packaging for you. Just add this to your pom.xml:
+
+```xml
+  <plugin>
+    <artifactId>maven-assembly-plugin</artifactId>
+    <configuration>
+      <descriptorRefs>  
+        <descriptorRef>jar-with-dependencies</descriptorRef>
+      </descriptorRefs>
+      <archive>
+        <manifest>
+          <mainClass>com.path.to.main.Class</mainClass>
+        </manifest>
+      </archive>
+    </configuration>
+  </plugin>
+```
+Then run mvn assembly:assembly to get an appropriately packaged jar. Make sure you [exclude](http://maven.apache.org/plugins/maven-assembly-plugin/examples/single/including-and-excluding-artifacts.html) the Storm jars since the cluster already has Storm on the classpath.
+
+4) Submit the topology to the cluster using the `storm` client like so:
 
 `storm jar allmycode.jar org.me.MyTopology arg1 arg2 arg3`
 
