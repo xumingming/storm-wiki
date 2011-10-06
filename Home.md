@@ -15,8 +15,11 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 ### Related projects
 
+* [storm-deploy](http://github.com/nathanmarz/storm-deploy): One click deploys for Storm clusters on AWS\
 * [storm-kestrel](https://github.com/nathanmarz/storm-kestrel): Adapter to use Kestrel as a spout within Storm topologies
-* [storm-deploy](http://github.com/nathanmarz/storm-deploy): One click deploys for Storm clusters on AWS
+* [storm-amqp-spout](https://github.com/rapportive-oss/storm-amqp-spout): Adapter to use AMQP source as a spout within Storm topologies
+* [io-storm](https://github.com/gphat/io-storm): Perl support for Storm
+* [storm-json](https://github.com/rapportive-oss/storm-json): Simple JSON serializer for Storm
 
 ### Documentation
 
