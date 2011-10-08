@@ -1,4 +1,4 @@
-Local mode simulates a Storm cluster in process and is useful for developing and testing topologies. Running topologies in local mode is similar to running topologies [on a cluster](https://github.com/nathanmarz/storm/wiki/Running-topologies-on-a-production-cluster). Note that installing a Storm release locally is only for interacting with remote clusters. For developing and testing topologies in local mode, it is recommended that you use Maven to include Storm as a dev dependency for your project. You can read more about using Maven for this purpose on Maven.
+Local mode simulates a Storm cluster in process and is useful for developing and testing topologies. Running topologies in local mode is similar to running topologies [on a cluster](https://github.com/nathanmarz/storm/wiki/Running-topologies-on-a-production-cluster). 
 
 To create an in-process cluster, simply use the `LocalCluster` class. For example:
 
