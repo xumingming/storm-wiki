@@ -43,6 +43,7 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 * STDOUT: Your PID. This is not JSON encoded, just a string. ShellBolt will log the PID to its log.
 * STDIN: (JSON) The Storm configuration.  Various settings and properties.
 * STDIN: (JSON) The Topology context
+* The rest happens in a while(true) loop
 * STDIN: A tuple! This is a JSON encoded structure like this:
 ```
 {
