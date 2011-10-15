@@ -44,6 +44,7 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 * STDIN: (JSON) The Storm configuration.  Various settings and properties.
 * STDIN: (JSON) The Topology context
 * STDIN: A tuple! This is a JSON encoded structure like this:
+```
 {
     // The tuple's id
 	"id": -6955786537413359385,
@@ -56,7 +57,9 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 	// All the values in this tuple
 	"tuple": ["snow white and the seven dwarfs", "field2", 3]
 }
+```
 * STDOUT: The results of your bolt, JSON encoded. This can be a sequence of acks, fails, emits, and/or logs. Emits look like:
+```
 {
 	"command": "emit",
 	// The ids of the tuples this output tuples should be anchored to
@@ -68,28 +71,34 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 	// All the values in this tuple
 	"tuple": ["field1", 2, 3]
 }
-
+```
 An ack looks like:
+```
 {
 	"command": "ack",
 	// the id of the tuple to ack
 	"id": 123123
 }
+```
 
 An fail looks like:
+```
 {
 	"command": "fail",
 	// the id of the tuple to fail
 	"id": 123123
 }
+```
 
 A "log" will log a message in the worker log. It looks like:
+```
 {
 	"command": "log",
 	// the message to log
 	"msg": "hello world!"
 
 }
+```
 * STDOUT: emit "sync" as a single line by itself when the bolt has finished emitting/acking/failing and is ready for the next input
 
 ### sync
