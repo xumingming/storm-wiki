@@ -44,3 +44,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[Using non-JVM languages with Storm]]
 * [[Distributed RPC]]
 * [[Direct groupings]]
+
+#### Advanced
+
+* [[Multilang protocol]] (how to provide support for another language)
