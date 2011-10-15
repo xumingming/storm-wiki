@@ -9,7 +9,7 @@ executing a script or program via the shell using Java's ProcessBuilder class.
 ## Output fields
 
 Output fields are part of the Thrift definition of the topology. This means that when you multilang in Java, you need to create a bolt that extends ShellBolt, implements IRichBolt, and declared the fields in `declareOutputFields`. 
-You can learn more about this on [Concepts]
+You can learn more about this on [[Concepts]]
 
 ## Protocol Preamble
 
