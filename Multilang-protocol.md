@@ -80,8 +80,7 @@ An ack looks like:
 	"id": 123123
 }
 ```
-
-An fail looks like:
+A fail looks like:
 ```
 {
 	"command": "fail",
@@ -89,7 +88,6 @@ An fail looks like:
 	"id": 123123
 }
 ```
-
 A "log" will log a message in the worker log. It looks like:
 ```
 {
@@ -106,10 +104,3 @@ A "log" will log a message in the worker log. It looks like:
 Note: This command is not JSON encoded, it is sent as a simple string.
 
 This lets the parent bolt know that the script has finished processing and is ready for another tuple.
-
-
-
-### log
-
-The command allows you to send information back to Storm for logging. This
-has nothing to do with tuple processing and is purely informational.
