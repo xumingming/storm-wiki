@@ -15,7 +15,7 @@ To set up the classpath in Eclipse, create a new Java project, include `src/jvm/
 
 ### If using multilang, add multilang dir to classpath
 
-If you implement spouts or bolts in languages other than Java, then those implementations should be under the `multilang/resources/` directory of the project. For Storm to find these files in local mode, the `multilang/` dir needs to be on the classpath. You can do this in Eclipse by adding `multilang/` as a source folder.
+If you implement spouts or bolts in languages other than Java, then those implementations should be under the `multilang/resources/` directory of the project. For Storm to find these files in local mode, the `resources/` dir needs to be on the classpath. You can do this in Eclipse by adding `multilang/` as a source folder. You may also need to add multilang/resources as a source directory.
 
 For more information on writing topologies in other languages, see [[Using non-JVM languages with Storm]].
 
