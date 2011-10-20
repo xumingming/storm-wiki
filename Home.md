@@ -32,6 +32,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 #### Setup and deploying
 
 * [[Setting up a Storm cluster]]
+* [[Upgrading an existing Storm cluster]]
 * [[Running topologies on a production cluster]]
 * [[Local mode]]
 * [[Maven]]
