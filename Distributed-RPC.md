@@ -1,4 +1,4 @@
-The idea behind distributed RPC (DRPC) is to implement a function as a Storm topology. Doing so lets you compute an intense function quickly by parallelizing it on Storm. The Storm topology takes in as input a stream of function arguments, and it emits an output stream of the results for each of those function calls. 
+The idea behind distributed RPC (DRPC) is to parallelize the computation of really intense functions on the fly using Storm. The Storm topology takes in as input a stream of function arguments, and it emits an output stream of the results for each of those function calls. 
 
 DRPC is not so much a feature of Storm as it is a pattern expressed from Storm's primitives of streams, spouts, bolts, and topologies. DRPC could have been packaged as a separate library from Storm, but it's so useful that it's bundled with Storm.
 
