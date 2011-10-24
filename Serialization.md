@@ -40,12 +40,8 @@ You can see example serialization implementations in the source for [Serializati
 
 Once you create a serializer, you need to tell Storm it exists. This is done through the Storm configuration (See [[Concepts]] for information about how configuration works in Storm). You can register serializations either through the config given when submitting a topology or in the storm.yaml files across your cluster.
 
-Serializer registrations are done through the Config.TOPOLOGY_SERIALIZATIONS config and are a map from a unique token id and class name. Let's start with the token id, as it's a common point of confusion.
+Serializer registrations are done through the Config.TOPOLOGY_SERIALIZATIONS config and is simply a list of serialization class names.
 
-To identify fields in a tuple so that they can be deserialized, Storm needs to annotate each field with its type information. The simplest thing Storm could do is write out the classname, but this would cause a huge amount of overhead at runtime. High-performance serialization is critical to Storm's performance, so writing the classname for every field is unacceptable.
-
-Instead, Storm requires you as a user to provide an identifier (the "token") that Storm can use to identify tuples on the wire. The token must be an integer greater than 32 (token values 32 and smaller are reserved by Storm). This small burden that Storm places on you has major performance benefits. And you only have to do it once per serializer if you register the serializers in your `storm.yaml` files.
-
-Storm provides helpers for registering serializers in a topology config. The [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html) class has a method called `addSerialization` that takes in a token and a serializer class.
+Storm provides helpers for registering serializers in a topology config. The [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html) class has a method called `addSerialization` that takes in a serializer class to add to the config.
 
 There's an advanced config called Config.TOPOLOGY_SKIP_MISSING_SERIALIZATIONS. If you set this to true, Storm will ignore any serializations that are registered but do not have their code available on the classpath. Otherwise, Storm will throw errors when it can't find a serialization. This is useful if you run many topologies on a cluster that each have different serializations, but you want to declare all the serializations across all topologies in the `storm.yaml` files.
