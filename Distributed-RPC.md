@@ -6,7 +6,7 @@ DRPC is not so much a feature of Storm as it is a pattern expressed from Storm's
 
 Distributed RPC is coordinated by a "DRPC server" (Storm comes packaged with an implementation of this). The DRPC server coordinates receiving an RPC request, sending the request to the Storm topology, receiving the results from the Storm topology, and sending the results back to the waiting client. From a client's perspective, a distributed RPC call looks just like a regular RPC call. For example, here's how a client would compute the results for the "reach" function with the argument "http://twitter.com":
 
-```
+```java
 DRPCClient client = new DRPCClient("drpc-host", 3772);
 String result = client.execute("reach", "http://twitter.com");
 ```
@@ -27,7 +27,7 @@ Storm comes with a topology builder called [LinearDRPCTopologyBuilder](http://na
 
 Let's look at a simple example. Here's the implementation of a DRPC topology that returns its input argument with a "!" appended:
 
-```
+```java
 public static class ExclaimBolt implements IBasicBolt {
     public void prepare(Map conf, TopologyContext context) {
     }
@@ -55,13 +55,13 @@ public static void main(String[] args) throws Exception {
 
 As you can see, there's very little to it. When creating the `LinearDRPCTopologyBuilder`, you tell it the name of the DRPC function for the topology. A single DRPC server can coordinate many functions, and the function name distinguishes the functions from one another. The first bolt you declare will take in as input 2-tuples, where the first field is the request id and the second field is the arguments for that request. `LinearDRPCTopologyBuilder` expects the last bolt to emit an output stream containing 2-tuples of the form [id, result]. Finally, all intermediate tuples must contain the request id as the first field.
 
-In this example, ExclaimBolt simply appends a "!" to the second field of the tuple. `LinearDRPCTopologyBuilder` handles the rest of the coordination of the topology of connecting to the DRPC server and sending results back.
+In this example, `ExclaimBolt` simply appends a "!" to the second field of the tuple. `LinearDRPCTopologyBuilder` handles the rest of the coordination of the topology of connecting to the DRPC server and sending results back.
 
 ### Local mode DRPC
 
 DRPC can be run in local mode. Here's how to run the above example in local mode:
 
-```
+```java
 LocalDRPC drpc = new LocalDRPC();
 LocalCluster cluster = new LocalCluster();
 
@@ -85,7 +85,7 @@ Using DRPC on an actual cluster is also straightforward. There's three steps:
 2. Configure the locations of the DRPC servers
 3. Submit DRPC topologies to Storm cluster
 
-Launching a DRPC server can be done with the `storm` script and is just like launching nimbus or the UI:
+Launching a DRPC server can be done with the `storm` script and is just like launching Nimbus or the UI:
 
 ```
 bin/storm drpc
@@ -93,7 +93,7 @@ bin/storm drpc
 
 Next, you need to configure your Storm cluster to know the locations of the DRPC server(s). This is how `DRPCSpout` knows from where to read function invocations. This can be done through the `storm.yaml` file or the topology configurations. Configuring this through the `storm.yaml` looks something like this:
 
-```
+```yaml
 drpc.servers:
   - "drpc1.foo.com"
   - "drpc2.foo.com"
@@ -101,7 +101,7 @@ drpc.servers:
 
 Finally, you launch DRPC topologies using `StormSubmitter` just like you launch any other topology. To run the above example in remote mode, you do something like this:
 
-```
+```java
 StormSubmitter.submitTopology("exclamation-drpc", conf, builder.createRemoteTopology());
 ```
 
@@ -122,7 +122,7 @@ A single reach computation can involve thousands of database calls and tens of m
 
 A sample reach topology is defined in storm-starter [here](https://github.com/nathanmarz/storm-starter/blob/master/src/jvm/storm/starter/ReachTopology.java). Here's how you define the reach topology:
 
-```
+```java
 LinearDRPCTopologyBuilder builder = new LinearDRPCTopologyBuilder("reach");
 builder.addBolt(new GetTweeters(), 3);
 builder.addBolt(new GetFollowers(), 12)
@@ -142,7 +142,7 @@ The topology executes as four steps:
 
 Let's take a look at the `PartialUniquer` bolt:
 
-```
+```java
 public static class PartialUniquer implements IRichBolt, FinishedCallback {
     OutputCollector _collector;
     Map<Object, Set<String>> _sets = new HashMap<Object, Set<String>>();
