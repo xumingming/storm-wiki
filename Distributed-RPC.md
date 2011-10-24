@@ -1,4 +1,4 @@
-The idea behind distributed RPC (DRPC) is to implement a function as a Storm topology. The Storm topology takes in as input a stream of function arguments, and it emits an output stream of the results for each of those function calls. 
+The idea behind distributed RPC (DRPC) is to implement a function as a Storm topology. Doing so lets you compute an intense function quickly by parallelizing it on Storm. The Storm topology takes in as input a stream of function arguments, and it emits an output stream of the results for each of those function calls. 
 
 DRPC is not so much a feature of Storm as it is a pattern expressed from Storm's primitives of streams, spouts, bolts, and topologies. DRPC could have been packaged as a separate library from Storm, but it's so useful that it's bundled with Storm.
 
@@ -55,7 +55,7 @@ public static void main(String[] args) throws Exception {
 
 As you can see, there's very little to it. When creating the `LinearDRPCTopologyBuilder`, you tell it the name of the DRPC function for the topology. A single DRPC server can coordinate many functions, and the function name distinguishes the functions from one another. The first bolt you declare will take in as input 2-tuples, where the first field is the request id and the second field is the arguments for that request. `LinearDRPCTopologyBuilder` expects the last bolt to emit an output stream containing 2-tuples of the form [id, result]. Finally, all intermediate tuples must contain the request id as the first field.
 
-In this example, `ExclaimBolt` simply appends a "!" to the second field of the tuple. `LinearDRPCTopologyBuilder` handles the rest of the coordination of the topology of connecting to the DRPC server and sending results back.
+In this example, `ExclaimBolt` simply appends a "!" to the second field of the tuple. `LinearDRPCTopologyBuilder` handles the rest of the coordination of connecting to the DRPC server and sending results back.
 
 ### Local mode DRPC
 
@@ -73,7 +73,7 @@ cluster.shutdown();
 drpc.shutdown();
 ```
 
-First you create a `LocalDRPC` object. This object simulates a DRPC server in process, just like how `LocalCluster` simulates a Storm cluster in process. Then you create the `LocalCluster` to run the topology on and submit the topology. `LinearDRPCTopologyBuilder` has separate methods for creating local topologies and remote topologies. In local mode the `LocalDRPC` object does not bind to any ports so the topology needs to know about the object to communicate with it. This is why `createLocalTopology` takes in the `LocalDRPC` object as input.
+First you create a `LocalDRPC` object. This object simulates a DRPC server in process, just like how `LocalCluster` simulates a Storm cluster in process. Then you create the `LocalCluster` to run the topology in local mode. `LinearDRPCTopologyBuilder` has separate methods for creating local topologies and remote topologies. In local mode the `LocalDRPC` object does not bind to any ports so the topology needs to know about the object to communicate with it. This is why `createLocalTopology` takes in the `LocalDRPC` object as input.
 
 After launching the topology, you can do DRPC invocations using the `execute` method on `LocalDRPC`.
 
