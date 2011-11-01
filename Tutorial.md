@@ -52,7 +52,7 @@ A topology runs forever, or until you kill it. Storm will automatically reassign
 
 ## Data model
 
-Storm uses tuples as its data model. A tuple is a named list of values, and a field in a tuple can be an object of any type. Out of the box, Storm supports all the primitive types, strings, and byte arrays as tuple field values. To use an object of another type, you just need to implement [a serializer](http://nathanmarz.github.com/storm/doc/backtype/storm/serialization/ISerialization.html) for the type.
+Storm uses tuples as its data model. A tuple is a named list of values, and a field in a tuple can be an object of any type. Out of the box, Storm supports all the primitive types, strings, and byte arrays as tuple field values. To use an object of another type, you just need to implement [a serializer](https://github.com/nathanmarz/storm/wiki/Serialization) for the type.
 
 Every node in a topology must declare the output fields for the tuples it emits. For example, this bolt declares that it emits 2-tuples with the fields "double" and "triple":
 
