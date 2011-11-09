@@ -1,0 +1,2 @@
+- contributions to storm codebase should be sent as github pull requests
+- modules built on top of Storm (like spouts, bolts, etc) can be done as your own project, or as part of storm-contrib. To be part of storm-contrib just send an email to the mailing list proposing to add your module to storm-contrib
