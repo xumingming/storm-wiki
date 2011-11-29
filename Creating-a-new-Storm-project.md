@@ -11,7 +11,7 @@ You'll need the Storm jars on your classpath to develop Storm topologies. Using 
 
 [storm-starter](http://github.com/nathanmarz/storm-starter) uses [Leiningen](http://github.com/technomancy/leiningen) for build and dependency resolution. You can install leiningen by downloading [this script](https://raw.github.com/technomancy/leiningen/stable/bin/lein), placing it on your path, and making it executable. To retrieve the dependencies for Storm, simply run `lein deps` in the project root.
 
-To set up the classpath in Eclipse, create a new Java project, include `src/jvm/` as a source path, and make sure all the jars in `lib/` and `lib/jvm/` are in the `Referenced Libraries` section of the project.
+To set up the classpath in Eclipse, create a new Java project, include `src/jvm/` as a source path, and make sure all the jars in `lib/` and `lib/dev/` are in the `Referenced Libraries` section of the project.
 
 ### If using multilang, add multilang dir to classpath
 
