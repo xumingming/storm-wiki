@@ -7,7 +7,7 @@ Follow along to see how to set up the [storm-starter](http://github.com/nathanma
 
 ### Add Storm jars to classpath
 
-You'll need the Storm jars on your classpath to develop Storm topologies. Using [[Maven]] is highly recommended. [Here's an example](https://github.com/BertrandDechoux/storm-starter/tree/java) of how to setup your pom.xml for a Storm project. If you don't want to use Maven, you can include the jars from the Storm release on your classpath. 
+You'll need the Storm jars on your classpath to develop Storm topologies. Using [[Maven]] is highly recommended. [Here's an example](https://github.com/nathanmarz/storm-starter/blob/master/m2-pom.xml) of how to setup your pom.xml for a Storm project. If you don't want to use Maven, you can include the jars from the Storm release on your classpath. 
 
 [storm-starter](http://github.com/nathanmarz/storm-starter) uses [Leiningen](http://github.com/technomancy/leiningen) for build and dependency resolution. You can install leiningen by downloading [this script](https://raw.github.com/technomancy/leiningen/stable/bin/lein), placing it on your path, and making it executable. To retrieve the dependencies for Storm, simply run `lein deps` in the project root.
 
