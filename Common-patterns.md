@@ -15,10 +15,10 @@ A streaming join combines two or more data streams together based on some common
 The join type you need will vary per application. Some applications join all tuples for two streams over a finite window of time, whereas other applications expect exactly one tuple for each side of the join for each join field. Other applications may do the join completely differently. The common pattern among all these join types is partitioning multiple input streams in the same way. This is easily accomplished in Storm by using a fields grouping on the same fields for many input streams to the joiner bolt. For example:
 
 ```java
-builder.setBolt(5, new MyJoiner(), parallelism)
-  .fieldsGrouping(1, new Fields("joinfield1", "joinfield2"))
-  .fieldsGrouping(2, new Fields("joinfield1", "joinfield2"))
-  .fieldsGrouping(3, new Fields("joinfield1", "joinfield2"));
+builder.setBolt("join", new MyJoiner(), parallelism)
+  .fieldsGrouping("1", new Fields("joinfield1", "joinfield2"))
+  .fieldsGrouping("2", new Fields("joinfield1", "joinfield2"))
+  .fieldsGrouping("3", new Fields("joinfield1", "joinfield2"));
 ```
 
 The different streams don't have to have the same field names, of course.
@@ -37,16 +37,16 @@ Many bolts follow a similar pattern of reading an input tuple, emitting zero or 
 
 ### In-memory caching + fields grouping combo
 
-It's common to keep caches in-memory in Storm bolts. Caching becomes particularly powerful when you combine it with a fields grouping. For example, suppose you have a bolt that expands short URLs (like bit.ly, t.co, etc.) into long URLs. You can increase performance by keeping an LRU cache of short URL to long URL expansions to avoid doing the same HTTP requests over and over. Suppose component 1 emits short URLS, and component 2 expands short URLs into long URLs and keeps a cache internally. Consider the difference between the two following snippets of code:
+It's common to keep caches in-memory in Storm bolts. Caching becomes particularly powerful when you combine it with a fields grouping. For example, suppose you have a bolt that expands short URLs (like bit.ly, t.co, etc.) into long URLs. You can increase performance by keeping an LRU cache of short URL to long URL expansions to avoid doing the same HTTP requests over and over. Suppose component "urls" emits short URLS, and component "expand" expands short URLs into long URLs and keeps a cache internally. Consider the difference between the two following snippets of code:
 
 ```java
-builder.setBolt(2, new ExpandUrl(), parallelism)
+builder.setBolt("expand", new ExpandUrl(), parallelism)
   .shuffleGrouping(1);
 ```
 
 ```java
-builder.setBolt(2, new ExpandUrl(), parallelism)
-  .fieldsGrouping(1, new Fields("url"));
+builder.setBolt("expand", new ExpandUrl(), parallelism)
+  .fieldsGrouping("urls", new Fields("url"));
 ```
 
 The second approach will have vastly more effective caches, since the same URL will always go to the same task. This avoids having duplication across any of the caches in the tasks and makes it much more likely that a short URL will hit the cache.
@@ -58,10 +58,10 @@ A common continuous computation done on Storm is a "streaming top N" of some sor
 This approach obviously doesn't scale to large streams since the entire stream has to go through one task. A better way to do the computation is to do many top N's in parallel across partitions of the stream, and then merge those top N's together to get the global top N. The pattern looks like this:
 
 ```java
-builder.setBolt(2, new RankObjects(), parallellism)
-  .fieldsGrouping(1, new Fields("value"));
-builder.setBolt(3, new MergeObjects())
-  .globalGrouping(2);
+builder.setBolt("rank", new RankObjects(), parallellism)
+  .fieldsGrouping("objects", new Fields("value"));
+builder.setBolt("merge", new MergeObjects())
+  .globalGrouping("rank");
 ```
 
 This pattern works because of the fields grouping done by the first bolt which gives the partitioning you need for this to be semantically correct.
