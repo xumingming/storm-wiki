@@ -91,29 +91,29 @@ Let's take a look at a simple topology to explore the concepts more and see how 
 
 ```java
 TopologyBuilder builder = new TopologyBuilder();        
-builder.setSpout(1, new TestWordSpout(), 10);        
-builder.setBolt(2, new ExclamationBolt(), 3)
-        .shuffleGrouping(1);
-builder.setBolt(3, new ExclamationBolt(), 2)
-        .shuffleGrouping(2);
+builder.setSpout("words", new TestWordSpout(), 10);        
+builder.setBolt("exclaim1", new ExclamationBolt(), 3)
+        .shuffleGrouping("words");
+builder.setBolt("exclaim2", new ExclamationBolt(), 2)
+        .shuffleGrouping("exclaim1");
 ```
 
 This topology contains a spout and two bolts. The spout emits words, and each bolt appends the string "!!!" to its input. The nodes are arranged in a line: the spout emits to the first bolt which then emits to the second bolt. If the spout emits the tuples ["bob"] and ["john"], then the second bolt will emit the words ["bob!!!!!!"] and ["john!!!!!!"].
 
-This code defines the nodes using the `setSpout` and `setBolt` methods. These methods take as input a user-specified id, an object containing the processing logic, and the amount of parallelism you want for the node. In this example, the spout is given id "1" and the bolts are given ids "2" and "3". 
+This code defines the nodes using the `setSpout` and `setBolt` methods. These methods take as input a user-specified id, an object containing the processing logic, and the amount of parallelism you want for the node. In this example, the spout is given id "words" and the bolts are given ids "exclaim1" and "exclaim2". 
 
 The object containing the processing logic implements the [IRichSpout](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichSpout.html) interface for spouts and the [IRichBolt](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/IRichBolt.html) interface for bolts. 
 
 The last parameter, how much parallelism you want for the node, is optional. It indicates how many threads should execute that component across the cluster. If you omit it, Storm will only allocate one thread for that node.
 
-`setBolt` returns an [InputDeclarer](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/InputDeclarer.html) object that is used to define the inputs to the Bolt. Here, component 2 declares that it wants to read all the tuples emitted by component 1 using a shuffle grouping, and component 3 declares that it wants to read all the tuples emitted by component 2 using a shuffle grouping. "shuffle grouping" means that tuples should be randomly distributed from the input tasks to the bolt's tasks. There are many ways to group data between components. I will explain these in a few sections.
+`setBolt` returns an [InputDeclarer](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/InputDeclarer.html) object that is used to define the inputs to the Bolt. Here, component "exclaim1" declares that it wants to read all the tuples emitted by component "words" using a shuffle grouping, and component "exclaim2" declares that it wants to read all the tuples emitted by component "exclaim1" using a shuffle grouping. "shuffle grouping" means that tuples should be randomly distributed from the input tasks to the bolt's tasks. There are many ways to group data between components. I will explain these in a few sections.
 
-If you wanted component 3 to read all the tuples emitted by both component 1 and component 2, you would write component 3's definition like this:
+If you wanted component "exclaim2" to read all the tuples emitted by both component "words" and component "exclaim1", you would write component "exclaim2"'s definition like this:
 
 ```java
-builder.setBolt(3, new ExclamationBolt(), 5)
-            .shuffleGrouping(1)
-            .shuffleGrouping(2);
+builder.setBolt("exclaim2", new ExclamationBolt(), 5)
+            .shuffleGrouping("words")
+            .shuffleGrouping("exclaim1");
 ```
 
 As you can see, input declarations can be chained to specify multiple sources for the Bolt.
@@ -214,14 +214,14 @@ A "stream grouping" answers this question by telling Storm how to send tuples be
 ```java
 TopologyBuilder builder = new TopologyBuilder();
         
-builder.setSpout(1, new RandomSentenceSpout(), 5);        
-builder.setBolt(2, new SplitSentence(), 8)
-        .shuffleGrouping(1);
-builder.setBolt(3, new WordCount(), 12)
-        .fieldsGrouping(2, new Fields("word"));
+builder.setSpout("sentences", new RandomSentenceSpout(), 5);        
+builder.setBolt("split", new SplitSentence(), 8)
+        .shuffleGrouping("sentences");
+builder.setBolt("count", new WordCount(), 12)
+        .fieldsGrouping("split", new Fields("word"));
 ```
 
-`SplitSentence` emits a tuple for each word in each sentence it receives, and `WordCount` keeps a map in memory from word to count. Each time `WordCount` receives a word, it updates it's state and emits the new word count.
+`SplitSentence` emits a tuple for each word in each sentence it receives, and `WordCount` keeps a map in memory from word to count. Each time `WordCount` receives a word, it updates its state and emits the new word count.
 
 There's a few different kinds of stream groupings.
 
