@@ -6,14 +6,14 @@ A tuple coming off a spout can trigger thousands of tuples to be created based o
 
 ```java
 TopologyBuilder builder = new TopologyBuilder();
-builder.setSpout(1, new KestrelSpout("kestrel.backtype.com",
-                                     22133,
-                                     "sentence_queue",
-                                     new StringScheme()));
-builder.setBolt(2, new SplitSentence(), 10)
-        .shuffleGrouping(1);
-builder.setBolt(3, new WordCount(), 20)
-        .fieldsGrouping(2, new Fields("word"));
+builder.setSpout("sentences", new KestrelSpout("kestrel.backtype.com",
+                                               22133,
+                                               "sentence_queue",
+                                               new StringScheme()));
+builder.setBolt("split", new SplitSentence(), 10)
+        .shuffleGrouping("sentences");
+builder.setBolt("count", new WordCount(), 20)
+        .fieldsGrouping("split", new Fields("word"));
 ```
 
 This topology reads sentences off of a Kestrel queue, splits the sentences into its constituent words, and then emits for each word the number of times it has seen that word before. A tuple coming off the spout triggers many tuples being created based on it: a tuple for each word in the sentence and a tuple for the updated count for each word. The tree of messages looks something like this:
@@ -165,7 +165,7 @@ As you have seen, Storm's reliability mechanisms are completely distributed, sca
 
 ### Tuning reliability
 
-Acker tasks are lightweight, so you don't need very many of them in a topology. You can track their performance through the Storm UI (component id -1). If the throughput doesn't look right, you'll need to add more acker tasks. 
+Acker tasks are lightweight, so you don't need very many of them in a topology. You can track their performance through the Storm UI (component id "__acker"). If the throughput doesn't look right, you'll need to add more acker tasks. 
 
 If reliability isn't important to you -- that is, you don't care about losing tuples in failure situations -- then you can improve performance by not tracking the tuple tree for spout tuples. Not tracking a tuple tree halves the number of messages transferred since normally there's an ack message for every tuple in the tuple tree. Additionally, it requires less ids to be kept in each downstream tuple, reducing bandwidth usage.
 
