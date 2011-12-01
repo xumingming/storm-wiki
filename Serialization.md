@@ -1,4 +1,10 @@
-Tuples can be comprised of objects of any types. Since Storm is a distributed system, it needs to know how to serialize and deserialize objects when they're passed between tasks. By default Storm can serialize ints, shorts, longs, floats, doubles, bools, bytes, strings, and byte arrays, but if you want to use another type in your tuples, you'll need to implement a custom serializer.
+This page is about how the serialization system in Storm works for versions 0.6.0 and onwards. Storm used a different serialization system prior to 0.6.0 which is documented on [[Serialization (prior to 0.6.0)]]. 
+
+Tuples can be comprised of objects of any types. Since Storm is a distributed system, it needs to know how to serialize and deserialize objects when they're passed between tasks.
+
+Storm uses [Kryo](http://code.google.com/p/kryo/) for serialization. Kryo is a flexible and fast serialization library that produces small serializations.
+
+By default, Storm can serialize primitive types, strings, byte arrays, ArrayList, HashMap, HashSet, and the Clojure collection types. If you want to use another type in your tuples, you'll need to implement a custom serializer.
 
 ### Dynamic typing
 
@@ -12,36 +18,32 @@ Finally, another reason for using dynamic typing is so Storm can be used in a st
 
 ### Custom serialization
 
-Let's dive into Storm's API for defining custom serializations. There are two steps you need to take as a user to create a custom serialization: implement the serializer, and register the serializer to Storm.
+As mentioned, Storm uses Kryo for serialization. To implement custom serializers, you need to register new serializers with Kryo. It's highly recommended that you read over [Kryo's home page](http://code.google.com/p/kryo/) to understand how it handles custom serialization.
 
-#### Creating a serializer
+Adding custom serializers is done through the "topology.kryo.register" property in your topology config. It takes a list of registrations, where each registration can take one of two forms:
 
-Custom serializers implement the [ISerialization](http://nathanmarz.github.com/storm/doc/backtype/storm/serialization/ISerialization.html) interface. Implementations specify how to serialize and deserialize types into a binary format.
+1) The name of a class to register. In this case, Storm will use Kryo's `FieldsSerializer` to serialize the class. This may or may not be optimal for the class -- see the Kryo docs for more details.
+2) A map from the name of a class to register to an implementation of [com.esotericsoftware.kryo.Serializer](http://kryo.googlecode.com/svn/api/com/esotericsoftware/kryo/Serializer.html). 
 
-The interface looks like this:
+Let's look at an example.
 
-```java
-public interface ISerialization<T> {
-    public boolean accept(Class c);
-    public void serialize(T object, DataOutputStream stream) throws IOException;
-    public T deserialize(DataInputStream stream) throws IOException;
-}
+```
+topology.kryo.register:
+  - com.mycompany.CustomType1
+  - com.mycompany.CustomType2: com.mycompany.serializer.CustomType2Serializer
+  - com.mycompany.CustomType3
 ```
 
-Storm uses the `accept` method to determine if a type can be serialized by this serializer. Remember, Storm's tuples are dynamically typed so Storm determines what serializer to use at runtime.
+`com.mycompany.CustomType1` and `com.mycompany.CustomType3` will use the `FieldsSerializer`, whereas `com.mycompany.CustomType2` will use `com.mycompany.serializer.CustomType2Serializer` for serialization.
 
-`serialize` writes the object out to the output stream in binary format. The field must be written in a way such that it can be deserialized later. For example, if you're writing out a list of objects, you'll need to write out the size of the list first so that you know how many elements to deserialize.
+Storm provides helpers for registering serializers in a topology config. The [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html) class has a method called `registerSerialization` that takes in a registration to add to the config.
 
-`deserialize` reads the serialized object off of the stream and returns it.
+There's an advanced config called `Config.TOPOLOGY_SKIP_MISSING_KRYO_REGISTRATIONS`. If you set this to true, Storm will ignore any serializations that are registered but do not have their code available on the classpath. Otherwise, Storm will throw errors when it can't find a serialization. This is useful if you run many topologies on a cluster that each have different serializations, but you want to declare all the serializations across all topologies in the `storm.yaml` files.
 
-You can see example serialization implementations in the source for [SerializationFactory](https://github.com/nathanmarz/storm/blob/master/src/jvm/backtype/storm/serialization/SerializationFactory.java)
+### Java serialization
 
-#### Registering a serializer
+If Storm encounters a type for which it doesn't have a serialization registered, it will use Java serialization if possible. If the object can't be serialized with Java serialization, then Storm will throw an error.
 
-Once you create a serializer, you need to tell Storm it exists. This is done through the Storm configuration (See [[Concepts]] for information about how configuration works in Storm). You can register serializations either through the config given when submitting a topology or in the storm.yaml files across your cluster.
+Beware that Java serialization is extremely expensive, both in terms of CPU cost as well as the size of the serialized object. It is highly recommended that you register custom serializers when you put the topology in production. The Java serialization behavior is there so that it's easy to prototype new topologies.
 
-Serializer registrations are done through the Config.TOPOLOGY_SERIALIZATIONS config and is simply a list of serialization class names.
-
-Storm provides helpers for registering serializers in a topology config. The [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html) class has a method called `addSerialization` that takes in a serializer class to add to the config.
-
-There's an advanced config called Config.TOPOLOGY_SKIP_MISSING_SERIALIZATIONS. If you set this to true, Storm will ignore any serializations that are registered but do not have their code available on the classpath. Otherwise, Storm will throw errors when it can't find a serialization. This is useful if you run many topologies on a cluster that each have different serializations, but you want to declare all the serializations across all topologies in the `storm.yaml` files.
+You can turn off the behavior to fall back on Java serialization by setting the `Config.TOPOLOGY_FALL_BACK_ON_JAVA_SERIALIZATION` config to false.
