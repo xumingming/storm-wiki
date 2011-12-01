@@ -15,17 +15,17 @@ Let's take a look at an example topology definition [from the storm-starter proj
 
 ```clojure
 (topology
- {1 (spout-spec sentence-spout)
-  2 (spout-spec (sentence-spout-parameterized
-                 ["the cat jumped over the door"
-                  "greetings from a faraway land"])
-                :p 2)}
- {3 (bolt-spec {1 :shuffle 2 :shuffle}
-               split-sentence
-               :p 5)
-  4 (bolt-spec {3 ["word"]}
-               word-count
-               :p 6)})
+ {"1" (spout-spec sentence-spout)
+  "2" (spout-spec (sentence-spout-parameterized
+                   ["the cat jumped over the door"
+                    "greetings from a faraway land"])
+                   :p 2)}
+ {"3" (bolt-spec {"1" :shuffle "2" :shuffle}
+                 split-sentence
+                 :p 5)
+  "4" (bolt-spec {"3" ["word"]}
+                 word-count
+                 :p 6)})
 ```
 
 The maps of spout and bolt specs are maps from the component id to the corresponding spec. The component ids must be unique across the maps. Just like defining topologies in Java, component ids are used when declaring inputs for bolts in the topology.
@@ -54,12 +54,12 @@ A stream grouping can be one of the following:
 See [[Concepts]] for more info on stream groupings. Here's an example input declaration showcasing the various ways to declare inputs:
 
 ```clojure
-{[2 1] :shuffle
- 3 ["field1" "field2"]
- [4 2] :global}
+{["2" "1"] :shuffle
+ "3" ["field1" "field2"]
+ ["4" "2"] :global}
 ```
 
-This input declaration subscribes to three streams total. It subscribes to stream 1 on component 2 with a shuffle grouping, subscribes to the default stream on component 3 with a fields grouping on the fields "field1" and "field2", and subscribes to stream 2 on component 4 with a global grouping.
+This input declaration subscribes to three streams total. It subscribes to stream "1" on component "2" with a shuffle grouping, subscribes to the default stream on component "3" with a fields grouping on the fields "field1" and "field2", and subscribes to stream "2" on component "4" with a global grouping.
 
 Like `spout-spec`, the only current supported keyword argument for `bolt-spec` is `:p` which specifies the parallelism for the bolt.
 
@@ -70,7 +70,7 @@ Like `spout-spec`, the only current supported keyword argument for `bolt-spec` i
 Here's an example `shell-bolt-spec`:
 
 ```clojure
-(shell-bolt-spec {1 :shuffle 2 ["id"]}
+(shell-bolt-spec {"1" :shuffle "2" ["id"]}
                  "python"
                  "mybolt.py"
                  ["outfield1" "outfield2"]
@@ -107,7 +107,7 @@ Since the option map is omitted, this is a non-prepared bolt. The DSL simply exp
 This implementation binds `split-sentence` to an actual `IRichBolt` object that you can use in topologies, like so:
 
 ```clojure
-(bolt-spec {1 :shuffle}
+(bolt-spec {"1" :shuffle}
            split-sentence
            :p 5)
 ```
@@ -127,7 +127,7 @@ Many times you want to parameterize your bolts with other arguments. For example
 Unlike the previous example, `suffix-appender` will be bound to a function that returns an `IRichBolt` rather than be an `IRichBolt` object directly. This is caused by specifying `:params` in its option map. So to use `suffix-appender` in a topology, you would do something like:
 
 ```clojure
-(bolt-spec {1 :shuffle}
+(bolt-spec {"1" :shuffle}
            (suffix-appender "-suffix")
            :p 10)
 ```
@@ -162,12 +162,12 @@ Prepared bolts can be parameterized just like simple bolts.
 The Clojure DSL has a concise syntax for declaring the outputs of a bolt. The most general way to declare the outputs is as a map from stream id a stream spec. For example:
 
 ```clojure
-{1 ["field1" "field2"]
- 2 (direct-stream ["f1" "f2" "f3"])
- 3 ["f1"]}
+{"1" ["field1" "field2"]
+ "2" (direct-stream ["f1" "f2" "f3"])
+ "3" ["f1"]}
 ```
 
-The stream id is an integer, while the stream spec is either a vector of fields or a vector of fields wrapped by `direct-stream`. `direct stream` marks the stream as a direct stream (See [[Concepts]] and [[Direct groupings]] for more details on direct streams).
+The stream id is a string, while the stream spec is either a vector of fields or a vector of fields wrapped by `direct-stream`. `direct stream` marks the stream as a direct stream (See [[Concepts]] and [[Direct groupings]] for more details on direct streams).
 
 If the bolt only has one output stream, you can define the default stream of the bolt by using a vector instead of a map for the output declaration. For example:
 
