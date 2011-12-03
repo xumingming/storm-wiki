@@ -20,7 +20,9 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[DSLs and multilang adapters]]
 * [[Serializers]]
 
-### [[Contributing to Storm]]
+### Contributing to Storm
+
+* [[Contributing to Storm]]
 
 ### Documentation
 
