@@ -6,6 +6,7 @@ This page outlines all the pieces of the Clojure DSL, including:
 2. `defbolt`
 3. `defspout`
 4. Running topologies in local mode or on a cluster
+5. Testing topologies
 
 ### Defining topologies
 
@@ -254,3 +255,7 @@ To create topology configs, it's easiest to use the `backtype.storm.config` name
 {TOPOLOGY-DEBUG true
  TOPOLOGY-WORKERS 15}
 ```
+
+### Testing topologies
+
+[This blog post](http://www.pixelmachine.org/2011/12/17/Testing-Storm-Topologies.html) gives a good overview of Storm's powerful built-in facilities for testing topologies in Clojure.
