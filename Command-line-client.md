@@ -16,31 +16,31 @@ This page describes all the commands that are possible with the "storm" command 
 
 ### jar
 
-Syntax: storm jar topology-jar-path class ...
+Syntax: `storm jar topology-jar-path class ...`
 
 Runs the main method of `class` with the specified arguments. The storm jars and configs in ~/.storm/ are put on the classpath. The process is configured so that [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html) will upload the jar at `topology-jar-path` when the topology is submitted.
 
 ### kill
 
-Syntax: storm kill topology-name [-w wait-time-secs]
+Syntax: `storm kill topology-name [-w wait-time-secs]`
 
 Kills the topology with the name `topology-name`. Storm will first deactivate the topology's spouts for the duration of the topology's message timeout to allow all messages currently being processed to finish processing. Storm will then shutdown the workers and clean up their state. You can override the length of time Storm waits between deactivation and shutdown with the -w flag.
 
 ### activate
 
-Syntax: storm activate topology-name
+Syntax: `storm activate topology-name`
 
 Activates the specified topology's spouts.
 
 ### deactivate
 
-Syntax: storm deactivate topology-name
+Syntax: `storm deactivate topology-name`
 
 Deactivates the specified topology's spouts.
 
 ### rebalance
 
-Syntax: storm rebalance topology-name [-w wait-time-secs]
+Syntax: `storm rebalance topology-name [-w wait-time-secs]`
 
 Sometimes you may wish to spread out where the workers for a topology are running. For example, let's say you have a 10 node cluster running 4 workers per node, and then let's say you add another 10 nodes to the cluster. You may wish to have Storm spread out the workers for the running topology so that each node runs 2 workers. One way to do this is to kill the topology and resubmit it, but Storm provides a "rebalance" command that provides an easier way to do this. 
 
@@ -48,42 +48,42 @@ Rebalance will first deactivate the topology for the duration of the message tim
 
 ### repl
 
-Syntax: storm repl
+Syntax: `storm repl`
 
 Opens up a Clojure REPL with the storm jars and configuration on the classpath. Useful for debugging.
 
 ### localconfvalue
 
-Syntax: storm localconfvalue conf-name
+Syntax: `storm localconfvalue conf-name`
 
 Prints out the value for `conf-name` in the local Storm configs. The local Storm configs are the ones in `~/.storm/storm.yaml` merged in with the configs in `defaults.yaml`.
 
 ### remoteconfvalue
 
-Syntax: storm remoteconfvalue conf-name
+Syntax: `storm remoteconfvalue conf-name`
 
 Prints out the value for `conf-name` in the cluster's Storm configs. The cluster's Storm configs are the ones in `$STORM-PATH/conf/storm.yaml` merged in with the configs in `defaults.yaml`. This command must be run on a cluster machine.
 
 ### nimbus
 
-Syntax: storm nimbus
+Syntax: `storm nimbus`
 
 Launches the nimbus daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### supervisor
 
-Syntax: storm supervisor
+Syntax: `storm supervisor`
 
 Launches the supervisor daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### ui
 
-Syntax: storm ui
+Syntax: `storm ui`
 
 Launches the UI daemon. The UI provides a web interface for a Storm cluster and shows detailed stats about running topologies. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### drpc
 
-Syntax: storm drpc
+Syntax: `storm drpc`
 
 Launches a DRPC daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Distributed RPC]] for more information.
