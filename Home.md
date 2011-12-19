@@ -31,6 +31,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [Javadoc](http://nathanmarz.github.com/storm/doc/index.html)
 * [[Concepts]]
 * [[Guaranteeing message processing]]
+* [[Command line client]]
 
 #### Setup and deploying
 
