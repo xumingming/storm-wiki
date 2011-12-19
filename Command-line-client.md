@@ -18,7 +18,7 @@ This page describes all the commands that are possible with the "storm" command 
 
 Syntax: `storm jar topology-jar-path class ...`
 
-Runs the main method of `class` with the specified arguments. The storm jars and configs in ~/.storm/ are put on the classpath. The process is configured so that [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html) will upload the jar at `topology-jar-path` when the topology is submitted.
+Runs the main method of `class` with the specified arguments. The storm jars and configs in `~/.storm` are put on the classpath. The process is configured so that [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html) will upload the jar at `topology-jar-path` when the topology is submitted.
 
 ### kill
 
