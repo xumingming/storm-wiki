@@ -1,9 +1,6 @@
-This page describes all the commands that are possible with the "storm" command line client. These commands are:
+Command line client
 
-COMMANDS = {"jar": jar, "kill": kill, "shell": shell, "nimbus": nimbus, "ui": ui,
-            "drpc": drpc, "supervisor": supervisor, "localconfvalue": print_localconfvalue,
-            "remoteconfvalue": print_remoteconfvalue, "repl": repl, "classpath": print_classpath,
-            "activate": activate, "deactivate": deactivate, "rebalance": rebalance}
+This page describes all the commands that are possible with the "storm" command line client. These commands are:
 
 1. jar
 1. kill
@@ -21,4 +18,12 @@ COMMANDS = {"jar": jar, "kill": kill, "shell": shell, "nimbus": nimbus, "ui": ui
 
 ### jar
 
-Syntax: storm jar <u>topology-jar-path</u>
+Syntax: storm jar `topology-jar-path` `class` `...`
+
+Runs the main method of `class` with the specified arguments. The storm jars and configs in ~/.storm/ are put on the classpath. The process is configured so that [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html) will upload the jar at `topology-jar-path` when the topology is submitted.
+
+### kill
+
+Syntax: storm kill `topology-name` \[-w `wait-time`\]
+
+Kills the topology with the name `topology-name`. 
