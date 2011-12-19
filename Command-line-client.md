@@ -24,6 +24,6 @@ Runs the main method of `class` with the specified arguments. The storm jars and
 
 ### kill
 
-Syntax: storm kill `topology-name` \[-w `wait-time`\]
+Syntax: storm kill `topology-name` [-w `wait-time`]
 
 Kills the topology with the name `topology-name`. 
