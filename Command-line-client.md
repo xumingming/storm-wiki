@@ -68,22 +68,22 @@ Prints out the value for `conf-name` in the cluster's Storm configs. The cluster
 
 Syntax: `storm nimbus`
 
-Launches the nimbus daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
+Launches the nimbus daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or [monit](http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### supervisor
 
 Syntax: `storm supervisor`
 
-Launches the supervisor daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
+Launches the supervisor daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or [monit](http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### ui
 
 Syntax: `storm ui`
 
-Launches the UI daemon. The UI provides a web interface for a Storm cluster and shows detailed stats about running topologies. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
+Launches the UI daemon. The UI provides a web interface for a Storm cluster and shows detailed stats about running topologies. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or [monit](http://mmonit.com/monit/). See [[Setting up a Storm cluster]] for more information.
 
 ### drpc
 
 Syntax: `storm drpc`
 
-Launches a DRPC daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or monit(http://mmonit.com/monit/). See [[Distributed RPC]] for more information.
+Launches a DRPC daemon. This command should be run under supervision with a tool like [daemontools](http://cr.yp.to/daemontools.html) or [monit](http://mmonit.com/monit/). See [[Distributed RPC]] for more information.
