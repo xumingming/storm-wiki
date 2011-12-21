@@ -258,4 +258,4 @@ To create topology configs, it's easiest to use the `backtype.storm.config` name
 
 ### Testing topologies
 
-[This blog post](http://www.pixelmachine.org/2011/12/17/Testing-Storm-Topologies.html) gives a good overview of Storm's powerful built-in facilities for testing topologies in Clojure.
+[This blog post](http://www.pixelmachine.org/2011/12/17/Testing-Storm-Topologies.html) and its [follow-up](http://www.pixelmachine.org/2011/12/21/Testing-Storm-Topologies-Part-2.html) give a good overview of Storm's powerful built-in facilities for testing topologies in Clojure.
