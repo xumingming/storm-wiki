@@ -27,7 +27,7 @@ If Maven isn't your thing, check out [leiningen](https://github.com/technomancy/
   :jvm-opts ["-Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib"]
   :dependencies []
   :dev-dependencies [
-                     [storm "0.6.0"]
+                     [storm "0.6.1"]
                      ])
 ```
 
