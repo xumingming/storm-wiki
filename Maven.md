@@ -11,7 +11,7 @@ To develop topologies, you'll need the Storm jars on your classpath. You should 
 <dependency>
   <groupId>storm</groupId>
   <artifactId>storm</artifactId>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -32,3 +32,7 @@ If Maven isn't your thing, check out [leiningen](https://github.com/technomancy/
 ```
 
 You can fetch dependencies using `lein deps`, build the project with `lein compile`, and make a jar suitable for submitting to a cluster with `lein uberjar`. 
+
+### Using Storm as a library
+
+If you want to use Storm as a library (e.g., use the Distributed RPC client) and have the Storm dependency jars be distributed with your application, there's a separate Maven dependency called "storm/storm-lib". The only difference between this dependency and the usual "storm/storm" is that storm-lib does not have any logging configured. 
