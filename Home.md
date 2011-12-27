@@ -3,9 +3,9 @@ Storm is a distributed realtime computation system. Similar to how Hadoop provid
 ### Read these first
 
 * [[Rationale]] 
+* [[Tutorial]]
 * [[Setting up development environment]]
 * [[Creating a new Storm project]]
-* [[Tutorial]]
 
 ### Getting help
 
