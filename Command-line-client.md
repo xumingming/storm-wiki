@@ -52,6 +52,12 @@ Syntax: `storm repl`
 
 Opens up a Clojure REPL with the storm jars and configuration on the classpath. Useful for debugging.
 
+### classpath
+
+Syntax: `storm classpath`
+
+Prints the classpath used by the storm client when running commands.
+
 ### localconfvalue
 
 Syntax: `storm localconfvalue conf-name`
