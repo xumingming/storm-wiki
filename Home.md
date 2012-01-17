@@ -32,6 +32,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[Concepts]]
 * [[Guaranteeing message processing]]
 * [[Command line client]]
+* [[Troubleshooting]]
 
 #### Setup and deploying
 
