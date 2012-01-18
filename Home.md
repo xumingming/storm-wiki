@@ -15,6 +15,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 ### Related projects
 
+* [storm-contrib](https://github.com/nathanmarz/storm-contrib)
 * [storm-deploy](http://github.com/nathanmarz/storm-deploy): One click deploys for Storm clusters on AWS
 * [[Spout implementations]]
 * [[DSLs and multilang adapters]]
