@@ -11,7 +11,7 @@ Possible symptoms:
 Solutions:
 
  * You may have a misconfigured subnet, where nodes can't locate other nodes based on their hostname. ZeroMQ sometimes crashes the process when it can't resolve a host. There are two solutions:
-  * Make a mapping from hostname to IP address in /etc/hosts (see )
+  * Make a mapping from hostname to IP address in /etc/hosts
   * Set up an internal DNS so that nodes can locate each other based on hostname.
   
 ### Nodes are unable to communicate with each other
