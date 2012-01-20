@@ -4,6 +4,7 @@
    * Streaming joins
    * Windowed aggregations
    * Rolling aggregations
+   * Easy to add DRPC capabilities into any topology (like to query the state of the topology)
    * More composable operations
  * **Online machine learning algorithms:** Something like [Mahout](http://mahout.apache.org/) but for online algorithms
  * **Suite of performance benchmarks:** These benchmarks should test Storm's performance on CPU and IO intensive workloads. There should be benchmarks for different classes of applications, such as stream processing (where throughput is the priority) and distributed RPC (where latency is the priority). 
