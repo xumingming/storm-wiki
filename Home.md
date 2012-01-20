@@ -24,6 +24,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 ### Contributing to Storm
 
 * [[Contributing to Storm]]
+* [[Project ideas]]
 
 ### Documentation
 
