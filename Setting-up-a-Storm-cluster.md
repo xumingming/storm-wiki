@@ -1,5 +1,7 @@
 This page outlines the steps for getting a Storm cluster up and running. If you're on AWS, you should check out the [storm-deploy](https://github.com/nathanmarz/storm-deploy/wiki) project. [storm-deploy](https://github.com/nathanmarz/storm-deploy/wiki) completely automates the provisioning, configuration, and installation of Storm clusters on EC2. It also sets up Ganglia for you so you can monitor CPU, disk, and network usage.
 
+If you run into difficulties with your Storm cluster, first check for a solution is in the [[Troubleshooting]] page. Otherwise, email the [mailing list](https://groups.google.com/group/storm-user).
+
 Here's a summary of the steps for setting up a Storm cluster:
 
 1. Set up a Zookeeper cluster
