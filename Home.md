@@ -35,11 +35,11 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[Guaranteeing message processing]]
 * [[Fault-tolerance]]
 * [[Command line client]]
-* [[Troubleshooting]]
 
 #### Setup and deploying
 
 * [[Setting up a Storm cluster]]
+* [[Troubleshooting]]
 * [[Upgrading an existing Storm cluster]]
 * [[Running topologies on a production cluster]]
 * [[Local mode]]
