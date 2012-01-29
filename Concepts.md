@@ -8,7 +8,6 @@ This page lists the main concepts of Storm and links to resources where you can 
 6. Reliability
 7. Tasks
 8. Workers
-9. Configuration
 
 ### Topologies
 
@@ -109,20 +108,3 @@ Topologies execute across one or more worker processes. Each worker process is a
 **Resources:**
 
 * [Config.TOPOLOGY_WORKERS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_WORKERS): this config sets the number of workers to allocate for executing the topology
-
-
-### Configuration
-
-Storm has a variety of configurations for tweaking the behavior of nimbus, supervisors, and running topologies. Some configurations are system configurations and cannot be modified on a topology by topology basis, whereas other configurations can be modified per topology. 
-
-Every configuration has a default value defined in [defaults.yaml](https://github.com/nathanmarz/storm/blob/master/conf/defaults.yaml) in the Storm codebase. You can override these configurations by defining a storm.yaml in the classpath of Nimbus and the supervisors. Finally, you can define a topology-specific configuration that you submit along with your topology when using [StormSubmitter](http://nathanmarz.github.com/storm/doc/backtype/storm/StormSubmitter.html).
-
-The preference order for configuration values is defaults.yaml < storm.yaml < topology specific configuration. However, the topology-specific configuration can only override configs prefixed with "TOPOLOGY". 
-
-**Resources:**
-
-* [Config](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html): a listing of all configurations as well as a helper class for creating topology specific configurations
-* [defaults.yaml](https://github.com/nathanmarz/storm/blob/master/conf/defaults.yaml): the default values for all configurations
-* [[Setting up a Storm cluster]]: explains how to create and configure a Storm cluster
-* [[Running topologies on a production cluster]]: lists useful configurations when running topologies on a cluster
-* [[Local mode]]: lists useful configurations when using local mode

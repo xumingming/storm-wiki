@@ -271,6 +271,14 @@ For more information on writing spouts and bolts in other languages, and to lear
 
 Earlier on in this tutorial, we skipped over a few aspects of how tuples are emitted. Those aspects were part of Storm's reliability API: how Storm guarantees that every message coming off a spout will be fully processed. See [[Guaranteeing message processing]] for information on how this works and what you have to do as a user to take advantage of Storm's reliability capabilities.
 
+## Transactional topologies
+
+Storm guarantees that every message will be played through the topology at least once. A common question asked is "how do you do things like counting on top of Storm? Won't you overcount?" Storm has a feature called transactional topologies that let you achieve exactly-once messaging semantics for most computations. Read more about transactional topologies [here](https://github.com/nathanmarz/storm/wiki/Transactional-topologies). 
+
+## Distributed RPC
+
+This tutorial showed how to do basic stream processing on top of Storm. There's lots more things you can do with Storm's primitives. One of the most interesting applications of Storm is Distributed RPC, where you parallelize the computation of intense functions on the fly. Read more about Distributed RPC [here](https://github.com/nathanmarz/storm/wiki/Distributed-RPC). 
+
 ## Conclusion
 
 This tutorial gave a broad overview of developing, testing, and deploying Storm topologies. The rest of the documentation dives deeper into all the aspects of using Storm.

@@ -129,6 +129,11 @@ This implementation is simpler than the implementation from before and is semant
 
 In contrast, bolts that do aggregations or joins may delay acking a tuple until after its computed a result based on a bunch of tuples. Aggregations and joins will commonly multi-anchor their output tuples as well. These things fall outside the simpler pattern of `IBasicBolt`.
 
+### How do I make my applications work correctly given that tuples can be replayed?
+
+As always in software design, the answer is "it depends." Storm 0.7.0 introduced the "transactional topologies" feature, which enables you to get fully fault-tolerant exactly-once messaging semantics for most computations. Read more about transactional topologies [here](https://github.com/nathanmarz/storm/wiki/Transactional-topologies). 
+
+
 ### How does Storm implement reliability in an efficient way?
 
 A Storm topology has a set of special "acker" tasks that track the tree of tuples for every spout tuple. When an acker sees that a tree is complete, it sends a message to the spout task that created the spout tuple to ack the message. You can set the number of acker tasks for a topology in the topology configuration using [Config.TOPOLOGY_ACKERS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_ACKERS). Storm defaults TOPOLOGY_ACKERS to one task -- you will need to increase this number for topologies processing large amounts of messages. 

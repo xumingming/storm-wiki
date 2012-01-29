@@ -32,6 +32,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 * [Javadoc](http://nathanmarz.github.com/storm)
 * [[Concepts]]
+* [[Configuration]]
 * [[Guaranteeing message processing]]
 * [[Fault-tolerance]]
 * [[Command line client]]
