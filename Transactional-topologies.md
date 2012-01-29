@@ -245,7 +245,7 @@ The details of implementing a `TransactionalSpout` are in [the Javadoc](http://n
 
 #### Partitioned Transactional Spout
 
-A common kind of transactional spout is one that reads the batches from a set of partitions across many queue brokers. For example, this is how [TransactionalKafkaSpout](https://github.com/nathanmarz/storm-contrib/blob/master/storm-kafka/src/jvm/storm/kafka/TransactionalKafkaSpout.java) works. The `IPartitionedTransactionalSpout` automates the bookkeeping work of managing the state for each partition to ensure idempotent replayability. See [the Javadoc](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/partitioned/IPartitionedTransactionalSpout.html) for more details.
+A common kind of transactional spout is one that reads the batches from a set of partitions across many queue brokers. For example, this is how [TransactionalKafkaSpout](https://github.com/nathanmarz/storm-contrib/blob/master/storm-kafka/src/jvm/storm/kafka/TransactionalKafkaSpout.java) works. An `IPartitionedTransactionalSpout` automates the bookkeeping work of managing the state for each partition to ensure idempotent replayability. See [the Javadoc](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/partitioned/IPartitionedTransactionalSpout.html) for more details.
 
 ### Configuration
 
