@@ -59,4 +59,5 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 #### Advanced
 
+* [[Defining a non-JVM language DSL for Storm]]
 * [[Multilang protocol]] (how to provide support for another language)
