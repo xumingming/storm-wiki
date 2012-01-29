@@ -33,14 +33,13 @@ There is a significant problem though with this design of processing one tuple a
 
 Instead of processing one tuple at a time, a better approach is to process a batch of tuples for each transaction. So if you're doing a global count, you would increment the count by the number of tuples in the entire batch. If a batch fails, you replay the exact batch that failed. Instead of assigning a transaction id to each tuple, you assign a transaction id to each batch, and the processing of the batches is strongly ordered. Here's a diagram of this design:
 
-TODO: (diagram)
+![Storm cluster](images/transactional-batches.png)
 
 So if you're processing 1000 tuples per batch, your application will do 1000x less database operations than design 1. Additionally, it takes advantage of Storm's parallelization capabilities as the computation for each batch can be parallelized.
 
 While this design is significantly better than design 1, it's still not as resource-efficient as possible. The workers in the topology spend a lot of time being idle waiting for the other portions of the computation to finish. For example, in a topology like this:
 
-TODO: diagram
-Spout -> Bolt 1 -> Bolt 2 -> Bolt 3 -> Bolt 4
+![Storm cluster](images/transactional-design-2.png)
 
 After bolt 1 finishes its portion of the processing, it will be idle until the rest of the bolts finish and the next batch can be emitted from the spout.
 
@@ -73,7 +72,7 @@ Finally, another thing to note is that transactional topologies require a source
 
 ## The basics through example
 
-You build transactional topologies by using [TransactionalTopologyBuilder](TODO: link to Javadoc). Here's the transactional topology definition for a topology that computes the global count of tuples from the input stream. This code comes from [TransactionalGlobalCount]() in storm-starter.
+You build transactional topologies by using [TransactionalTopologyBuilder](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/TransactionalTopologyBuilder.html). Here's the transactional topology definition for a topology that computes the global count of tuples from the input stream. This code comes from [TransactionalGlobalCount](https://github.com/nathanmarz/storm-starter/blob/master/src/jvm/storm/starter/TransactionalGlobalCount.java) in storm-starter.
 
 ```java
 MemoryTransactionalSpout spout = new MemoryTransactionalSpout(DATA, new Fields("word"), PARTITION_TAKE_PER_BATCH);
@@ -120,9 +119,9 @@ public static class BatchCount extends BaseBatchBolt {
 }
 ```
 
-A new instance of this object is created for every batch that's being processed. The actual bolt this runs within is called [BatchBoltExecutor](TODO: link) and manages the creation and cleanup for these objects.
+A new instance of this object is created for every batch that's being processed. The actual bolt this runs within is called [BatchBoltExecutor](https://github.com/nathanmarz/storm/blob/master/src/jvm/backtype/storm/coordination/BatchBoltExecutor.java) and manages the creation and cleanup for these objects.
 
-The `prepare` method parameterizes this batch bolt with the Storm config, the topology context, an output collector, and the id for this batch of tuples. In the case of transactional topologies, the id will be a [TransactionAttempt](TODO: link) object. The batch bolt abstraction can be used in Distributed RPC as well which uses a different type of id for the batches. `BatchBolt` can actually be parameterized with the type of the id, so if you only intend to use the batch bolt for transactional topologies, you can extend `BaseTransactionalBolt` which has this definition:
+The `prepare` method parameterizes this batch bolt with the Storm config, the topology context, an output collector, and the id for this batch of tuples. In the case of transactional topologies, the id will be a [TransactionAttempt](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/TransactionAttempt.html) object. The batch bolt abstraction can be used in Distributed RPC as well which uses a different type of id for the batches. `BatchBolt` can actually be parameterized with the type of the id, so if you only intend to use the batch bolt for transactional topologies, you can extend `BaseTransactionalBolt` which has this definition:
 
 ```java
 public abstract class BaseTransactionalBolt extends BaseBatchBolt<TransactionAttempt> {   
@@ -191,6 +190,8 @@ First, notice that this bolt implements the `ICommitter` interface. This tells S
 
 The code for `finishBatch` in `UpdateGlobalCount` gets the current value from the database and compares its transaction id to the transaction id for this batch. If they are the same, it does nothing. Otherwise, it increments the value in the database by the partial count for this batch.
 
+A more involved transactional topology example that updates multiple databases idempotently can be found in storm-starter in the [TransactionalWords](https://github.com/nathanmarz/storm-starter/blob/master/src/jvm/storm/starter/TransactionalWords.java) class. 
+
 
 ## Transactional Topology API
 
@@ -200,18 +201,15 @@ This section outlines the different pieces of the transactional topology API.
 
 There are three kinds of bolts possible in a transactional topology:
 
-1. [BasicBolt](TODO: link): This bolt doesn't deal with batches of tuples and just emits tuples based on a single tuple of input. 
-2. [BatchBolt](TODO: link): This bolt processes batches of tuples. `execute` is called for each tuple, and `finishBatch` is called when the batch is complete. 
-3. BatchBolt's that are marked as committers: The only different between this bolt and a regular batch bolt is when `finishBatch` is called. A committer bolt has `finishedBatch` called during the commit phase. The commit phase is guaranteed to occur only after all prior batches have successfully committed, and it will be retried until all bolts in the topology succeed the commit for the batch. There are two ways to make a `BatchBolt` a committer, by having the `BatchBolt` implement the [ICommitter](TODO: link) marker interface, or by using the `setCommiterBolt` method in `TransactionalTopologyBuilder`.
+1. [BasicBolt](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/topology/base/BaseBasicBolt.html): This bolt doesn't deal with batches of tuples and just emits tuples based on a single tuple of input. 
+2. [BatchBolt](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/topology/base/BaseBatchBolt.html): This bolt processes batches of tuples. `execute` is called for each tuple, and `finishBatch` is called when the batch is complete. 
+3. BatchBolt's that are marked as committers: The only different between this bolt and a regular batch bolt is when `finishBatch` is called. A committer bolt has `finishedBatch` called during the commit phase. The commit phase is guaranteed to occur only after all prior batches have successfully committed, and it will be retried until all bolts in the topology succeed the commit for the batch. There are two ways to make a `BatchBolt` a committer, by having the `BatchBolt` implement the [ICommitter](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/ICommitter.html) marker interface, or by using the `setCommiterBolt` method in `TransactionalTopologyBuilder`.
 
 #### Processing phase vs. commit phase in bolts
 
 To nail down the difference between the processing phase and commit phase of a transaction, let's look at an example topology:
 
-TODO: diagram
-
-S -> B -> C -> B -> C
-      \------/ 
+![Storm cluster](images/transactional-commit-flow.png)
 
 In this topology, only the bolts with a red outline are committers. 
 
@@ -229,7 +227,7 @@ Notice that you don't have to do any acking or anchoring when working with trans
 
 #### Failing a transaction
 
-When using regular bolts, you can call the `fail` method on `OutputCollector` to fail the tuple trees of which that tuple is a member. Since transactional topologies hide the acking framework from you, they provide a different mechanism to fail a batch (and cause the batch to be replayed). Just throw a [FailedException](TODO: link). Unlike regular exceptions, this will only cause that particular batch to replay and will not crash the process. 
+When using regular bolts, you can call the `fail` method on `OutputCollector` to fail the tuple trees of which that tuple is a member. Since transactional topologies hide the acking framework from you, they provide a different mechanism to fail a batch (and cause the batch to be replayed). Just throw a [FailedException](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/topology/FailedException.html). Unlike regular exceptions, this will only cause that particular batch to replay and will not crash the process. 
 
 ### Transactional spout
 
@@ -237,26 +235,40 @@ The `TransactionalSpout` interface is completely different from a regular `Spout
 
 A transactional spout looks like this while a topology is executing:
 
-TODO: diagram of coordinator and emitters
+![Storm cluster](images/transactional-spout-structure.png)
 
 The coordinator on the left is a regular Storm spout that emits a tuple whenever a batch should be emitted for a transaction. The emitters execute as a regular Storm bolt and are responsible for emitting the actual tuples for the batch. The emitters subscribe to the "batch emit" stream of the coordinator using an all grouping.
 
 The need to be idempotent with respect to the tuples it emits requires a `TransactionalSpout` to store a small amount of state. The state is stored in Zookeeper. 
 
-The details of implementing a `TransactionalSpout` are in [the Javadoc](TODO: link).
+The details of implementing a `TransactionalSpout` are in [the Javadoc](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/ITransactionalSpout.html).
 
 #### Partitioned Transactional Spout
 
-A common kind of transactional spout is one that reads the batches from a set of partitions across many queue brokers. For example, this is how [TransactionalKafkaSpout](TODO: link) works. The `IPartitionedTransactionalSpout` automates the bookkeeping work of managing the state for each partition to ensure idempotent replayability. See [the Javadoc](TODO: link) for more details.
+A common kind of transactional spout is one that reads the batches from a set of partitions across many queue brokers. For example, this is how [TransactionalKafkaSpout](https://github.com/nathanmarz/storm-contrib/blob/master/storm-kafka/src/jvm/storm/kafka/TransactionalKafkaSpout.java) works. The `IPartitionedTransactionalSpout` automates the bookkeeping work of managing the state for each partition to ensure idempotent replayability. See [the Javadoc](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/partitioned/IPartitionedTransactionalSpout.html) for more details.
 
 ### Configuration
 
 There's two important bits of configuration for transactional topologies:
 
-1. Zookeeper: By default, transactional topologies will store state in the same Zookeeper instance as used to manage the Storm cluster. You can override this with the "transactional.zookeeper.servers" and "transactional.zookeeper.port" configs.
-2. Number of active batches permissible at once: You must set a limit to the number of batches that can be processed at once. You configure this using the "topology.max.spout.pending" config. If you don't set this config, it will default to 1.
+1. *Zookeeper:* By default, transactional topologies will store state in the same Zookeeper instance as used to manage the Storm cluster. You can override this with the "transactional.zookeeper.servers" and "transactional.zookeeper.port" configs.
+2. *Number of active batches permissible at once:* You must set a limit to the number of batches that can be processed at once. You configure this using the "topology.max.spout.pending" config. If you don't set this config, it will default to 1.
 
 ## Implementation
 
 The implementation for transactional topologies is very elegant. Managing the commit protocol, detecting failures, and pipelining batches seem complex, but everything turns out to be a straightforward mapping to Storm's primitives. 
+
+- Transactional spouts are a sub-topology consisting of a spout and a bolt
+  - the spout is the coordinator and contains a single task
+  - the bolt is the emitter
+  - the bolt subscribes to the coordinator with an all grouping
+  - serialization of metadata is handled by kryo. kryo is initialized ONLY with the registrations defined in the component configuration for the transactionalspout
+- the coordinator uses the acking framework to determine when a batch has been successfully processed, and then to determine when a batch has been successfully committed. 
+- state is stored in zookeeper using RotatingTransactionalState
+- commiting bolts subscribe to the coordinators commit stream using an all grouping
+- CoordinatedBolt is used to detect when a bolt has received all the tuples for a particular batch.
+  - this is the same abstraction that is used in DRPC
+  - for commiting bolts, it waits to receive a tuple from the coordinator's commit stream before calling finishbatch
+  - so it can't call finishbatch until it's received all tuples from all subscribed components AND its received the commit stream tuple (for committers). this ensures that it can't prematurely call finishBatch
+
 
