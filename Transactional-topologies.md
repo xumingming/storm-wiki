@@ -83,7 +83,9 @@ builder.setBolt("sum", new UpdateGlobalCount())
         .globalGrouping("partial-count");
 ```
 
-Let's start with the spout. A transactional topology has a single `TransactionalSpout` that is defined in the constructor of `TransactionalTopologyBuilder`. In this example, `MemoryTransactionalSpout` is used which reads in data from an in-memory partitioned source of data (the `DATA` variable). The second argument defines the fields for the data, and the third argument specifies the maximum number of tuples to emit from each partition per batch of tuples. The interface for defining your own transactional spouts is discussed later on in this tutorial.
+`TransactionalTopologyBuilder` takes as input in the constructor an id for the transactional topology, an id for the spout within the topology, a transactional spout, and optionally the parallelism for the transactional spout. The id for the transactional topology is used to store state about the progress of topology in Zookeeper, so that if you restart the topology it will continue where it left off.
+
+A transactional topology has a single `TransactionalSpout` that is defined in the constructor of `TransactionalTopologyBuilder`. In this example, `MemoryTransactionalSpout` is used which reads in data from an in-memory partitioned source of data (the `DATA` variable). The second argument defines the fields for the data, and the third argument specifies the maximum number of tuples to emit from each partition per batch of tuples. The interface for defining your own transactional spouts is discussed later on in this tutorial.
 
 Now on to the bolts. This topology parallelizes the computation of the global count. The first bolt, `BatchCount`, randomly partitions the input stream using a shuffle grouping and emits the count for each partition. The second bolt, `UpdateGlobalCount`, does a global grouping and sums together the partial counts to get the count for the batch. It then updates the global count in the database if necessary.
 
