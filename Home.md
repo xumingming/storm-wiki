@@ -30,7 +30,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 
 #### Basics
 
-* [Javadoc](http://nathanmarz.github.com/storm/doc/index.html)
+* [Javadoc](http://nathanmarz.github.com/storm)
 * [[Concepts]]
 * [[Guaranteeing message processing]]
 * [[Fault-tolerance]]
