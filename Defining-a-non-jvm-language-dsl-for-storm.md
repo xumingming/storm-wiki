@@ -1,4 +1,4 @@
-The right place to start to learn how to make a non-JVM DSL for Storm is src/storm.thrift. Since Storm topologies are just Thrift structures, and Nimbus is a Thrift daemon, you can create and submit topologies in any language.
+The right place to start to learn how to make a non-JVM DSL for Storm is [src/storm.thrift](https://github.com/nathanmarz/storm/blob/master/src/storm.thrift). Since Storm topologies are just Thrift structures, and Nimbus is a Thrift daemon, you can create and submit topologies in any language.
 
 When you create the Thrift structs for spouts and bolts, the code for the spout or bolt is specified in the ComponentObject struct:
 
