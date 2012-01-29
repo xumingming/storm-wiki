@@ -52,6 +52,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[Clojure DSL]]
 * [[Using non-JVM languages with Storm]]
 * [[Distributed RPC]]
+* [[Transactional topologies]]
 * [[Kestrel and Storm]]
 * [[Direct groupings]]
 
