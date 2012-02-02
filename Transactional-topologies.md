@@ -25,7 +25,7 @@ Suppose you want to do a global count of the tuples in the stream. Instead of st
 
 This logic and the strong ordering of transactions ensures that the count in the database will be accurate even if tuples are replayed.  Credit for this trick of storing a transaction id in the database along with the value goes to the Kafka devs, particularly [this design document](http://incubator.apache.org/kafka/design.html).
 
-Furthermore, notice that the topology can safely update many sources of state in the same transaction and achieve exactly-once semantics. If there's a failure, any updates that already succeeded will skip on the retry, and any updates that failed will properly retry. For example, if you were processing a stream of tweeted urls, you could transactionally update a database that stores a tweet count for each url as well as a database that stores a tweet count for each domain.
+Furthermore, notice that the topology can safely update many sources of state in the same transaction and achieve exactly-once semantics. If there's a failure, any updates that already succeeded will skip on the retry, and any updates that failed will properly retry. For example, if you were processing a stream of tweeted urls, you could update a database that stores a tweet count for each url as well as a database that stores a tweet count for each domain.
 
 There is a significant problem though with this design of processing one tuple at time. Having to wait for each tuple to be _completely processed_ before moving on to the next one is horribly inefficient. It entails a huge amount of database calls (at least one per tuple), and this design makes very little use of the parallelization capabilities of Storm. So it isn't very scalable.
 
