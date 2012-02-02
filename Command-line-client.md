@@ -1,4 +1,6 @@
-This page describes all the commands that are possible with the "storm" command line client. These commands are:
+This page describes all the commands that are possible with the "storm" command line client. To learn how to set up your "storm" client to talk to a remote cluster, follow the instructions in [[Setting up a development environment]].
+
+These commands are:
 
 1. jar
 1. kill
