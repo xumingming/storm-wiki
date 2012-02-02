@@ -48,3 +48,22 @@ Solutions:
  * Make sure the supervisor local dirs are independent (e.g., not sharing a local dir over NFS)
  * Try deleting the local dirs for the supervisors and restarting the daemons. Supervisors create a unique id for themselves and store it locally. When that id is copied to other nodes, Storm gets confused. 
 
+### "Multiple defaults.yaml found" error
+
+Symptoms:
+
+ * When deploying a topology with "storm jar", you get this error
+
+Solution:
+
+ * You're most likely including the Storm jars inside your topology jar. When packaging your topology jar, don't include the Storm jars as Storm will put those on the classpath for you.
+
+### "NoSuchMethodError" when running storm jar
+
+Symptoms:
+
+ * When running storm jar, you get a cryptic "NoSuchMethodError"
+
+Solution:
+
+ * You're deploying your topology with a different version of Storm than you built your topology against. Make sure the storm client you use comes from the same version as the version you compiled your topology against.
