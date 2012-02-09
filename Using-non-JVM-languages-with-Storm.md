@@ -34,8 +34,8 @@ storm shell resources/ python topology.py arg1 arg2
 
 storm shell will then package resources/ into a jar, upload the jar to Nimbus, and call your topology.py script like this:
 
-python topology.py arg1 arg2 {nimbus-host} {nimbus-port} {uploaded-jar-location}
+```python topology.py arg1 arg2 {nimbus-host} {nimbus-port} {uploaded-jar-location}```
 
 Then you can connect to Nimbus using the Thrift API and submit the topology, passing {uploaded-jar-location} into the submitTopology method. For reference, here's the submitTopology definition:
 
-void submitTopology(1: string name, 2: string uploadedJarLocation, 3: string jsonConf, 4: StormTopology topology) throws (1: AlreadyAliveException e, 2: InvalidTopologyException ite);
+```void submitTopology(1: string name, 2: string uploadedJarLocation, 3: string jsonConf, 4: StormTopology topology) throws (1: AlreadyAliveException e, 2: InvalidTopologyException ite);```
