@@ -11,7 +11,7 @@ To develop topologies, you'll need the Storm jars on your classpath. You should 
 <dependency>
   <groupId>storm</groupId>
   <artifactId>storm</artifactId>
-  <version>0.6.1</version>
+  <version>0.6.2</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -27,7 +27,7 @@ If Maven isn't your thing, check out [leiningen](https://github.com/technomancy/
   :jvm-opts ["-Djava.library.path=/usr/local/lib:/opt/local/lib:/usr/lib"]
   :dependencies []
   :dev-dependencies [
-                     [storm "0.6.1"]
+                     [storm "0.6.2"]
                      ])
 ```
 
