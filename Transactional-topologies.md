@@ -66,7 +66,7 @@ When using transactional topologies, Storm does the following for you:
 1. *Manages state:* Storm stores in Zookeeper all the state necessary to do transactional topologies. This includes the current transaction id as well as the metadata defining the parameters for each batch. 
 2. *Coordinates the transactions:* Storm will manage everything necessary to determine which transactions should be processing or committing at any point.
 3. *Fault detection:* Storm leverages the acking framework to efficiently determine when a batch has successfully processed, successfully committed, or failed. Storm will then replay batches appropriately. You don't have to do any acking or anchoring -- Storm manages all of this for you.
-4. *First class batch processing API*: Storm layers an API on top of regular bolts to allow for batch processing of tuples. Storm manages all the coordination for determining when a bolt has received all the tuples for that particular transaction. Storm will also take care of cleaning up any accumulated state for each transaction (like the partial counts).
+4. *First class batch processing API*: Storm layers an API on top of regular bolts to allow for batch processing of tuples. Storm manages all the coordination for determining when a task has received all the tuples for that particular transaction. Storm will also take care of cleaning up any accumulated state for each transaction (like the partial counts).
 
 Finally, another thing to note is that transactional topologies require a source queue that can replay an exact batch of messages. Technologies like [Kestrel](https://github.com/robey/kestrel) can't do this. [Apache Kafka](http://incubator.apache.org/kafka/index.html) is a perfect fit for this kind of spout, and [storm-kafka](https://github.com/nathanmarz/storm-contrib/tree/master/storm-kafka) in [storm-contrib](https://github.com/nathanmarz/storm-contrib) contains a transactional spout implementation for Kafka. 
 
@@ -134,11 +134,11 @@ All tuples emitted within a transactional topology must have the `TransactionAtt
 
 The `TransactionAttempt` contains two values: the "transaction id" and the "attempt id". The "transaction id" is the unique id chosen for this batch and is the same no matter how many times the batch is replayed. The "attempt id" is a unique id for this particular batch of tuples and lets Storm distinguish tuples from different emissions of the same batch. Without the attempt id, Storm could confuse a replay of a batch with tuples from a prior time that batch was emitted. This would be disastrous.
 
-The transaction ids increases by 1 for every batch emitted. So the first batch has id "1", the second has id "2", and so on.
+The transaction id increases by 1 for every batch emitted. So the first batch has id "1", the second has id "2", and so on.
 
 The `execute` method is called for every tuple in the batch. You should accumulate state for the batch in a local instance variable every time this method is called. The `BatchCount` bolt increments a local counter variable for every tuple.
 
-Finally, `finishBatch` is called when the bolt has received all tuples for this particular batch. `BatchCount` emits the partial count to the output stream when this method is called. 
+Finally, `finishBatch` is called when the task has received all tuples intended for it for this particular batch. `BatchCount` emits the partial count to the output stream when this method is called. 
 
 Here's the definition of `UpdateGlobalCount`:
 
