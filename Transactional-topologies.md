@@ -265,7 +265,7 @@ class Value {
   Object count;
   BigInteger txid;
 }
-``` 
+```
 
 For non-idempotent transactional spouts you should instead store a value that looks like this:
 
