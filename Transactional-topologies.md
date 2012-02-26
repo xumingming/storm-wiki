@@ -293,7 +293,7 @@ This logic works because once you commit a particular transaction id for the fir
 
 There's a few more subtle aspects of transactional topologies that make opaque transactional spouts possible.
 
-When a transaction fails, all subsequent transactions in the processing phase are considered failed as well. So they will be reprocessed. Without this behavior, the following situation could happen:
+When a transaction fails, all subsequent transactions in the processing phase are considered failed as well. Each of those transactions will be re-emitted and reprocessed. Without this behavior, the following situation could happen:
 
 1. Transaction A emits tuples 1-50
 2. Transaction B emits tuples 51-100
