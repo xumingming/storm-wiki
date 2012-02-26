@@ -194,7 +194,6 @@ The code for `finishBatch` in `UpdateGlobalCount` gets the current value from th
 
 A more involved transactional topology example that updates multiple databases idempotently can be found in storm-starter in the [TransactionalWords](https://github.com/nathanmarz/storm-starter/blob/master/src/jvm/storm/starter/TransactionalWords.java) class. 
 
-
 ## Transactional Topology API
 
 This section outlines the different pieces of the transactional topology API.
@@ -248,6 +247,69 @@ The details of implementing a `TransactionalSpout` are in [the Javadoc](http://n
 #### Partitioned Transactional Spout
 
 A common kind of transactional spout is one that reads the batches from a set of partitions across many queue brokers. For example, this is how [TransactionalKafkaSpout](https://github.com/nathanmarz/storm-contrib/blob/master/storm-kafka/src/jvm/storm/kafka/TransactionalKafkaSpout.java) works. An `IPartitionedTransactionalSpout` automates the bookkeeping work of managing the state for each partition to ensure idempotent replayability. See [the Javadoc](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/partitioned/IPartitionedTransactionalSpout.html) for more details.
+
+## What if you can't emit the same batch of tuples for a given transaction id?
+
+So far the discussion around transactional topologies has assumed that you can always emit the exact same batch of tuples for the same transaction id. So what do you do if this is not possible?
+
+Consider an example of when this is not possible. Suppose you are reading tuples from a partitioned message broker (stream is partitioned across many machines), and a single transaction will include tuples from all the individual machines. Now suppose one of the nodes goes down at the same time that a transaction fails. Without that node, it is impossible to replay the same batch of tuples you just played for that transaction id.
+
+It turns out that you can still achieve idempotence in your processing with a non-idempotent transactional spout, although this requires a bit more work on your part in developing the topology.
+
+If a batch can change for a given transaction id, then the logic we've been using so far of "skip the update if the transaction id in the database is the same as the id for the current transaction" is no longer valid. This is because the current batch is different than the batch for the last time the transaction was committed, so the result will not necessarily be the same. You can fix this problem by storing a little bit more state in the database. Let's again use the example of storing a global count in the database and suppose the partial count for the batch is stored in the `partialCount` variable.
+
+Instead of storing a value in the database that looks like this:
+
+```java
+class Value {
+  Object count;
+  BigInteger txid;
+}
+``` 
+
+For non-idempotent transactional spouts you should instead store a value that looks like this:
+
+```java
+class Value {
+  Object count;
+  BigInteger txid;
+  Object prevCount;
+}
+```
+
+The logic for the update is as follows:
+
+1. If the transaction id for the current batch is the same as the transaction id in the database, set `val.count = val.prevCount + partialCount`.
+2. Otherwise, set `val.count = val.count + partialCount` and `val.txid = batchTxid`.
+
+This logic works because once you commit a particular transaction id for the first time, all prior transaction ids will never be committed again.
+
+There's a few more subtle aspects of transactional topologies that make opaque transactional spouts possible.
+
+When a transaction fails, all subsequent transactions in the processing phase are considered failed as well. So they will be reprocessed. Without this behavior, the following situation could happen:
+
+1. Transaction A emits tuples 1-50
+2. Transaction B emits tuples 51-100
+3. Transaction A fails
+4. Transaction A emits tuples 1-40
+5. Transaction A commits
+6. Transaction B commits
+7. Transaction C emits tuples 101-150
+
+In this scenario, tuples 41-50 are skipped. By failing all subsequent transactions, this would happen instead:
+
+1. Transaction A emits tuples 1-50
+2. Transaction B emits tuples 51-100
+3. Transaction A fails (and causes Transaction B to fail)
+4. Transaction A emits tuples 1-40
+5. Transaction B emits tuples 41-90
+5. Transaction A commits
+6. Transaction B commits
+7. Transaction C emits tuples 91-140
+
+By failing all subsequent transactions on failure, no tuples are skipped. This also shows that a requirement of transactional spouts is that they always emit where the last transaction left off.
+
+A non-idempotent transactional spout is more concisely referred to as an "OpaqueTransactionalSpout" (opaque is the opposite of idempotent). [IOpaquePartitionedTransactionalSpout](http://nathanmarz.github.com/storm/doc-0.7.0/backtype/storm/transactional/partitioned/IOpaquePartitionedTransactionalSpout.html) is an interface for implementing opaque partitioned transactional spouts, of which [OpaqueTransactionalKafkaSpout](https://github.com/nathanmarz/storm-contrib/blob/master/storm-kafka/src/jvm/storm/kafka/OpaqueTransactionalKafkaSpout.java) is an example. `OpaqueTransactionalKafkaSpout` can withstand losing individual Kafka nodes without sacrificing accuracy as long as you use the update strategy as explained in this section.
 
 ### Configuration
 
