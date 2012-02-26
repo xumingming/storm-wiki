@@ -280,7 +280,7 @@ class Value {
 The logic for the update is as follows:
 
 1. If the transaction id for the current batch is the same as the transaction id in the database, set `val.count = val.prevCount + partialCount`.
-2. Otherwise, set `val.count = val.count + partialCount` and `val.txid = batchTxid`.
+2. Otherwise, set `val.prevCount = val.count`, `val.count = val.count + partialCount` and `val.txid = batchTxid`.
 
 This logic works because once you commit a particular transaction id for the first time, all prior transaction ids will never be committed again.
 
