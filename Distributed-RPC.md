@@ -28,22 +28,15 @@ Storm comes with a topology builder called [LinearDRPCTopologyBuilder](http://na
 Let's look at a simple example. Here's the implementation of a DRPC topology that returns its input argument with a "!" appended:
 
 ```java
-public static class ExclaimBolt implements IBasicBolt {
-    public void prepare(Map conf, TopologyContext context) {
-    }
-
+public static class ExclaimBolt extends BaseBasicBolt {
     public void execute(Tuple tuple, BasicOutputCollector collector) {
         String input = tuple.getString(1);
         collector.emit(new Values(tuple.getValue(0), input + "!"));
     }
 
-    public void cleanup() {
-    }
-
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields("id", "result"));
     }
-
 }
 
 public static void main(String[] args) throws Exception {

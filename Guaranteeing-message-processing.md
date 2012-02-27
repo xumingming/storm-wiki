@@ -102,18 +102,12 @@ Every tuple you process must be acked or failed. Storm uses memory to track each
 A lot of bolts follow a common pattern of reading an input tuple, emitting tuples based on it, and then acking the tuple at the end of the `execute` method. These bolts fall into the categories of filters and simple functions. Storm has an interface called `BasicBolt` that encapsulates this pattern for you. The `SplitSentence` example can be written as a `BasicBolt` like follows:
 
 ```java
-public class SplitSentence implements IBasicBolt {
-        public void prepare(Map conf, TopologyContext context) {
-        }
-
+public class SplitSentence extends BaseBasicBolt {
         public void execute(Tuple tuple, BasicOutputCollector collector) {
             String sentence = tuple.getString(0);
             for(String word: sentence.split(" ")) {
                 collector.emit(new Values(word));
             }
-        }
-
-        public void cleanup() {
         }
 
         public void declareOutputFields(OutputFieldsDeclarer declarer) {
