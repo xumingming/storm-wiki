@@ -53,7 +53,7 @@ There's two things you have to do as a user to benefit from Storm's reliability 
 Specifying a link in the tuple tree is called _anchoring_. Anchoring is done at the same time you emit a new tuple. Let's use the following bolt as an example. This bolt splits a tuple containing a sentence into a tuple for each word:
 
 ```java
-public class SplitSentence implements IRichBolt {
+public class SplitSentence extends BaseRichBolt {
         OutputCollector _collector;
         
         public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
@@ -66,9 +66,6 @@ public class SplitSentence implements IRichBolt {
                 _collector.emit(tuple, new Values(word));
             }
             _collector.ack(tuple);
-        }
-
-        public void cleanup() {
         }
 
         public void declareOutputFields(OutputFieldsDeclarer declarer) {

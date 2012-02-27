@@ -143,48 +143,39 @@ The topology executes as four steps:
 Let's take a look at the `PartialUniquer` bolt:
 
 ```java
-public static class PartialUniquer implements IRichBolt, FinishedCallback {
-    OutputCollector _collector;
-    Map<Object, Set<String>> _sets = new HashMap<Object, Set<String>>();
+public class PartialUniquer extends BaseBatchBolt {
+    BatchOutputCollector _collector;
+    Object _id;
+    Set<String> _followers = new HashSet<String>();
     
-    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
+    @Override
+    public void prepare(Map conf, TopologyContext context, BatchOutputCollector collector, Object id) {
         _collector = collector;
+        _id = id;
     }
 
+    @Override
     public void execute(Tuple tuple) {
-        Object id = tuple.getValue(0);
-        Set<String> curr = _sets.get(id);
-        if(curr==null) {
-            curr = new HashSet<String>();
-            _sets.put(id, curr);
-        }
-        curr.add(tuple.getString(1));
-        _collector.ack(tuple);
+        _followers.add(tuple.getString(1));
+    }
+    
+    @Override
+    public void finishBatch() {
+        _collector.emit(new Values(_id, _followers.size()));
     }
 
-    public void cleanup() {
-    }
-
-    public void finishedId(Object id) {
-        Set<String> curr = _sets.remove(id);
-        int count;
-        if(curr!=null) {
-            count = curr.size();
-        } else {
-            count = 0;
-        }
-        _collector.emit(new Values(id, count));
-    }
-
+    @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields("id", "partial-count"));
     }
 }
 ```
 
-When `PartialUniquer` receives a follower tuple in the `execute` method, it adds it to the set for the request id in an internal `HashMap`. 
+`PartialUniquer` implements `IBatchBolt` by extending `BaseBatchBolt`. A batch bolt provides a first class API to processing a batch of tuples as a concrete unit. A new instance of the batch bolt is created for each request id, and Storm takes care of cleaning up the instances when appropriate. 
 
-`PartialUniquer` also implements the `FinishedCallback` interface, which tells the `LinearDRPCTopologyBuilder` that it wants to be notified when it has received all of the tuples directed towards it for any given request id. This callback is the `finishedId` method. In the callback, `PartialUniquer` emits a single tuple containing the unique count for its subset of follower ids.
+When `PartialUniquer` receives a follower tuple in the `execute` method, it adds it to the set for the request id in an internal `HashSet`. 
+
+Batch bolts provide the `finishBatch` method which is called after all the tuples for this batch targeted at this task have been processed. In the callback, `PartialUniquer` emits a single tuple containing the unique count for its subset of follower ids.
 
 Under the hood, `CoordinatedBolt` is used to detect when a given bolt has received all of the tuples for any given request id. `CoordinatedBolt` makes use of direct streams to manage this coordination.
 

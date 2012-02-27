@@ -57,7 +57,7 @@ Storm uses tuples as its data model. A tuple is a named list of values, and a fi
 Every node in a topology must declare the output fields for the tuples it emits. For example, this bolt declares that it emits 2-tuples with the fields "double" and "triple":
 
 ```java
-public class DoubleAndTripleBolt implements IRichBolt {
+public class DoubleAndTripleBolt extends BaseRichBolt {
     private OutputCollectorBase _collector;
 
     @Override
@@ -70,10 +70,6 @@ public class DoubleAndTripleBolt implements IRichBolt {
         int val = input.getInteger(0);        
         _collector.emit(input, new Values(val*2, val*3));
         _collector.ack(input);
-    }
-
-    @Override
-    public void cleanup() {
     }
 
     @Override
@@ -153,6 +149,10 @@ public static class ExclamationBolt implements IRichBolt {
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
         declarer.declare(new Fields("word"));
     }
+    
+    public Map getComponentConfiguration() {
+        return null;
+    }
 }
 ```
 
@@ -164,7 +164,29 @@ There's a few other things going in in the `execute` method, namely that the inp
 
 The `cleanup` method is called when a Bolt is being shutdown and should cleanup any resources that were opened. There's no guarantee that this method will be called on the cluster: for example, if the machine the task is running on blows up, there's no way to invoke the method. The `cleanup` method is intended for when you run topologies in [[local mode]] (where a Storm cluster is simulated in process), and you want to be able to run and kill many topologies without suffering any resource leaks.
 
-Finally, the `declareOutputFields` method declares that the `ExclamationBolt` emits 1-tuples with one field called "word".
+The `declareOutputFields` method declares that the `ExclamationBolt` emits 1-tuples with one field called "word".
+
+The `getComponentConfiguration` method allows you to configure various aspects of how this component runs. This is a more advanced topic that is explained further on [[Configuration]].
+
+Methods like `cleanup` and `getComponentConfiguration` are often not needed in a bolt implementation. You can define bolts more succinctly by using a base class that provides default implementations where appropriate. `ExclamationBolt` can be written more succinctly by extends `BaseRichBolt`, like so:
+
+```java
+public static class ExclamationBolt extends BaseRichBolt {
+    OutputCollector _collector;
+
+    public void prepare(Map conf, TopologyContext context, OutputCollector collector) {
+        _collector = collector;
+    }
+
+    public void execute(Tuple tuple) {
+        _collector.emit(tuple, new Values(tuple.getString(0) + "!!!"));
+        _collector.ack(tuple);
+    }
+
+    public void declareOutputFields(OutputFieldsDeclarer declarer) {
+        declarer.declare(new Fields("word"));
+    }    
+}
 
 ## Running ExclamationTopology in local mode
 
