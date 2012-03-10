@@ -336,6 +336,8 @@ Here's how transactional spout works:
 8. All committing bolts subscribe to the commit stream using an all grouping, so that they will all receive a notification when the commit happens.
 9. Like the processing phase, the coordinator uses the acking framework to determine whether the commit phase succeeded or not. If it receives an "ack", it marks that transaction as complete in zookeeper.
 
+More notes:
+
 - Transactional spouts are a sub-topology consisting of a spout and a bolt
   - the spout is the coordinator and contains a single task
   - the bolt is the emitter
