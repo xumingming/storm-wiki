@@ -322,6 +322,20 @@ A non-idempotent transactional spout is more concisely referred to as an "Opaque
 
 The implementation for transactional topologies is very elegant. Managing the commit protocol, detecting failures, and pipelining batches seem complex, but everything turns out to be a straightforward mapping to Storm's primitives. 
 
+How the data flow works:
+
+Here's how transactional spout works:
+
+1. Transactional spout is a subtopology consisting of a coordinator spout and an emitter bolt
+2. The coordinator is a regular spout with a parallelism of 1
+3. The emitter is a bolt with a parallelism of P, connected to the coordinator's "batch" stream using an all grouping
+4. When the coordinator determines it's time to enter the processing phase for a transaction, it emits a tuple containing the TransactionAttempt and the metadata for that transaction to the "batch" stream
+5. Because of the all grouping, every single emitter task receives the notification that it's time to emit its portion of the tuples for that transaction attempt
+6. Storm automatically manages the anchoring/acking necessary throughout the whole topology to determine when a transaction has completed the processing phase. The key here is that *the root tuple was created by the coordinator, so the coordinator will receive an "ack" if the processing phase succeeds, and a "fail" if it doesn't succeed for any reason (failure or timeout).
+7. If the processing phase succeeds, and all prior transactions have successfully committed, the coordinator emits a tuple containing the TransactionAttempt to the "commit" stream.
+8. All committing bolts subscribe to the commit stream using an all grouping, so that they will all receive a notification when the commit happens.
+9. Like the processing phase, the coordinator uses the acking framework to determine whether the commit phase succeeded or not. If it receives an "ack", it marks that transaction as complete in zookeeper.
+
 - Transactional spouts are a sub-topology consisting of a spout and a bolt
   - the spout is the coordinator and contains a single task
   - the bolt is the emitter
@@ -334,5 +348,4 @@ The implementation for transactional topologies is very elegant. Managing the co
   - this is the same abstraction that is used in DRPC
   - for commiting bolts, it waits to receive a tuple from the coordinator's commit stream before calling finishbatch
   - so it can't call finishbatch until it's received all tuples from all subscribed components AND its received the commit stream tuple (for committers). this ensures that it can't prematurely call finishBatch
-
 
