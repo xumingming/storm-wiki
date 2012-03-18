@@ -187,6 +187,7 @@ public static class ExclamationBolt extends BaseRichBolt {
         declarer.declare(new Fields("word"));
     }    
 }
+```
 
 ## Running ExclamationTopology in local mode
 
