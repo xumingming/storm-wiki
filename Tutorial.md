@@ -168,7 +168,7 @@ The `declareOutputFields` method declares that the `ExclamationBolt` emits 1-tup
 
 The `getComponentConfiguration` method allows you to configure various aspects of how this component runs. This is a more advanced topic that is explained further on [[Configuration]].
 
-Methods like `cleanup` and `getComponentConfiguration` are often not needed in a bolt implementation. You can define bolts more succinctly by using a base class that provides default implementations where appropriate. `ExclamationBolt` can be written more succinctly by extends `BaseRichBolt`, like so:
+Methods like `cleanup` and `getComponentConfiguration` are often not needed in a bolt implementation. You can define bolts more succinctly by using a base class that provides default implementations where appropriate. `ExclamationBolt` can be written more succinctly by extending `BaseRichBolt`, like so:
 
 ```java
 public static class ExclamationBolt extends BaseRichBolt {
