@@ -56,6 +56,7 @@ You can also come to the #storm-user room on [freenode](http://freenode.net/). Y
 * [[Transactional topologies]]
 * [[Kestrel and Storm]]
 * [[Direct groupings]]
+* [[Hooks]]
 
 #### Advanced
 
