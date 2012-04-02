@@ -1,0 +1,4 @@
+Storm provides hooks with which you can insert custom code to run on any number of events within Storm. You create a hook by extending the [BaseTaskHook](http://nathanmarz.github.com/storm/doc-0.7.1/backtype/storm/hooks/BaseTaskHook.html) class and overriding the appropriate method for the event you want to catch. There are two ways to register your hook:
+
+1. In the prepare method of your spout or bolt using the [TopologyContext#addTaskHook](http://nathanmarz.github.com/storm/doc-0.7.1/backtype/storm/task/TopologyContext.html) method.
+2. Through the Storm configuration using the ["topology.auto.task.hooks"](http://nathanmarz.github.com/storm/doc-0.7.1/backtype/storm/Config.html#TOPOLOGY_AUTO_TASK_HOOKS) config. These hooks are automatically registered in every spout or bolt, and are useful for doing things like integrating with a custom monitoring system.
