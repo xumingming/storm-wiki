@@ -74,7 +74,7 @@ Its perfectly fine to launch new threads in bolts that do processing asynchronou
 
 Part of defining a topology is specifying for each bolt which streams it should receive as input. A stream grouping defines how that stream should be partitioned among the bolt's tasks.
 
-There are six types of stream groupings in Storm:
+There are seven built-in stream groupings in Storm, and you can implement a custom stream grouping by implementing the [CustomStreamGrouping](http://nathanmarz.github.com/storm/doc-0.7.1/backtype/storm/grouping/CustomStreamGrouping.html) interface:
 
 1. **Shuffle grouping**: Tuples are randomly distributed across the bolt's tasks in a way such that each bolt is guaranteed to get an equal number of tuples.
 2. **Fields grouping**: The stream is partitioned by the fields specified in the grouping. For example, if the stream is grouped by the "user-id" field, tuples with the same "user-id" will always go to the same task, but tuples with different "user-id"'s may go to different tasks.
@@ -82,6 +82,7 @@ There are six types of stream groupings in Storm:
 4. **Global grouping**: The entire stream goes to a single one of the bolt's tasks. Specifically, it goes to the task with the lowest id.
 5. **None grouping**: This grouping specifies that you don't care how the stream is grouped. Currently, none groupings are equivalent to shuffle groupings. Eventually though, Storm will push down bolts with none groupings to execute in the same thread as the bolt or spout they subscribe from (when possible).
 6. **Direct grouping**: This is a special kind of grouping. A stream grouped this way means that the __producer__ of the tuple decides which task of the consumer will receive this tuple. Direct groupings can only be declared on streams that have been declared as direct streams. Tuples emitted to a direct stream must be emitted using one of the [emitDirect](http://nathanmarz.github.com/storm/doc/backtype/storm/task/OutputCollector.html#emitDirect(int, int, java.util.List) methods. A bolt can get the task ids of its consumers by either using the provided [TopologyContext](http://nathanmarz.github.com/storm/doc/backtype/storm/task/TopologyContext.html) or by keeping track of the output of the `emit` method in [OutputCollector](http://nathanmarz.github.com/storm/doc/backtype/storm/task/OutputCollector.html) (which returns the task ids that the tuple was sent to).  
+7. **Local or shuffle grouping**: If the target bolt has one or more tasks in the same worker process, tuples will be shuffled to just those in-process tasks. Otherwise, this acts like a normal shuffle grouping.
 
 **Resources:**
 
