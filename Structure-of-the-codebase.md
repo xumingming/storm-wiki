@@ -1,5 +1,3 @@
-Structure of codebase
-
 There are three distinct layers to Storm's codebase.
 
 First, Storm was designed from the very beginning to be compatible with multiple languages. Nimbus is a Thrift service and topologies are defined as Thrift structures. The usage of Thrift allows Storm to be used from any language.
