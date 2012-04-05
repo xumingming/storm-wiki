@@ -47,6 +47,7 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 * STDIN: (JSON) The Topology context
 * The rest happens in a while(true) loop
 * STDIN: A tuple! This is a JSON encoded structure like this:
+
 ```
 {
     // The tuple's id
@@ -61,7 +62,9 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 	"tuple": ["snow white and the seven dwarfs", "field2", 3]
 }
 ```
+
 * STDOUT: The results of your bolt, JSON encoded. This can be a sequence of acks, fails, emits, and/or logs. Emits look like:
+
 ```
 {
 	"command": "emit",
@@ -75,7 +78,9 @@ file lets the supervisor know the PID so it can shutdown the process later on.
 	"tuple": ["field1", 2, 3]
 }
 ```
+
 An ack looks like:
+
 ```
 {
 	"command": "ack",
@@ -83,7 +88,9 @@ An ack looks like:
 	"id": 123123
 }
 ```
+
 A fail looks like:
+
 ```
 {
 	"command": "fail",
@@ -91,7 +98,9 @@ A fail looks like:
 	"id": 123123
 }
 ```
+
 A "log" will log a message in the worker log. It looks like:
+
 ```
 {
 	"command": "log",
@@ -100,6 +109,7 @@ A "log" will log a message in the worker log. It looks like:
 
 }
 ```
+
 * STDOUT: emit "sync" as a single line by itself when the bolt has finished emitting/acking/failing and is ready for the next input
 
 ### sync
