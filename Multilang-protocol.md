@@ -1,4 +1,4 @@
-This page explains the multilang protocol as of Storm 0.7.1. Versions prior to 0.7.1 used a somewhat different protocol, documented [here](https://github.com/nathanmarz/storm/wiki/Storm-multi-language-protocol-(versions-0.7.0-and-below)).
+This page explains the multilang protocol as of Storm 0.7.1. Versions prior to 0.7.1 used a somewhat different protocol, documented [here](https://github.com/nathanmarz/storm/wiki/Storm-multi-language-protocol-(versions-0.7.0-and-below\)).
 
 # Storm Multi-Language Protocol
 
