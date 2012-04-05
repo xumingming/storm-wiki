@@ -12,6 +12,7 @@ program via the shell using Java's ProcessBuilder class.
 ## Output fields
 
 Output fields are part of the Thrift definition of the topology. This means that when you multilang in Java, you need to create a bolt that extends ShellBolt, implements IRichBolt, and declare the fields in `declareOutputFields` (similarly for ShellSpout).
+
 You can learn more about this on [[Concepts]]
 
 ## Protocol Preamble
@@ -42,6 +43,7 @@ STDIN and STDOUT.
 ### Initial Handshake
 
 The initial handshake is the same for both types of shell components:
+
 * STDIN: Setup info. This is a JSON object with the Storm configuration, Topology context, and a PID directory, like this:
 
 ```
@@ -65,6 +67,7 @@ The initial handshake is the same for both types of shell components:
 Your script should create an empty file named with its PID in this directory. e.g.
 the PID is 1234, so an empty file named 1234 is created in the directory. This
 file lets the supervisor know the PID so it can shutdown the process later on.
+
 * STDOUT: Your PID, in a JSON object, like `{"pid": 1234}`. The shell component will log the PID to its log.
 
 What happens next depends on the type of component:
@@ -72,6 +75,7 @@ What happens next depends on the type of component:
 ### Spouts
 
 Shell spouts are synchronous. The rest happens in a while(true) loop:
+
 * STDIN: Either a next, ack, or fail command.
 
 "next" is the equivalent of ISpout's `nextTuple`. It looks like:
@@ -138,6 +142,7 @@ Note that, similarly to ISpout, all of the spouts in the worker will be locked u
 ### Bolts
 
 The shell bolt protocol is asynchronous. You will receive tuples on STDIN as soon as they are available, and you may emit, ack, and fail, and log at any time by writing to STDOUT, as follows:
+
 * STDIN: A tuple! This is a JSON encoded structure like this:
 
 ```
