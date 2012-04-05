@@ -1,3 +1,5 @@
+This page explains the multilang protocol for versions 0.7.0 and below. The protocol changed in version 0.7.1.
+
 # Storm Multi-Language Protocol
 
 ## The ShellBolt
