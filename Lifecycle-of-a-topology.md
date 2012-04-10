@@ -1,0 +1,30 @@
+- start with "jar" command implementation
+  - runs your class and sets the storm.jar env variable
+  - this just runs that class with those arguments locally
+  - when StormSubmitter is called, it:
+     - uploads the jar if it hasn't been uploaded before
+         - uploading done via Nimbus thrift interface
+            - beginFileUpload returns a path in Nimbus's inbox
+            - 15 kb uploaded at a time through uploadChunk
+            - finishFileUpload called when it's done
+    - calls submitTopology on the Nimbus thrift interface with the location of the jar in Nimbus's inbox, the name of the topology, the conf serialized as json (json is used so that writing DSL's in any language is as easy as possible), and the thrift structure for the topology
+- nimbus normalizes the configuration:
+  - ensure that every task has the same serialization configuration (critical for serialization to work correctly)
+      - merges component configuration serialization registrations into the global set of registrations
+- sets up the static state for the topology
+   - code/configs are kept on Nimbus LFS (too big for ZK). files kept in {nimbus local dir}/stormdist/{storm id} directory
+   - task -> component mapping is kept in ZK (setup-storm-static)
+   - setup-heartbeats creates zk "directory" for the task heartbeats
+   - mk-assignment creates an "assignment" for the topology, which:
+       - link to record definition
+       - master-code-dir -> used by supervisors when downloading jars/configs for that topology
+       - task->node+port -> Map from task id to the worker it shoudl be running on (the worker is specified by a node id + port)
+       - node->host (map from node id to host -- used so tasks know which machines to connect to to communicate with other workers) -> node ids are used so that you can have multiple supervisors on a single host (which you would want to do with mesos integration, for example)
+       - task->start-time-secs - the time that each task was started. used by nimbus when monitoring topologies, as tasks are given more time to heartbeat when they are first launched (configured via nimbus.task.launch.secs config)
+- topologies are launched in a deactivated mode, nimbus then starts the topology by calling "start-storm"
+- cluster state diagram (show all nodes and what's kept everywhere)
+
+- supervisor detects that there's a new assignment, and checks to see what has been assigned to its machine (by looking for tasks assigned to its node id in the assignment)
+- supervisor runs 2 threads
+    - "synchronize-supervisor" - download code for topologies assigned to this machine if haven't downloaded yet. write into local filesystem what's supposed to be running on this machine (port -> [storm id, list of task ids]
+   - "sync-processes" - read from LFS what synchronize-supervisor wrote and start/stop worker processes to get in sync with that state. this starts the topology's workers with the downloaded jars/confs on the classpath.
