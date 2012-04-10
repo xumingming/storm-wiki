@@ -1,6 +1,7 @@
 This section of the wiki is dedicated to explaining how Storm is implemented. You should have a good grasp of how to use Storm before reading these sections. 
 
 [[Structure of the codebase]]
+[[Lifecycle of a topology]]
 
 - Cluster state
   - Metadata in Zookeeper
