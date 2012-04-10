@@ -12,6 +12,8 @@ The following sections explain each of these layers in more detail.
 
 The first place to look to understand the structure of Storm's codebase is the [storm.thrift](https://github.com/nathanmarz/storm/blob/0.7.1/src/storm.thrift) file.
 
+Storm uses [this fork](https://github.com/nathanmarz/thrift) of Thrift to produce the generated code. This "fork" is actually Thrift 7 with all the Java packages renamed to be `org.apache.thrift7`. Otherwise, it's identical to Thrift 7. This fork was done because of the lack of backwards compatibility in Thrift and the need for many people to use other versions of Thrift in their Storm topologies.
+
 Every spout or bolt in a topology is given a user-specified identifier called the "component id". The component id is used to specify subscriptions from a bolt to the output streams of other spouts or bolts. A [StormTopology]9https://github.com/nathanmarz/storm/blob/0.7.1/src/storm.thrift#L91) structure contains a map from component id to component for each type of component (spouts and bolts).
 
 Spouts and bolts have the same Thrift definition, so let's just take a look at the [Thrift definition for bolts](https://github.com/nathanmarz/storm/blob/0.7.1/src/storm.thrift#L79). It contains a `ComponentObject` struct and a `ComponentCommon` struct.
