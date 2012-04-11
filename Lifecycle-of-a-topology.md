@@ -24,7 +24,7 @@ First a couple of important notes about topologies:
 - Nimbus receives the topology submission. [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L639)
 - Nimbus normalizes the topology configuration. The main purpose of normalization is to ensure that every single task will have the same serialization registrations, which is critical for getting serialization working correctly. [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L557) 
 - Nimbus sets up the static state for the topology [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L661)
-    - Jars and configs are kept on local filesystem because they're too big for Zookeeper. The jar and configs are copied into the path <nimbus local dir>/stormdist/<topology id>
+    - Jars and configs are kept on local filesystem because they're too big for Zookeeper. The jar and configs are copied into the path {nimbus local dir}/stormdist/{topology id}
     - `setup-storm-static` writes task -> component mapping into ZK
     - `setup-heartbeats` creates a ZK "directory" in which tasks can heartbeat
 - Nimbus calls `mk-assignment` to assign tasks to machines [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L458) 
