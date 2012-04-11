@@ -1,6 +1,6 @@
 This page explains in detail the lifecycle of a topology from running the "storm jar" command to uploading the topology to Nimbus to the supervisors starting/stopping workers to workers and tasks setting themselves up. It also explains how Nimbus monitors topologies and how topologies are shutdown when they are killed.
 
-*Starting a topology*
+## Starting a topology
 
 - "storm jar" command executes your class with the specified arguments. The only special thing that "storm jar" does is set the "storm.jar" environment variable for use by `StormSubmitter` later. [code](https://github.com/nathanmarz/storm/blob/0.7.1/bin/storm#L101)
 - When your code uses `StormSubmitter.submitTopology`, `StormSubmitter` takes the following actions:
@@ -45,7 +45,7 @@ This page explains in detail the lifecycle of a topology from running the "storm
   - Tasks set up routing function which takes in a stream and an output tuple and returns a list of task ids to send the tuple to [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/task.clj#L207) (there's also a 3-arity version used for direct streams)
   - Tasks set up the spout-specific or bolt-specific code with [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/task.clj#L241)
    
-*Topology Monitoring*
+## Topology Monitoring
 
 - Nimbus monitors the topology during its lifetime
    - Schedules recurring task on the timer thread to check the topologies [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L623)
@@ -55,7 +55,7 @@ This page explains in detail the lifecycle of a topology from running the "storm
       - `mk-assignments` checks heartbeats and reassigns workers as necessary
       - Any reassignments change the state in ZK, which will trigger supervisors to synchronize and start/stop workers
       
-*Killing a topology*
+## Killing a topology
 
 - "storm kill" command runs this code which just calls the Nimbus Thrift interface to kill the topology: [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/command/kill_topology.clj)
 - Nimbus receives the kill command [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L671)
