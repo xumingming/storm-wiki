@@ -2,8 +2,8 @@ This page explains in detail the lifecycle of a topology from running the "storm
 
 First a couple of important notes about topologies:
 
-1. The actual topology run is different than the topology the user specifies. The actual topology has streams and an "acker" bolt added to manage the acking framework (used to guarantee data processing). The implicit topology is created via the [system-topology!](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/common.clj#L188) function.
-2. `system-topology!` is used when Nimbus is creating tasks for the topology [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L316) and in the worker so it knows where it needs to route messages to [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L90)
+1. The actual topology that runs is different than the topology the user specifies. The actual topology has implicit streams and an implicit "acker" bolt added to manage the acking framework (used to guarantee data processing). The implicit topology is created via the [system-topology!](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/common.clj#L188) function.
+2. `system-topology!` is used in two places: when Nimbus is creating tasks for the topology [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/nimbus.clj#L316), and in the worker so it knows where it needs to route messages to [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L90)
 
 ## Starting a topology
 
