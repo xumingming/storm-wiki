@@ -1,0 +1,4 @@
+- one "receiver port" on each worker (virtual port). routes to the in memory task ports
+- Kryo serialization
+- worker send thread
+- ZeroMQ
