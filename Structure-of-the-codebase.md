@@ -8,7 +8,7 @@ Third, Storm's implementation is largely in Clojure. Line-wise, Storm is about h
 
 The following sections explain each of these layers in more detail.
 
-**storm.thrift**
+### storm.thrift
 
 The first place to look to understand the structure of Storm's codebase is the [storm.thrift](https://github.com/nathanmarz/storm/blob/0.7.1/src/storm.thrift) file.
 
@@ -33,7 +33,7 @@ The `ComponentObject` defines the implementation for the bolt. It can be one of 
 
 Note that the structure spouts also have a `ComponentCommon` field, and so spouts can also have declarations to consume other input streams. Yet the Storm Java API does not provide a way for spouts to consume other streams, and if you put any input declarations there for a spout you would get an error when you tried to submit the topology. The reason that spouts have an input declarations field is not for users to use, but for Storm itself to use. Storm adds implicit streams and bolts to the topology to set up the [acking framework](https://github.com/nathanmarz/storm/wiki/Guaranteeing-message-processing), and two of these implicit streams are from the acker bolt to each spout in the topology. The acker sends "ack" or "fail" messages along these streams whenever a tuple tree is detected to be completed or failed. The code that transforms the user's topology into the runtime topology is located [here](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/common.clj#L188).
 
-**Java interfaces**
+### Java interfaces
 
 The interfaces for Storm are generally specified as Java interfaces. The main interfaces are:
 
@@ -53,7 +53,7 @@ Spouts and bolts are serialized into the Thrift definition of the topology as de
 One subtle aspect of the interfaces is the difference between `IBolt` and `ISpout` vs. `IRichBolt` and `IRichSpout`. The main difference between them is the addition of the `declareOutputFields` method in the "Rich" versions of the interfaces. The reason for the split is that the output fields declaration for each output stream needs to be part of the Thrift struct (so it can be specified from any language), but as a user you want to be able to declare the streams as part of your class. What `TopologyBuilder` does when constructing the Thrift representation is call `declareOutputFields` to get the declaration and convert it into the Thrift structure. The conversion happens [at this portion](https://github.com/nathanmarz/storm/blob/0.7.1/src/jvm/backtype/storm/topology/TopologyBuilder.java#L205) of the `TopologyBuilder` code. 
 
 
-**Implementation**
+### Implementation
 
 Specifying all the functionality via Java interfaces ensures that every feature of Storm is available via Java. Moreso, the focus on Java interfaces ensures that the user experience from Java-land is pleasant as well.
 
@@ -61,7 +61,7 @@ The implementation of Storm, on the other hand, is primarily in Java. While the 
 
 Here's a summary of the purpose of the main Java packages and Clojure namespace:
 
-***Java packages***
+#### Java packages
 
 [backtype.storm.coordination](https://github.com/nathanmarz/storm/tree/0.7.1/src/jvm/backtype/storm/coordination): Implements the pieces required to coordinate batch-processing on top of Storm, which both DRPC and transactional topologies use. `CoordinatedBolt` is the most important class here.
 
@@ -90,7 +90,7 @@ Here's a summary of the purpose of the main Java packages and Clojure namespace:
 [backtype.storm.utils](https://github.com/nathanmarz/storm/tree/0.7.1/src/jvm/backtype/storm/tuple): Data structures and miscellaneous utilities used throughout the codebase.
 
 
-***Clojure namespaces***
+#### Clojure namespaces
 
 [backtype.storm.bootstrap](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/bootstrap.clj): Contains a helpful macro to import all the classes and namespaces that are used throughout the codebase.
 
