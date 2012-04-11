@@ -2,6 +2,10 @@
 
 Some of the issues on the [issue tracker](https://github.com/nathanmarz/storm/issues) are marked with the "Newbie" label. If you're interesting in contributing to Storm but don't know where to begin, these are good issues to start with. These issues aren't anticipated to be a lot of work, require learning about only an isolated portion of the codebase, and are a great way to get your feet wet with learning the codebase.
 
+### Learning the codebase
+
+The [[Implementation docs]] section of the wiki gives detailed walkthroughs of the codebase. Reading through these docs is highly recommended to understand the codebase.
+
 ### Contribution process
 
 Contributions to the Storm codebase should be sent as GitHub pull requests. If there's any problems to the pull request we can iterate on it using GitHub's commenting features.
