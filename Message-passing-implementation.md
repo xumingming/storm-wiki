@@ -1,7 +1,7 @@
 This page walks through how emitting and transferring tuples works in Storm.
 
 - Worker is responsible for message transfer
-   - `refresh-connections` is called every "task.refresh.poll.secs" or whenever an assignment in ZK changes. It manages connections to other workers and maintains a mapping from task -> worker [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L123)
+   - `refresh-connections` is called every "task.refresh.poll.secs" or whenever assignment in ZK changes. It manages connections to other workers and maintains a mapping from task -> worker [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L123)
    - Provides a "transfer function" that is used by tasks to send tuples to other tasks. The transfer function takes in a task id and a tuple, and it serializes the tuple and puts it onto a "transfer queue". There is a single transfer queue for each worker. [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L56)
    - The serializer is thread-safe [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/jvm/backtype/storm/serialization/KryoTupleSerializer.java#L26)
    - The worker has a single thread which drains the transfer queue and sends the messages to other workers [code](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/daemon/worker.clj#L185)
