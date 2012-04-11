@@ -98,7 +98,7 @@ Here's a summary of the purpose of the main Java packages and Clojure namespace:
 
 [backtype.storm.cluster](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/cluster.clj): All Zookeeper logic used in Storm daemons is encapsulated in this file. This code manages how cluster state (like what tasks are running where, what spout/bolt each task runs as) is mapped to the Zookeeper "filesystem" API.
 
-[backtype.storm.command.*]](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/command): These namespaces implement various commands for the `storm` command line client. These implementations are very short.
+[backtype.storm.command.*](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/command): These namespaces implement various commands for the `storm` command line client. These implementations are very short.
 
 [backtype.storm.config](https://github.com/nathanmarz/storm/blob/0.7.1/src/clj/backtype/storm/config.clj): Implementation of config reading/parsing code for Clojure. Also has utility functions for determining what local path nimbus/supervisor/daemons should be using for various things. e.g. the `master-inbox` function will return the local path that Nimbus should use when jars are uploaded to it.
 
