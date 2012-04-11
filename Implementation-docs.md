@@ -2,12 +2,7 @@ This section of the wiki is dedicated to explaining how Storm is implemented. Yo
 
 - [[Structure of the codebase]]
 - [[Lifecycle of a topology]]
-
-- Passing messages around
-  - one "receiver port" (virtual port)
-  - Kryo serialization
-  - worker send thread
-  - ZeroMQ
+- [[Message passing implementation]]
 - Acking framework implementation
 - How transactional topologies work
    - subtopology for TransactionalSpout
