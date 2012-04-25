@@ -13,6 +13,8 @@ Feel free to ask questions on Storm's mailing list: http://groups.google.com/gro
 
 You can also come to the #storm-user room on [freenode](http://freenode.net/). You can usually find a Storm developer there to help you out.
 
+Follow [@stormprocessor](https://twitter.com/stormprocessor) on Twitter for updates on the project.
+
 ### Related projects
 
 * [storm-contrib](https://github.com/nathanmarz/storm-contrib)
