@@ -2,7 +2,6 @@
 - creating topologies in another language is easy since topologies are just thrift structures (link to storm.thrift)
 - implementing spouts and bolts in another language is called a "multilang components" or "shelling"
    - Here's a specification of the protocol: [[Multilang protocol]]
-   - currently you can only define multilang bolts, but this will be remedied soon
    - the thrift structure lets you define multilang components explicitly as a program and a script (e.g., python and the file implementing your bolt)
    - In Java, you override ShellBolt or ShellSpout to create multilang components
        - note that output fields declarations happens in the thrift structure, so in Java you create multilang components like the following:
