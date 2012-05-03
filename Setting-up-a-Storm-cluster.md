@@ -23,7 +23,7 @@ A few notes about Zookeeper deployment:
 
 Next you need to install Storm's dependencies on Nimbus and the worker machines. These are:
 
-1. [ZeroMQ 2.1.7](http://www.zeromq.org/area:download) - Note that you should **not** install version 2.1.10, as that version has some serious bugs that can cause strange issues for a Storm cluster.
+1. [ZeroMQ 2.1.7](http://www.zeromq.org/area:download) - Note that you should **not** install version 2.1.10, as that version has some serious bugs that can cause strange issues for a Storm cluster. In some rare cases, users have reported an "IllegalArgumentException" bubbling up from the ZeroMQ code when using 2.1.7 – in these cases downgrading to 2.1.4 fixed the problem.
 2. [JZMQ](http://github.com/nathanmarz/jzmq)
 3. Java 6
 4. Python 2.6.6
