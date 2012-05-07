@@ -1,5 +1,3 @@
-## Documentation
-
 ### Basics
 
 * [Javadoc](http://nathanmarz.github.com/storm)
