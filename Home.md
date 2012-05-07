@@ -7,6 +7,11 @@ Storm is a distributed realtime computation system. Similar to how Hadoop provid
 * [[Setting up development environment]]
 * [[Creating a new Storm project]]
 
+### Documentation
+
+* [Regular documentation](https://github.com/nathanmarz/storm/wiki/Documentation)
+* [Javadoc](http://nathanmarz.github.com/storm)
+
 ### Getting help
 
 Feel free to ask questions on Storm's mailing list: http://groups.google.com/group/storm-user
@@ -27,41 +32,3 @@ Follow [@stormprocessor](https://twitter.com/stormprocessor) on Twitter for upda
 
 * [[Contributing to Storm]]
 * [[Project ideas]]
-
-### Documentation
-
-#### Basics
-
-* [Javadoc](http://nathanmarz.github.com/storm)
-* [[Concepts]]
-* [[Configuration]]
-* [[Guaranteeing message processing]]
-* [[Fault-tolerance]]
-* [[Command line client]]
-
-#### Setup and deploying
-
-* [[Setting up a Storm cluster]]
-* [[Troubleshooting]]
-* [[Upgrading an existing Storm cluster]]
-* [[Running topologies on a production cluster]]
-* [[Local mode]]
-* [[Maven]]
-
-#### Intermediate
-
-* [[Serialization]]
-* [[Common patterns]]
-* [[Clojure DSL]]
-* [[Using non-JVM languages with Storm]]
-* [[Distributed RPC]]
-* [[Transactional topologies]]
-* [[Kestrel and Storm]]
-* [[Direct groupings]]
-* [[Hooks]]
-
-#### Advanced
-
-* [[Defining a non-JVM language DSL for Storm]]
-* [[Multilang protocol]] (how to provide support for another language)
-* [[Implementation docs]]
