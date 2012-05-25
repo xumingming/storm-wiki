@@ -2,7 +2,7 @@
 
 <tr>
 <td>
-Groupon
+<a href="http://groupon.com">Groupon</a>
 </td>
 <td>
 <p>
@@ -13,7 +13,7 @@ At Groupon we use Storm to build real-time data integration systems. Storm helps
 
 <tr>
 <td>
-Rubicon Project
+<a href="http://www.rubiconproject.com/">Rubicon Project</a>
 </td>
 <td>
 <p>
@@ -24,7 +24,7 @@ Storm is being used in production mode at the Rubicon Project to analyze the res
 
 <tr>
 <td>
-premise.is
+<a href="http://premise.is/">premise.is</a>
 </td>
 <td>
 <p>
@@ -38,7 +38,7 @@ We've been using Storm in production since January 2012 as a streaming, time-ind
 
 <tr>
 <td>
-Ooyala
+<a href="http://www.ooyala.com/">Ooyala</a>
 </td>
 <td>
 <p>
@@ -57,7 +57,7 @@ Ooyala will be deploying Storm in production to give our customers real-time str
 
 <tr>
 <td>
-RocketFuel
+<a href="http://rocketfuel.com/">RocketFuel</a>
 </td>
 <td>
 <p>
@@ -68,7 +68,7 @@ At Rocket Fuel (an ad network) we are building a real time platform on top of St
 
 <tr>
 <td>
-QuickLizard
+<a href="http://quicklizard.com/">QuickLizard</a>
 </td>
 <td>
 <p>
@@ -87,7 +87,7 @@ In plans: use Storm also for real time data mining model calculation that should
 
 <tr>
 <td>
-spider.io
+<a href="http://spider.io/">spider.io</a>
 </td>
 <td>
 <p>
@@ -98,7 +98,7 @@ At spider.io we've been using Storm as a core part of our classification engine 
 
 <tr>
 <td>
-8digits
+<a href="http://8digits.com/">8digits</a>
 </td>
 <td>
 <p>
@@ -109,7 +109,7 @@ At 8digits, we are using Storm in our analytics engine, which is one of the most
 
 <tr>
 <td>
-FullContact
+<a href="http://www.fullcontact.com/">FullContact</a>
 </td>
 <td>
 <p>
@@ -120,7 +120,7 @@ At FullContact we currently use Storm as the backbone of the system which synchr
 
 <tr>
 <td>
-Twitter
+<a href="http://twitter.com">Twitter</a>
 </td>
 <td>
 <p>
@@ -131,7 +131,7 @@ Storm powers Twitter's publisher analytics product, processing every tweet and c
 
 <tr>
 <td>
-Alipay
+<a href="https://www.alipay.com/">Alipay</a>
 </td>
 <td>
 <p>
@@ -151,7 +151,7 @@ Log processing, more than 6T data per day.
 
 <tr>
 <td>
-NaviSite
+<a href="http://navisite.com/">NaviSite</a>
 </td>
 <td>
 <p>
@@ -166,7 +166,7 @@ We have Storm deployed on the NaviSite Cloud platform.  We have a ZK cluster of 
 
 <tr>
 <td>
-Heartbyte
+<a href="http://heartbyte.com/">Heartbyte</a>
 </td>
 <td>
 <p>
@@ -178,7 +178,7 @@ At Heartbyte, Storm is a central piece of our realtime audience participation pl
 
 <tr>
 <td>
-Alibaba
+<a href="http://www.alibaba.com/">Alibaba</a>
 </td>
 <td>
 <p>
@@ -189,7 +189,7 @@ Alibaba is the leading B2B e-commerce website in the world. We use storm to proc
 
 <tr>
 <td>
-Nodeable
+<a href="http://www.nodeable.com/">Nodeable</a>
 </td>
 <td>
 <p>
@@ -200,7 +200,7 @@ Nodeable uses Storm to deliver real-time continuous computation of the data we c
 
 <tr>
 <td>
-TwitSprout
+<a href="https://twitsprout.com/">TwitSprout</a>
 </td>
 <td>
 <p>
@@ -211,7 +211,7 @@ At TwitSprout, we use Storm to analyze activity on Twitter to monitor mentions o
 
 <tr>
 <td>
-HappyElements
+<a href="http://www.happyelements.com/">HappyElements</a>
 </td>
 <td>
 <p>
@@ -222,7 +222,7 @@ HappyElements
 
 <tr>
 <td>
-IDEXX Laboratories
+<a href="http://www.idexx.com/view/xhtml/en_us/corporate/home.jsf">IDEXX Laboratories</a>
 </td>
 <td>
 <p>
@@ -241,7 +241,7 @@ Our current cluster consists of four supervisor machines running 110 tasks insid
 
 <tr>
 <td>
-Admaster
+<a href="http://www.admaster.com.cn/">Admaster</a>
 </td>
 <td>
 <p>
@@ -258,7 +258,7 @@ Our cluster has 8 nodes, process several billions messages per day, about 200GB.
 
 <tr>
 <td>
-SocialMetrix
+<a href="http://socialmetrix.com/en/">SocialMetrix</a>
 </td>
 <td>
 <p>
@@ -269,7 +269,7 @@ Since its release, Storm was a perfect fit to our needs of real time monitoring.
 
 <tr>
 <td>
-Taobao
+<a href="http://www.taobao.com/index_global.php">Taobao</a>
 </td>
 <td>
 <p>
@@ -280,7 +280,7 @@ We make statistics of logs and extract useful information from the statistics in
 
 <tr>
 <td>
-Needium
+<a href="http://needium.com/">Needium</a>
 </td>
 <td>
 <p>
@@ -291,10 +291,11 @@ At Needium we love Ruby and JRuby. The Storm platform offers the right balance b
 
 <tr>
 <td>
-MercadoLibre
+<a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
 </td>
 </tr>
 
 </table>
+
