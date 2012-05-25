@@ -35,4 +35,4 @@ Follow [@stormprocessor](https://twitter.com/stormprocessor) on Twitter for upda
 
 ### Powered by Storm
 
-[[Powered By]]
+[Companies and projects powered by Storm](https://github.com/nathanmarz/storm/wiki/Powered-By)
