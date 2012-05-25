@@ -155,7 +155,7 @@ Log processing, more than 6T data per day.
 </td>
 <td>
 <p>
-We are using Storm as part of our server event log monitoring/auditing system.  We send log messages from thousands of servers into a RabbitMQ cluster and then use Storm to check each message against a set of regular expressions.  If there is a match (< 1% of messages), then the message is sent to a bolt that stores data in a Mongo database.  Right now we are handling a load of somewhere around 5-10k messages per second, however we tested our existing RabbitMQ + Storm clusters up to about 50k per second.  We have plans to do real time intrusion detection as an enhancement to the current log message reporting system. 
+We are using Storm as part of our server event log monitoring/auditing system.  We send log messages from thousands of servers into a RabbitMQ cluster and then use Storm to check each message against a set of regular expressions.  If there is a match (&lt; 1% of messages), then the message is sent to a bolt that stores data in a Mongo database.  Right now we are handling a load of somewhere around 5-10k messages per second, however we tested our existing RabbitMQ + Storm clusters up to about 50k per second.  We have plans to do real time intrusion detection as an enhancement to the current log message reporting system. 
 </p>
 
 <p>
