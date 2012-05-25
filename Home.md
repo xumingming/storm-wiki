@@ -32,3 +32,7 @@ Follow [@stormprocessor](https://twitter.com/stormprocessor) on Twitter for upda
 
 * [[Contributing to Storm]]
 * [[Project ideas]]
+
+### Powered by Storm
+
+[[Powered By]]
