@@ -1,4 +1,4 @@
-Want to be added to this page? Send an email to [here](mailto:nathan.marz@gmail.com).
+Want to be added to this page? Send an email [here](mailto:nathan.marz@gmail.com).
 
 <table>
 
