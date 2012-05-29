@@ -297,7 +297,7 @@ At Needium we love Ruby and JRuby. The Storm platform offers the right balance b
 </td>
 <td>
 <p>
-Parse.ly is using Storm for its web/content analytics system. We have a home-grown data procressing and storage system built with Python and Celery, with backend stores in Redis and MongoDB. We are now using Storm for real-time unique visitor counting and are exploring options for using it for some of our richer data sources such as social share data and semantic content metadata.
+Parse.ly is using Storm for its web/content analytics system. We have a home-grown data processing and storage system built with Python and Celery, with backend stores in Redis and MongoDB. We are now using Storm for real-time unique visitor counting and are exploring options for using it for some of our richer data sources such as social share data and semantic content metadata.
 </p>
 </td>
 </tr>
