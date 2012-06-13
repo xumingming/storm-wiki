@@ -20,7 +20,7 @@ This topology reads sentences off of a Kestrel queue, splits the sentences into 
 
 ![Tuple tree](images/tuple_tree.png)
 
-Storm considers a tuple coming off a spout "fully processed" when every message in the tree has been processed. A tuple is considered failed when its tree of messages fails to be fully processed within a specified timeout. This timeout can be configured on a topology-specific basis using the [Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_MESSAGE_TIMEOUT_SECS) configuration and defaults to 30 seconds.
+Storm considers a tuple coming off a spout "fully processed" when the tuple tree has been exhausted and every message in the tree has been processed. A tuple is considered failed when its tree of messages fails to be fully processed within a specified timeout. This timeout can be configured on a topology-specific basis using the [Config.TOPOLOGY_MESSAGE_TIMEOUT_SECS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_MESSAGE_TIMEOUT_SECS) configuration and defaults to 30 seconds.
 
 ### What happens if a message is fully processed or fails to be fully processed?
 
@@ -91,7 +91,11 @@ anchors.add(tuple2);
 _collector.emit(anchors, new Values(1, 2, 3));
 ```
 
-Multi-anchoring adds the output tuple into multiple tuple trees.
+Multi-anchoring adds the output tuple into multiple tuple trees. Note that it's also possible for multi-anchoring to break the tree structure and create tuple DAGs, like so:
+
+![Tuple DAG](images/tuple-dag.png)
+
+Storm's implementation works for DAGs as well as trees (pre-release it only worked for trees, and the name "tuple tree" stuck).
 
 Anchoring is how you specify the tuple tree -- the next and final piece to Storm's reliability API is specifying when you've finished processing an individual tuple in the tuple tree. This is done by using the `ack` and `fail` methods on the `OutputCollector`. If you look back at the `SplitSentence` example, you can see that the input tuple is acked after all the word tuples are emitted.
 
@@ -127,9 +131,9 @@ As always in software design, the answer is "it depends." Storm 0.7.0 introduced
 
 ### How does Storm implement reliability in an efficient way?
 
-A Storm topology has a set of special "acker" tasks that track the tree of tuples for every spout tuple. When an acker sees that a tree is complete, it sends a message to the spout task that created the spout tuple to ack the message. You can set the number of acker tasks for a topology in the topology configuration using [Config.TOPOLOGY_ACKERS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_ACKERS). Storm defaults TOPOLOGY_ACKERS to one task -- you will need to increase this number for topologies processing large amounts of messages. 
+A Storm topology has a set of special "acker" tasks that track the DAG of tuples for every spout tuple. When an acker sees that a DAG is complete, it sends a message to the spout task that created the spout tuple to ack the message. You can set the number of acker tasks for a topology in the topology configuration using [Config.TOPOLOGY_ACKERS](http://nathanmarz.github.com/storm/doc/backtype/storm/Config.html#TOPOLOGY_ACKERS). Storm defaults TOPOLOGY_ACKERS to one task -- you will need to increase this number for topologies processing large amounts of messages. 
 
-The best way to understand Storm's reliability implementation is to look at the lifecycle of tuples and tuple trees. When a tuple is created in a topology, whether in a spout or a bolt, it is given a random 64 bit id. These ids are used by ackers to track the tuple tree for every spout tuple.
+The best way to understand Storm's reliability implementation is to look at the lifecycle of tuples and tuple DAGs. When a tuple is created in a topology, whether in a spout or a bolt, it is given a random 64 bit id. These ids are used by ackers to track the tuple DAG for every spout tuple.
 
 Every tuple knows the ids of all the spout tuples for which it exists in their tuple trees. When you emit a new tuple in a bolt, the spout tuple ids from the tuple's anchors are copied into the new tuple. When a tuple is acked, it sends a message to the appropriate acker tasks with information about how the tuple tree changed. In particular it tells the acker "I am now completed within the tree for this spout tuple, and here are the new tuples in the tree that were anchored to me". 
 
