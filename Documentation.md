@@ -7,6 +7,13 @@
 * [[Fault-tolerance]]
 * [[Command line client]]
 
+### Trident
+
+* [[Trident tutorial]]
+* [[Trident API overview]]
+* [[Trident state]]
+* [[Trident spouts]]
+
 ### Setup and deploying
 
 * [[Setting up a Storm cluster]]
