@@ -23,7 +23,7 @@ As mentioned, Storm uses Kryo for serialization. To implement custom serializers
 Adding custom serializers is done through the "topology.kryo.register" property in your topology config. It takes a list of registrations, where each registration can take one of two forms:
 
 1. The name of a class to register. In this case, Storm will use Kryo's `FieldsSerializer` to serialize the class. This may or may not be optimal for the class -- see the Kryo docs for more details.
-2. A map from the name of a class to register to an implementation of [com.esotericsoftware.kryo.Serializer](http://kryo.googlecode.com/svn/api/com/esotericsoftware/kryo/Serializer.html). 
+2. A map from the name of a class to register to an implementation of [com.esotericsoftware.kryo.Serializer](http://code.google.com/p/kryo/source/browse/trunk/src/com/esotericsoftware/kryo/Serializer.java).
 
 Let's look at an example.
 
