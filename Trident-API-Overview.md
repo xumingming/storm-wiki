@@ -45,9 +45,9 @@ mystream.each(new Fields("b"), new MyFunction(), new Fields("d")))
 The resulting tuples would have fields ["a", "b", "c", "d"] and look like this:
 
 ```
-[1, 2, 3, 2]
-[1, 2, 3, 2]
-[4, 1, 6, 1]
+[1, 2, 3, 0]
+[1, 2, 3, 1]
+[4, 1, 6, 0]
 ```
 
 ### Filters
