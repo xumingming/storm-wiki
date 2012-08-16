@@ -145,7 +145,7 @@ You're told when a state update is beginning, when a state update is ending, and
 Suppose you have a home-grown database that contains user location information and you want to be able to access it from Trident. Your State implementation would have methods for getting and setting user information:
 
 ```java
-public class LocationDB {
+public class LocationDB implements State {
     public void beginCommit(Long txid) {    
     }
     
