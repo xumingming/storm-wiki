@@ -204,7 +204,7 @@ QueryFunction's execute in two steps. First, Trident collects a batch of reads t
 You can see that this code doesn't take advantage of the batching that Trident does, since it just queries the LocationDB one at a time. So a better way to write the LocationDB would be like this:
 
 ```java
-public class LocationDB {
+public class LocationDB implements State {
     public void beginCommit(Long txid) {    
     }
     
@@ -245,7 +245,7 @@ To update state, you make use of the StateUpdater interface. Here's a StateUpdat
 
 ```java
 public class LocationUpdater extends BaseStateUpdater<LocationDB> {
-    public void updateState(MapState state, List<TridentTuple> tuples, TridentCollector collector) {
+    public void updateState(LocationDB state, List<TridentTuple> tuples, TridentCollector collector) {
         List<Long> ids = new ArrayList<Long>();
         List<String> locations = new ArrayList<String>();
         for(TridentTuple t: tuples) {
