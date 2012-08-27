@@ -178,7 +178,7 @@ Trident provides the QueryFunction interface for writing Trident operations that
 TridentTopology topology = new TridentTopology();
 TridentState locations = topology.newStaticState(new LocationDBFactory());
 topology.newStream("myspout", spout)
-        .stateQuery(new Fields("userid"), new QueryLocation(), new Fields("location"))
+        .stateQuery(locations, new Fields("userid"), new QueryLocation(), new Fields("location"))
 ```
 
 Now let's take a look at what the implementation of QueryLocation would look like:
