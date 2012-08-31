@@ -304,6 +304,31 @@ Parse.ly is using Storm for its web/content analytics system. We have a home-gro
 
 <tr>
 <td>
+<a href="http://www.crowdflower.com/">CrowdFlower</a>
+</td>
+<td>
+<p>
+CrowdFlower is using Storm with Kafka to generalize our data stream
+aggregation and realtime computation infrastructure. We replaced our
+homegrown aggregation solutions with Storm because it simplified the
+creation of fault tolerant systems. We were already using Zookeeper
+and Kafka, so Storm allowed us to build more generic abstractions for
+our analytics using tools that we had already deployed and
+battle-tested in production.
+</p>
+
+<p>
+We are currently writing to DynamoDB from Storm, so we are able to
+scale our capacity quickly by bringing up additional supervisors and
+tweaking the throughput on our Dynamo tables. We look forward to
+exploring other uses for Storm in our system, especially with the
+recent release of Trident.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
@@ -311,4 +336,3 @@ Parse.ly is using Storm for its web/content analytics system. We have a home-gro
 </tr>
 
 </table>
-
