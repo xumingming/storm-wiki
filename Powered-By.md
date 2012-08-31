@@ -329,6 +329,21 @@ recent release of Trident.
 
 <tr>
 <td>
+<a href="http://www.dsbox.com">Digital Sandbox</a>
+</td>
+<td>
+<p>
+At Digital Sandbox we use Storm to enable our open source information feed monitoring system.  The system uses Storm to constantly monitor and pull data from structured and unstructured information sources across the internet.  For each found item, our topology applies natural language processing based concept analysis, temporal analysis, geospatial analytics and a prioritization algorithm to enable users to monitor large special events, public safety operations, and topics of interest to a multitude of individual users and teams.
+</p>
+ 
+<p>
+Our system is built using Storm for feed retrieval and annotation, Python with Flask and jQuery for business logic and web interfaces, and MongoDB for data persistence. We use NTLK for natural language processing and the WordNet, GeoNames, and OpenStreetMap databases to enable feed item concept extraction and geolocation.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
