@@ -304,6 +304,17 @@ Parse.ly is using Storm for its web/content analytics system. We have a home-gro
 
 <tr>
 <td>
+<a href="http://gumgum.com/">GumGum</a>
+</td>
+<td>
+<p>
+GumGum, the leading in-image advertising platform for publishers and brands, uses Storm to produce real-time data. Storm and Trident-based topologies consume various ad-related events from Kafka and persist the aggregations in MySQL and HBase. This architecture will eventually replace most existing daily Hadoop map reduce jobs. There are also plans for Kafka + Storm to replace existing distributed queue processing infrastructure built with Amazon SQS.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.crowdflower.com/">CrowdFlower</a>
 </td>
 <td>
