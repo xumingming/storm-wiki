@@ -354,11 +354,19 @@ Our system is built using Storm for feed retrieval and annotation, Python with F
 </tr>
 
 <tr>
+<td><a href="http://www.weather.com/">The Weather Channel</a></td>
+<td>
+<p>At Weather Central we use several Storm topologies to ingest and persist weather data. Each topology is responsible for fetching one dataset from an internal or external network (the Internet), reshaping the records for use by our company, and persisting the records to relational databases. It is particularly useful to have an automatic mechanism for repeating attempts to download and manipulate the data when there is a hiccup.</p>
+</td>
+</tr>
+
+<tr>
 <td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
 </td>
 </tr>
+
 
 </table>
