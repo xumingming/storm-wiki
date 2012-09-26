@@ -59,6 +59,19 @@ Ooyala will be deploying Storm in production to give our customers real-time str
 
 <tr>
 <td>
+<a href="http://www.wego.com/">Wego</a>
+</td>
+<td>
+<p>About Wego, we are one of the world’s most comprehensive travel metasearch engines, operating in 42 markets worldwide and used by millions of travelers to save time, pay less and travel more. We compare and display real-time flights, hotel pricing and availability from hundreds of leading travel sites from all around the world on one simple screen.</p>
+
+<p>At the heart of our products, Storm helps us to stream real-time meta-search data from our partners to end-users. Since data comes from many sources and with different timing, Storm topology concept naturally solves concurrency issues while helping us to continuously merge, slice and clean all the data. Additionally with a few tricks and tools provided in Storm we can easily apply incremental update to improve the flow our data (1-5GB/minute).</p>
+ 
+<p>With its simplicity, scalability, and flexibility, Storm does not only improve our current products but more importantly changes the way we work with data. Instead of keeping data static and crunching it once a while, we constantly move data all around, making use of different technologies, evaluating new ideas and building new products. We stream critical data to memory for fast access while continuously crunching and directing huge amount of data into various engines so that we can evaluate and make use of data instantly. Previously, this kind of system requires to setup and maintain quite a few things but with Storm all we need is half day of coding and a few seconds to deploy. In this sense we never think Storm is to serve our products but rather to evolve our products.</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://rocketfuel.com/">RocketFuel</a>
 </td>
 <td>
