@@ -1,3 +1,5 @@
+(Note: this walkthrough is out of date as of 0.8.0. 0.8.0 revamped the message passing infrastructure to be based on the Disruptor)
+
 This page walks through how emitting and transferring tuples works in Storm.
 
 - Worker is responsible for message transfer
