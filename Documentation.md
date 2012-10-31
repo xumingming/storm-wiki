@@ -6,7 +6,7 @@
 * [[Guaranteeing message processing]]
 * [[Fault-tolerance]]
 * [[Command line client]]
-* [Understanding the parallelism of a Storm topology](http://www.michael-noll.com/blog/2012/10/16/understanding-the-parallelism-of-a-storm-topology/)
+* [[Understanding the parallelism of a Storm topology]]
 
 ### Trident
 
