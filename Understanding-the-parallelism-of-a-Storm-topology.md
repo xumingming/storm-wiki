@@ -48,7 +48,7 @@ The following sections give an overview of the various configuration options and
 
 Here is an example code snippet to show these settings in practice:
 
-```
+```java
 topologyBuilder.setBolt("green-bolt", new GreenBolt(), 2)
                .setNumTasks(4)
                .shuffleGrouping("blue-spout);
@@ -64,7 +64,7 @@ The following illustration shows how a simple topology would look like in operat
 
 The ``GreenBolt`` was configured as per the code snippet above whereas ``BlueSpout`` and ``YellowBolt`` only set the parallelism hint (number of executors). Here is the relevant code:
 
-```
+```java
 Config conf = new Config();
 conf.setNumWorkers(2); // use two worker processes
 
