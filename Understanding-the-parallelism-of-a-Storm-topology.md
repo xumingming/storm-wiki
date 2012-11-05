@@ -109,8 +109,6 @@ $ storm rebalance mytopology -n 5 -e blue-spout=3 -e yellow-bolt=10
 
 # References for this article
 
-To compile this article (and to write my related test code) I used information primarily from the following sources:
-
 * [[Concepts]]
 * [[Configuration]]
 * [[Running topologies on a production cluster]]
