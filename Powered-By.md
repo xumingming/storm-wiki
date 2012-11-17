@@ -14,26 +14,41 @@ At Groupon we use Storm to build real-time data integration systems. Storm helps
 </tr>
 
 <tr>
+<td><a href="http://www.weather.com/">The Weather Channel</a></td>
 <td>
-<a href="http://www.rubiconproject.com/">Rubicon Project</a>
+<p>At Weather Central we use several Storm topologies to ingest and persist weather data. Each topology is responsible for fetching one dataset from an internal or external network (the Internet), reshaping the records for use by our company, and persisting the records to relational databases. It is particularly useful to have an automatic mechanism for repeating attempts to download and manipulate the data when there is a hiccup.</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://www.fullcontact.com/">FullContact</a>
 </td>
 <td>
 <p>
-Storm is being used in production mode at the Rubicon Project to analyze the results of auctions of ad impressions on its RTB exchange as they occur.  It is currently processing around 650 million auction results in three data centers daily (with 3 separate Storm clusters). One simple application is identifying new creatives (ads) in real time for ad quality purposes.  A more sophisticated application is an "Inventory Valuation Service" that uses DRPC to return appraisals of new impressions before the auction takes place.  The appraisals are used for various optimization problems, such as deciding whether to auction an impression or skip it when close to maximum capacity.
+At FullContact we currently use Storm as the backbone of the system which synchronizes our Cloud Address Book with third party services such as Google Contacts and Salesforce. We also use it to provide real-time support for our contact graph analysis and federated contact search systems.
 </p>
 </td>
 </tr>
 
 <tr>
 <td>
-<a href="http://premise.is/">premise.is</a>
+<a href="http://twitter.com">Twitter</a>
 </td>
 <td>
 <p>
-We're building a platform for alternative, bottom-up, high-granularity econometric data capture, particularly targeting opaque developing economies (i.e., Argentina might lie about their inflation statistics, but their black market certainly doesn't). Basically we get to funnel hedge fund money into improving global economic transparency. 
+Storm powers Twitter's publisher analytics product, processing every tweet and click that happens on Twitter to provide analytics for Twitter's publisher partners. Storm integrates with the rest of Twitter's infrastructure, including Cassandra, the Kestrel infrastructure, and Mesos. Many other projects are underway using Storm, including projects in the areas of revenue optimization, anti-spam, and content discovery.
 </p>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://www.rubiconproject.com/">Rubicon Project</a>
+</td>
+<td>
 <p>
-We've been using Storm in production since January 2012 as a streaming, time-indexed web crawl + extraction + machine learning-based semantic markup flow (about 60 physical nodes comparable to m1.large; generating a modest 25GB/hr incremental). We wanted to have an end-to-end push-based system where new inputs get percolated through the topology in realtime and appear on the website, with no batch jobs required in between steps. Storm has been really integral to realizing this goal.
+Storm is being used in production mode at the Rubicon Project to analyze the results of auctions of ad impressions on its RTB exchange as they occur.  It is currently processing around 650 million auction results in three data centers daily (with 3 separate Storm clusters). One simple application is identifying new creatives (ads) in real time for ad quality purposes.  A more sophisticated application is an "Inventory Valuation Service" that uses DRPC to return appraisals of new impressions before the auction takes place.  The appraisals are used for various optimization problems, such as deciding whether to auction an impression or skip it when close to maximum capacity.
 </p>
 </td>
 </tr>
@@ -56,6 +71,44 @@ Ooyala will be deploying Storm in production to give our customers real-time str
 </p>
 </td>
 </tr>
+
+<tr>
+<td>
+<a href="http://www.taobao.com/index_global.php">Taobao</a>
+</td>
+<td>
+<p>
+We make statistics of logs and extract useful information from the statistics in almost real-time with Storm.  Logs are read from Kafka-like persistent message queues into spouts, then processed and emitted over the topologies to compute desired results, which are then stored into distributed databases to be used elsewhere. Input log count varies from 2 millions to 1.5 billion every day, whose size is up to 2 terabytes among the projects.  The main challenge here is not only real-time processing of big data set; storing and persisting result is also a challenge and needs careful design and implementation.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://www.alibaba.com/">Alibaba</a>
+</td>
+<td>
+<p>
+Alibaba is the leading B2B e-commerce website in the world. We use storm to process the application log and the data change in database to supply realtime stats for data apps.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<a href="http://premise.is/">premise.is</a>
+</td>
+<td>
+<p>
+We're building a platform for alternative, bottom-up, high-granularity econometric data capture, particularly targeting opaque developing economies (i.e., Argentina might lie about their inflation statistics, but their black market certainly doesn't). Basically we get to funnel hedge fund money into improving global economic transparency. 
+</p>
+<p>
+We've been using Storm in production since January 2012 as a streaming, time-indexed web crawl + extraction + machine learning-based semantic markup flow (about 60 physical nodes comparable to m1.large; generating a modest 25GB/hr incremental). We wanted to have an end-to-end push-based system where new inputs get percolated through the topology in realtime and appear on the website, with no batch jobs required in between steps. Storm has been really integral to realizing this goal.
+</p>
+</td>
+</tr>
+
+
 
 <tr>
 <td>
@@ -122,27 +175,7 @@ At 8digits, we are using Storm in our analytics engine, which is one of the most
 </td>
 </tr>
 
-<tr>
-<td>
-<a href="http://www.fullcontact.com/">FullContact</a>
-</td>
-<td>
-<p>
-At FullContact we currently use Storm as the backbone of the system which synchronizes our Cloud Address Book with third party services such as Google Contacts and Salesforce. We also use it to provide real-time support for our contact graph analysis and federated contact search systems.
-</p>
-</td>
-</tr>
 
-<tr>
-<td>
-<a href="http://twitter.com">Twitter</a>
-</td>
-<td>
-<p>
-Storm powers Twitter's publisher analytics product, processing every tweet and click that happens on Twitter to provide analytics for Twitter's publisher partners. Storm integrates with the rest of Twitter's infrastructure, including Cassandra, the Kestrel infrastructure, and Mesos. Many other projects are underway using Storm, including projects in the areas of revenue optimization, anti-spam, and content discovery.
-</p>
-</td>
-</tr>
 
 <tr>
 <td>
@@ -191,16 +224,6 @@ At Heartbyte, Storm is a central piece of our realtime audience participation pl
 </tr>
 
 
-<tr>
-<td>
-<a href="http://www.alibaba.com/">Alibaba</a>
-</td>
-<td>
-<p>
-Alibaba is the leading B2B e-commerce website in the world. We use storm to process the application log and the data change in database to supply realtime stats for data apps.
-</p>
-</td>
-</tr>
 
 <tr>
 <td>
@@ -282,16 +305,6 @@ Since its release, Storm was a perfect fit to our needs of real time monitoring.
 </td>
 </tr>
 
-<tr>
-<td>
-<a href="http://www.taobao.com/index_global.php">Taobao</a>
-</td>
-<td>
-<p>
-We make statistics of logs and extract useful information from the statistics in almost real-time with Storm.  Logs are read from Kafka-like persistent message queues into spouts, then processed and emitted over the topologies to compute desired results, which are then stored into distributed databases to be used elsewhere. Input log count varies from 2 millions to 1.5 billion every day, whose size is up to 2 terabytes among the projects.  The main challenge here is not only real-time processing of big data set; storing and persisting result is also a challenge and needs careful design and implementation.
-</p>
-</td>
-</tr>
 
 <tr>
 <td>
@@ -363,13 +376,6 @@ At Digital Sandbox we use Storm to enable our open source information feed monit
 <p>
 Our system is built using Storm for feed retrieval and annotation, Python with Flask and jQuery for business logic and web interfaces, and MongoDB for data persistence. We use NTLK for natural language processing and the WordNet, GeoNames, and OpenStreetMap databases to enable feed item concept extraction and geolocation.
 </p>
-</td>
-</tr>
-
-<tr>
-<td><a href="http://www.weather.com/">The Weather Channel</a></td>
-<td>
-<p>At Weather Central we use several Storm topologies to ingest and persist weather data. Each topology is responsible for fetching one dataset from an internal or external network (the Internet), reshaping the records for use by our company, and persisting the records to relational databases. It is particularly useful to have an automatic mechanism for repeating attempts to download and manipulate the data when there is a hiccup.</p>
 </td>
 </tr>
 
