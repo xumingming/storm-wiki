@@ -375,6 +375,15 @@ Our system is built using Storm for feed retrieval and annotation, Python with F
 
 <tr>
 <td>
+<a href="http://hallo.me/">Hallo</a>
+</td>
+<td>
+With several mainstream celebrities and very popular YouTubers using Hallo to communicate with their fans, we needed a good solution to notify users via push notifications and make sure that the celebrity messages were delivered to follower timelines in near realtime. Our initial approach for broadcast push notifications would take anywhere from 2-3 hours. After re-engineering our solution on top of Storm, that time has been cut down to 5 minutes on a very small cluster. With the user base growing and user need for realtime communication, we are very happy knowing that we can easily scale Storm by adding nodes to maintain a baseline QoS for our users.
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
