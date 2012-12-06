@@ -390,6 +390,15 @@ With several mainstream celebrities and very popular YouTubers using Hallo to co
 
 <tr>
 <td>
+<a href="http://keepcon.com/">Keepcon</a>
+</td>
+<td>
+We provide moderation services for classifieds, kids communities, newspapers, chat rooms, facebook fan pages, youtube channels, reviews, and all kind of UGC. We use storm for the integration with our clients, find evidences within each text, persisting on cassandra and elastic search and sending results back to our clients.
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
