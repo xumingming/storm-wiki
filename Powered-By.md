@@ -319,6 +319,15 @@ Our current cluster consists of four supervisor machines running 110 tasks insid
 
 <tr>
 <td>
+<a href="http://www.umeng.com/">Umeng</a>
+</td>
+<td>
+Umeng is the leading and largest provider of mobile app analytics and developer services platform in China. Storm powers Umeng's realtime analytics platform, processing billions of data points per day and growing. We also use Storm in other products which requires realtime processing and it has become the core infrastructure in our company. 
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.admaster.com.cn/">Admaster</a>
 </td>
 <td>
