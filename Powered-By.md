@@ -44,6 +44,7 @@ Storm powers Twitter's publisher analytics product, processing every tweet and c
 
 <tr>
 <td>
+<a href="www.infochimps.com">Infochimps</a>
 </td>
 <td>
 <p>
@@ -58,12 +59,23 @@ In much the same way that Hadoop provides batch ETL and large-scale batch analyt
 DDS uses both Storm and Kafka along with a host of additional technologies to provide an enterprise-class real-time stream processing solution with features including:
 </p>
 
-
-* Integration connections to any variety of data sources in a way that is robust yet as non-invasive
-* Optimizations for highly scalable, reliable data import and distributed ETL (extract, transform, load), fulfilling data transport needs
-* Developer tools for rapid development of decorators, which perform the real-time stream processing
-* Guaranteed delivery framework and data failover snapshots to send processed data to analytics systems, databases, file systems, and applications with extreme reliability
-* Rapid solution development and deployment, along with our expert Big Data methodology and best practices
+<ul>
+<li>
+Integration connections to any variety of data sources in a way that is robust yet as non-invasive
+</li>
+<li>
+Optimizations for highly scalable, reliable data import and distributed ETL (extract, transform, load), fulfilling data transport needs
+</li>
+<li>
+Developer tools for rapid development of decorators, which perform the real-time stream processing
+</li>
+<li>
+Guaranteed delivery framework and data failover snapshots to send processed data to analytics systems, databases, file systems, and applications with extreme reliability
+</li>
+<li>
+Rapid solution development and deployment, along with our expert Big Data methodology and best practices
+</li>
+</ul>
 
 <p>Infochimps has extensive experience in deploying its DDS to power large-scale clickstream web data flows, massive Twitter stream processes, Foursquare event processing, customer purchase data, product pricing data, and more.
 </p>
