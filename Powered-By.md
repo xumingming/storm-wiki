@@ -44,6 +44,34 @@ Storm powers Twitter's publisher analytics product, processing every tweet and c
 
 <tr>
 <td>
+</td>
+<td>
+<p>
+Infochimps uses Storm as part of its Big Data Enterprise Cloud. Specifically, it uses Storm as the basis for one of three of its cloud data services - namely, Data Delivery Services (DDS), which uses Storm to provide a fault-tolerant and linearly scalable enterprise data collection, transport, and complex in-stream processing cloud service. 
+</p>
+
+<p>
+In much the same way that Hadoop provides batch ETL and large-scale batch analytical processing, the Data Delivery Service provides real-time ETL and large-scale real-time analytical processing — the perfect complement to Hadoop (or in some cases, what you needed instead of Hadoop).
+</p>
+
+<p>
+DDS uses both Storm and Kafka along with a host of additional technologies to provide an enterprise-class real-time stream processing solution with features including:
+</p>
+
+
+* Integration connections to any variety of data sources in a way that is robust yet as non-invasive
+* Optimizations for highly scalable, reliable data import and distributed ETL (extract, transform, load), fulfilling data transport needs
+* Developer tools for rapid development of decorators, which perform the real-time stream processing
+* Guaranteed delivery framework and data failover snapshots to send processed data to analytics systems, databases, file systems, and applications with extreme reliability
+* Rapid solution development and deployment, along with our expert Big Data methodology and best practices
+
+<p>Infochimps has extensive experience in deploying its DDS to power large-scale clickstream web data flows, massive Twitter stream processes, Foursquare event processing, customer purchase data, product pricing data, and more.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.rubiconproject.com/">Rubicon Project</a>
 </td>
 <td>
