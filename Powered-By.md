@@ -448,6 +448,25 @@ We provide moderation services for classifieds, kids communities, newspapers, ch
 
 <tr>
 <td>
+<a href="http://www.visiblemeasures.com/">Visible Measures</a>
+</td>
+<td>
+<p>
+Visible Measures powers video campaigns and analytics for publishers and
+advertisers, tracking data for hundreds of million of videos, and billions
+of views. We are using Storm to process viewing behavior data in real time and make
+the information immediately available to our customers. We read events from
+various push and pull sources, including a Kestrel queue, filter and
+enrich the events in Storm topologies, and persist the events to Redis,
+HDFS and Vertica for real-time analytics and archiving. We are currently
+experimenting with Trident topologies, and figuring out how to move more
+of our Hadoop-based batch processing into Storm.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
