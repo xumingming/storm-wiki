@@ -467,6 +467,16 @@ of our Hadoop-based batch processing into Storm.
 
 <tr>
 <td>
+<a href="http://www.o2mc.eu/en/">O2mc</a>
+</td>
+<td>
+<p>
+One of the core products of O2mc is called O2mc Community. O2mc Community performs multilingual, realtime sentiment analysis with very low latency and distributes the analyzed results to numerous clients. The input is extracted from source systems like Twitter, Facebook, e-mail and many more. After the analysis has taken place on Storm, the results are streamed to any output system ranging from HTTP streaming to clients to direct database insertion to an external business process engine to kickstart a process.</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
