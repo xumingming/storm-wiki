@@ -44,7 +44,7 @@ Storm powers Twitter's publisher analytics product, processing every tweet and c
 
 <tr>
 <td>
-<a href="www.infochimps.com">Infochimps</a>
+<a href="http://www.infochimps.com">Infochimps</a>
 </td>
 <td>
 <p>
