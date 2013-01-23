@@ -477,6 +477,17 @@ One of the core products of O2mc is called O2mc Community. O2mc Community perfor
 
 <tr>
 <td>
+<a href="http://www.theladders.com">The Ladders</a>
+</td>
+<td>
+<p>
+TheLadders has been committed to finding the right person for the right job since 2003. We're using Storm in a variety of ways and are happy with its versatility, robustness, and ease of development. We use Storm in conjunction with RabbitMQ for such things as sending hiring alerts: when a recruiter submits a job to our site, Storm processes that event and will aggregate jobseekers whose profiles match the position. That list is subsequently batch-processed to send an email to the list of jobseekers. We also use Storm to persist events for Business Intelligence and internal event tracking. We're continuing to find uses for Storm where fast, asynchronous, real-time event processing is a must.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
