@@ -488,6 +488,17 @@ TheLadders has been committed to finding the right person for the right job sinc
 
 <tr>
 <td>
+<a href="http://semlab.nl">SemLab</a>
+</td>
+<td>
+<p>
+SemLab develops software for knowledge discovery and information support. Our ViewerPro platform uses information extraction, natural language processing and semantic web technologies to extract structured data from unstructured sources, in domains such as financial news feeds and legal documents. We have succesfully adapted ViewerPro's processing framework to run on top of Storm. The transition to Storm has made ViewerPro a much more scalable product, allowing us to process more in less time.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
