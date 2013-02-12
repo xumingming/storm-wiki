@@ -33,11 +33,11 @@ You can download the contributor agreement [here](https://dl.dropbox.com/u/13390
 
 Make sure you fill in all the fields. These are:
 
- 1. Username for Storm
- 2. Username for storm-contrib (should be same as above)
- 3. Name
- 4. Company's name
- 5. Mailing address
- 6. Telephone and email
+ 1. Full Name
+ 2. Username(s)
+ 3. Mailing address
+ 4. Country
+ 5. Telephone
+ 6. Email
  7. Signature
- 8. Date
+ 8. Date 
