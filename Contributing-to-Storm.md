@@ -29,7 +29,7 @@ Documentation contributions are very welcome! The best way to send contributions
 
 To contribute to Storm, you will need to sign a contributor agreement. This is a standard agreement used by most major open source projects to provide legal protection to the project and community. Basically you just agree to share ownership of the code with the project.
 
-You can download the contributor agreement [here](https://dl.dropbox.com/u/133901206/contributor-agreement.pdf). The easiest way to fill it out is with [HelloFax](https://www.hellofax.com/), where you can fill in the fields, sign it, and email it back all digitally. The whole process should only take a couple minutes. Email the filled and signed agreement to nathan.marz@gmail.com. 
+You can download the contributor agreement [here](https://dl.dropbox.com/u/133901206/storm-apache-style-cla.txt). The easiest way to fill it out is with [HelloFax](https://www.hellofax.com/), where you can fill in the fields, sign it, and email it back all digitally. The whole process should only take a couple minutes. Email the filled and signed agreement to nathan.marz@gmail.com. 
 
 Make sure you fill in all the fields. These are:
 
