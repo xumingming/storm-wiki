@@ -499,6 +499,17 @@ SemLab develops software for knowledge discovery and information support. Our Vi
 
 <tr>
 <td>
+<a href="http://visualrevenue.com/">Visual Revenue</a>
+</td>
+<td>
+<p>
+Here at Visual Revenue, we built a decision support system to help online editors to make choices on what, when, and where to promote their content in real-time. Storm is the backbone our real-time data processing and aggregation pipelines.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
