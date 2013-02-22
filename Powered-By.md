@@ -510,6 +510,17 @@ Here at Visual Revenue, we built a decision support system to help online editor
 
 <tr>
 <td>
+<a href="http://www.peerindex.com/">PeerIndex</a>
+</td>
+<td>
+<p>
+Our company is interested in who’s influential to whom on the web, on what topics, and why. To do that, we gather data on social activities on the web and run analytics on them. We use Storm to parse social data streams, to crawl the web and to augment the obtained data and provide real-time aggregations before storing it for further analysis, which we conduct with Hadoop based platforms. Storm has an intuitive architecture & API and has performed well in our deployment. We are looking forward to conduct a larger variety of real-time analytics on our data with it.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
