@@ -84,6 +84,17 @@ Rapid solution development and deployment, along with our expert Big Data method
 
 <tr>
 <td>
+<a href="http://cerner.com/">Cerner</a>
+</td>
+<td>
+<p>
+Cerner is a leader in health care information technology. We have been using Storm since it's release to process massive amounts of clinical data in real-time. Storm integrates well in our architecture, allowing us to quickly provide clinicians with the data they need to make medical decisions.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.rubiconproject.com/">Rubicon Project</a>
 </td>
 <td>
