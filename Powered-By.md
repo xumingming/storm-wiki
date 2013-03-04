@@ -95,6 +95,17 @@ Cerner is a leader in health care information technology. We have been using Sto
 
 <tr>
 <td>
+<a href="http://www.aeris.com/">Aeris Communications</a>
+</td>
+<td>
+<p>
+Aeris Communications has the only cellular network that was designed and built exclusively for machines. Our ability to provide scalable, reliable real-time analytics - powered by Storm - for machine to machine (M2M) communication offers immense value to our customers. We are using Storm in production since Q1 of 2013.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.rubiconproject.com/">Rubicon Project</a>
 </td>
 <td>
@@ -526,17 +537,6 @@ Here at Visual Revenue, we built a decision support system to help online editor
 <td>
 <p>
 Our company is interested in who’s influential to whom on the web, on what topics, and why. To do that, we gather data on social activities on the web and run analytics on them. We use Storm to parse social data streams, to crawl the web and to augment the obtained data and provide real-time aggregations before storing it for further analysis, which we conduct with Hadoop based platforms. Storm has an intuitive architecture & API and has performed well in our deployment. We are looking forward to conduct a larger variety of real-time analytics on our data with it.
-</p>
-</td>
-</tr>
-
-<tr>
-<td>
-<a href="http://www.aeris.com/">Aeris Communications</a>
-</td>
-<td>
-<p>
-Aeris Communications has the only cellular network that was designed and built exclusively for machines. Our ability to provide scalable, reliable real-time analytics - powered by Storm - for machine to machine (M2M) communication offers immense value to our customers. We are using Storm in production since Q1 of 2013.
 </p>
 </td>
 </tr>
