@@ -532,6 +532,17 @@ Our company is interested in who’s influential to whom on the web, on what top
 
 <tr>
 <td>
+<a href="http://www.aeris.com/">Aeris Communications</a>
+</td>
+<td>
+<p>
+Aeris Communications has the only cellular network that was designed and built exclusively for machines. Our ability to provide scalable, reliable real-time analytics - powered by Storm - for machine to machine (M2M) communication offers immense value to our customers. We are using Storm in production since Q1 of 2013.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://www.mercadolibre.com/">MercadoLibre</a>
 </td>
 <td>
