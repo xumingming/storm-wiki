@@ -158,6 +158,17 @@ Alibaba is the leading B2B e-commerce website in the world. We use storm to proc
 
 <tr>
 <td>
+<a href="http://www.klout.com/">Klout</a>
+</td>
+<td>
+<p>
+Klout helps everyone discover and be recognized for their influence by analyzing engagement with their content across social networks. Our analysis powers a daily Klout Score on a scale from 1-100 that shows how much influence social media users have and on what topics. We are using Storm to develop a realtime scoring and moments generation pipeline. Leveraging Storm's intuitive Trident abstraction we are able to create complex topologies which stream data from our network collectors via Kafka, processed and written out to HDFS.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
 <a href="http://premise.is/">premise.is</a>
 </td>
 <td>
