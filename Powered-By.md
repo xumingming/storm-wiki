@@ -37,7 +37,7 @@ At FullContact we currently use Storm as the backbone of the system which synchr
 </td>
 <td>
 <p>
-Storm powers Twitter's publisher analytics product, processing every tweet and click that happens on Twitter to provide analytics for Twitter's publisher partners. Storm integrates with the rest of Twitter's infrastructure, including Cassandra, the Kestrel infrastructure, and Mesos. Many other projects are underway using Storm, including projects in the areas of revenue optimization, anti-spam, and content discovery.
+Storm powers a wide variety of Twitter systems, ranging in applications from discovery, realtime analytics, personalization, search, revenue optimization, and many more. Storm integrates with the rest of Twitter's infrastructure, including database systems (Cassandra, Memcached, etc), the messaging infrastructure, Mesos, and the monitoring/alerting systems. Storm's isolation scheduler makes it easy to use the same cluster both for production applications and in-development applications, and it provides a sane way to do capacity planning.
 </p>
 </td>
 </tr>
