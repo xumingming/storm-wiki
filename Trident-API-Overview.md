@@ -21,7 +21,7 @@ A function takes in a set of input fields and emits zero or more tuples as outpu
 ```java
 public class MyFunction extends BaseFunction {
     public void execute(TridentTuple tuple, TridentCollector collector) {
-        for(int i=0; i < tuple.getInteger(0); i++) {
+        for(int i=0; i <= tuple.getInteger(0); i++) {
             collector.emit(new Values(i));
         }
     }
