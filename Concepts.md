@@ -6,8 +6,9 @@ This page lists the main concepts of Storm and links to resources where you can 
 4. Bolts
 5. Stream groupings
 6. Reliability
-7. Tasks
-8. Workers
+7. Executors
+8. Tasks
+9. Workers
 
 ### Topologies
 
@@ -98,13 +99,18 @@ To take advantage of Storm's reliability capabilities, you must tell Storm when 
 
 This is all explained in much more detail on [[Guaranteeing message processing]]. 
 
+### Executors
+
+Each spout or bolt executes as many executors across the cluster. Each executor corresponds to one thread of execution. You set the parallelism(initial number of executors) for each spout or bolt in the `setSpout` and `setBolt` methods of [TopologyBuilder](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/TopologyBuilder.html). 
+
 ### Tasks
 
-Each spout or bolt executes as many tasks across the cluster. Each task corresponds to one thread of execution, and stream groupings define how to send tuples from one set of tasks to another set of tasks. You set the parallelism for each spout or bolt in the `setSpout` and `setBolt` methods of [TopologyBuilder](http://nathanmarz.github.com/storm/doc/backtype/storm/topology/TopologyBuilder.html). 
+Althrough spout or bolt executes as executors in the cluster, tasks do the real work. Tasks run within executor, there can be many tasks within one executor. You set the number of tasks for a spout/bolt using `setNumTasks` method of [ComponentConfigurationDeclarer](http://nathanmarz.github.com/storm/doc-0.8.1/backtype/storm/topology/ComponentConfigurationDeclarer.html). Stream groupings define how to send tuples from one set of tasks to another set of tasks. The number of Executor defines the parallelism of a spout or bolt, while task + Stream grouping control how tuple flows within the topology(through stream grouping).
+
 
 ### Workers
 
-Topologies execute across one or more worker processes. Each worker process is a physical JVM and executes a subset of all the tasks for the topology. For example, if the combined parallelism of the topology is 300 and 50 workers are allocated, then each worker will execute 6 tasks (as threads within the worker). Storm tries to spread the tasks evenly across all the workers.
+Topologies execute across one or more worker processes. Each worker process is a physical JVM and executes a subset of all the executors for the topology. For example, if the combined parallelism of the topology is 300(executors) and 50 workers are allocated, then each worker will execute 6 executors (as threads within the worker). Storm tries to spread the executors evenly across all the workers.
 
 **Resources:**
 
