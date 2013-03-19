@@ -1,0 +1,9 @@
+Instructions
+------------
+
+sudo gem install gollum
+run "gollum" command in the storm.wiki checkout
+
+View documentation through web browser at http://localhost:4567
+
+
